@@ -1,0 +1,607 @@
+.box2,
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+.hero-background {
+  margin: 0 !important;
+  right: -2.8px;
+  bottom: -2.8px;
+  border-radius: 42.69px;
+  background-color: var(--color-aliceblue);
+  border: 1.4px solid #6f737b;
+}
+.box2 {
+  box-shadow: 0 2.8px 2.85px rgba(0, 0, 0, 0.25),
+    0 2.8px 2.85px rgba(0, 0, 0, 0.25) inset;
+  border-radius: 17.79px;
+  background-color: var(--color-darkslategray);
+  border: 0.7px solid var(--color-black);
+}
+.ps-5-icon {
+  position: absolute;
+  top: 11.3px;
+  left: 19.2px;
+  width: 51.9px;
+  height: 87.5px;
+  object-fit: contain;
+  z-index: 1;
+}
+.box2-parent {
+  width: 90.4px;
+  height: 118.8px;
+  position: relative;
+}
+.game-console {
+  position: relative;
+  font-weight: 500;
+  display: inline-block;
+  min-width: 112.4px;
+  flex-shrink: 0;
+  debug_commit: bf4bc93;
+}
+.digital-edition,
+.playstation-51 {
+  margin: 0;
+}
+.playstation-5-digital-container {
+  position: relative;
+  font-size: 11.4px;
+  font-weight: 500;
+  font-family: var(--font-lora);
+  flex-shrink: 0;
+  debug_commit: bf4bc93;
+}
+.game-console-parent {
+  flex-direction: column;
+  gap: 16.6px;
+}
+.game-console-parent,
+.playstation-5,
+.playstation-5-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.playstation-5-inner {
+  flex-direction: row;
+  padding: 0 0 0 37px;
+}
+.playstation-5 {
+  margin: 0 !important;
+  bottom: -80.6px;
+  left: 17px;
+  flex-direction: column;
+  gap: 26.8px;
+  z-index: 1;
+}
+.border,
+.box,
+.playstation-5 {
+  position: absolute;
+}
+.border {
+  top: 0;
+  left: 0;
+  border-radius: 12.81px;
+  border: 0.7px solid var(--color-white);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+.box {
+  top: 1.4px;
+  left: 1.4px;
+  box-shadow: -2.1px -2.1px 4.98px #fff inset,
+    2.1px 2.1px 4.98px rgba(136, 165, 191, 0.48) inset;
+  border-radius: 11.38px;
+  background-color: var(--color-aliceblue);
+  width: 39.8px;
+  height: 39.8px;
+}
+.border-parent,
+.menu-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.menu-icon {
+  height: 23.42%;
+  width: 40.05%;
+  top: 38.41%;
+  right: 29.98%;
+  bottom: 38.17%;
+  left: 29.98%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  z-index: 2;
+}
+.menu-button {
+  height: 42.7px;
+  width: 42.7px;
+  position: relative;
+  z-index: 1;
+}
+.ps5-logo-icon {
+  align-self: stretch;
+  height: 25.6px;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.ps5-logo-wrapper {
+  width: 113.8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8.5px 0 0;
+  box-sizing: border-box;
+}
+.box1 {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: -2.8px -1.4px 11.38px #fff,
+    2.8px 1.4px 11.38px rgba(136, 165, 191, 0.48);
+  border-radius: 11.38px;
+  background-color: var(--color-aliceblue);
+}
+.settings-icon {
+  position: absolute;
+  height: 42.96%;
+  width: 42.96%;
+  top: 28.64%;
+  right: 28.39%;
+  bottom: 28.39%;
+  left: 28.64%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  z-index: 1;
+}
+.settings-button {
+  width: 39.8px;
+  height: 39.8px;
+  position: relative;
+  z-index: 1;
+}
+.settings-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 1.4px 0 0;
+}
+.frame-container,
+.menu-button-parent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.menu-button-parent {
+  flex: 1;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+}
+.frame-container {
+  align-self: stretch;
+  justify-content: flex-start;
+  padding: 0 0 0 var(--padding-5xl);
+}
+.ps5-e-commerce,
+.your-gateway-to {
+  position: relative;
+  display: inline-block;
+}
+.ps5-e-commerce {
+  width: 266.5px;
+}
+.your-gateway-to {
+  height: 34px;
+  flex: 1;
+}
+.mobile-hero,
+.your-gateway-to-ps5-adventure-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.your-gateway-to-ps5-adventure-wrapper {
+  align-self: stretch;
+  flex-direction: row;
+  padding: 0 0 0 7px;
+  font-size: 19.9px;
+}
+.mobile-hero {
+  width: 273.6px;
+  flex-direction: column;
+  padding: 0 0 var(--padding-12xs-1);
+  box-sizing: border-box;
+  gap: 41.8px;
+  z-index: 3;
+}
+.frame-parent,
+.frame-wrapper,
+.playstation-5-parent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.frame-parent {
+  flex: 1;
+  flex-direction: column;
+  gap: 90.4px;
+}
+.frame-wrapper,
+.playstation-5-parent {
+  flex-direction: row;
+  box-sizing: border-box;
+}
+.frame-wrapper {
+  flex: 1;
+  padding: 0 0 192px var(--padding-11xs);
+  font-size: 28.5px;
+  color: var(--color-black);
+  font-family: var(--font-kadwa);
+}
+.playstation-5-parent {
+  align-self: stretch;
+  padding: 0 var(--padding-10xl) 0 0;
+  position: relative;
+}
+.stars-icon {
+  height: 33.3px;
+  width: 251.8px;
+  position: relative;
+  z-index: 2;
+}
+.stars-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 var(--padding-27xl) 0 54px;
+}
+.box11 {
+  position: absolute;
+  height: 72.1%;
+  width: 74.01%;
+  top: 27.8%;
+  right: 25.99%;
+  bottom: 0.1%;
+  left: 0;
+  box-shadow: 0 2.8px 2.85px rgba(0, 0, 0, 0.25),
+    0 2.8px 2.85px rgba(0, 0, 0, 0.25) inset;
+  border-radius: 17.79px;
+  background-color: var(--color-gray-100);
+  border: 0.7px solid var(--color-black);
+  box-sizing: border-box;
+}
+.box21,
+.joystick-icon {
+  position: absolute;
+  top: 0;
+}
+.box21 {
+  left: 0;
+  box-shadow: 0 2.8px 2.85px rgba(0, 0, 0, 0.25),
+    0 2.8px 2.85px rgba(0, 0, 0, 0.25) inset;
+  border-radius: 17.79px;
+  background-color: var(--color-darkslategray);
+  border: 0.7px solid var(--color-black);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+.joystick-icon {
+  left: 0.3px;
+  width: 67.9px;
+  height: 70.6px;
+  object-fit: cover;
+  z-index: 2;
+}
+.box2-group,
+.card3 {
+  position: absolute;
+  top: 0;
+  left: 22.5px;
+  width: 68.2px;
+  height: 75.2px;
+}
+.card3 {
+  height: 96.4%;
+  width: 30.6%;
+  top: 3.6%;
+  right: 69.4%;
+  bottom: 0;
+  left: 0;
+}
+.box3,
+.box5 {
+  position: absolute;
+  top: 0;
+  box-shadow: 0 2.8px 2.85px rgba(0, 0, 0, 0.25),
+    0 2.8px 2.85px rgba(0, 0, 0, 0.25) inset;
+  border-radius: 17.79px;
+  border: 0.7px solid var(--color-black);
+  box-sizing: border-box;
+}
+.box3 {
+  height: 69.5%;
+  width: 84.53%;
+  right: -0.13%;
+  bottom: 30.5%;
+  left: 15.6%;
+  background-color: var(--color-darkslategray);
+}
+.box5 {
+  left: 0;
+  background-color: var(--color-gray-200);
+  width: 100%;
+  height: 100%;
+}
+.controller-icon {
+  position: absolute;
+  top: 8.6px;
+  left: 4.7px;
+  width: 58px;
+  height: 42.6px;
+  object-fit: contain;
+  z-index: 2;
+}
+.box5-parent,
+.card2 {
+  position: absolute;
+  top: 32.9px;
+  left: 0;
+  width: 67.2px;
+  height: 75.2px;
+}
+.card2 {
+  height: 100%;
+  width: 26.79%;
+  top: 0;
+  right: 34.92%;
+  bottom: 0;
+  left: 38.29%;
+}
+.box4,
+.box6 {
+  position: absolute;
+  left: 0;
+  box-shadow: 0 2.8px 2.85px rgba(0, 0, 0, 0.25),
+    0 2.8px 2.85px rgba(0, 0, 0, 0.25) inset;
+  border-radius: 17.79px;
+  border: 0.7px solid var(--color-black);
+  box-sizing: border-box;
+}
+.box6 {
+  height: 72.1%;
+  width: 86.49%;
+  top: 27.8%;
+  right: 13.51%;
+  bottom: 0.1%;
+  background-color: var(--color-gray-300);
+  z-index: 1;
+}
+.box4 {
+  top: 0;
+  background-color: var(--color-darkslategray);
+  width: 100%;
+  height: 100%;
+}
+.headset-icon {
+  position: absolute;
+  top: 9.7px;
+  left: 4.9px;
+  width: 52.2px;
+  height: 61.3px;
+  object-fit: contain;
+  z-index: 2;
+}
+.box4-parent,
+.card1 {
+  position: absolute;
+  top: 0;
+  left: 10.6px;
+  width: 67.2px;
+  height: 75.2px;
+}
+.card1 {
+  height: 96.4%;
+  width: 26.19%;
+  top: 3.6%;
+  right: 0.03%;
+  bottom: 0;
+  left: 73.78%;
+}
+.control,
+.headset,
+.joystick {
+  position: absolute;
+  height: 74.37%;
+  width: 24.08%;
+  top: 0;
+  left: 75.92%;
+  display: inline-block;
+}
+.control,
+.joystick {
+  height: 92.42%;
+  width: 19.46%;
+  top: 7.58%;
+  left: 39.67%;
+}
+.joystick {
+  height: 79.78%;
+  width: 21.89%;
+  top: 20.58%;
+  left: 0;
+  font-size: 17.1px;
+  font-family: var(--font-lato);
+  min-width: 64px;
+}
+.middle-txt {
+  position: absolute;
+  top: 78.2px;
+  left: 3.5px;
+  width: 100%;
+  height: 27.7px;
+  z-index: 4;
+}
+.cards {
+  height: 108.2px;
+  flex: 1;
+  position: relative;
+  z-index: 3;
+}
+.cards-wrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 30px 0 var(--padding-5xl);
+}
+.menu-block-icon {
+  align-self: stretch;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  z-index: 1;
+}
+.frame-group,
+.products-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.frame-group {
+  align-self: stretch;
+  gap: 33.3px;
+  color: var(--color-black);
+  font-family: var(--font-kadwa);
+}
+.products-page {
+  position: absolute;
+  height: 100%;
+  width: 97.64%;
+  top: 0;
+  right: 1.36%;
+  bottom: 0;
+  left: 1%;
+  padding: 28.4px 0 var(--padding-12xs-1);
+  box-sizing: border-box;
+  gap: 7.3px;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-mini-2);
+  color: var(--color-white);
+  font-family: var(--font-montserrat);
+}
+.less-than-icon,
+.more-than-icon {
+  width: 28.5px;
+  position: relative;
+  flex-shrink: 0;
+  debug_commit: bf4bc93;
+}
+.less-than-icon {
+  height: 64px;
+  object-fit: contain;
+}
+.more-than-icon {
+  flex: 1;
+  max-height: 100%;
+  object-fit: cover;
+}
+.more-than-wrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 2.1px 0 0;
+}
+.backforwd-arrow {
+  position: absolute;
+  height: 8.66%;
+  width: 98.81%;
+  top: 72.06%;
+  right: 1.19%;
+  bottom: 19.28%;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 0 var(--padding-12xs-1);
+  box-sizing: border-box;
+  gap: var(--gap-xl);
+  z-index: 2;
+}
+.playstation-icon {
+  position: absolute;
+  top: 121px;
+  left: 49.1px;
+  border-radius: 18.5px;
+  width: 157.2px;
+  height: 182.1px;
+  object-fit: contain;
+  z-index: 2;
+}
+.mobile-icon,
+.playstation-parent {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.mobile-icon {
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  z-index: 4;
+}
+.playstation-parent {
+  margin: 0 !important;
+}
+.mobile-inner {
+  position: absolute;
+  top: 65.4px;
+  left: 144.4px;
+  width: 215.6px;
+  height: 472.4px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.mobile {
+  width: 360px;
+  height: 764.1px;
+  max-width: 100%;
+  line-height: normal;
+  letter-spacing: normal;
+}

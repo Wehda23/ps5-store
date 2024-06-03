@@ -1,0 +1,612 @@
+.playstation1 {
+  text-decoration: none;
+  width: 122px;
+  position: absolute;
+  margin: 0 !important;
+  right: -163.3px;
+  bottom: 1px;
+  color: inherit;
+  display: inline-block;
+  white-space: nowrap;
+}
+.ps5-logo-1-icon1 {
+  margin-bottom: -7.899999999999977px;
+  height: 83.8px;
+  width: 148.9px;
+  position: relative;
+  border-radius: 23.04px;
+  object-fit: cover;
+  flex-shrink: 0;
+  debug_commit: bf4bc93;
+}
+.navigation,
+.navigation-wrapper {
+  display: flex;
+  box-sizing: border-box;
+}
+.navigation {
+  align-self: stretch;
+  height: 67.9px;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  gap: 37.7px;
+}
+.navigation-wrapper {
+  width: 122.1px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 0 30.3px;
+}
+.games1,
+.services1 {
+  text-decoration: none;
+  position: relative;
+  color: inherit;
+  display: inline-block;
+}
+.games1 {
+  min-width: 67px;
+}
+.services1 {
+  height: 67px;
+  flex: 1;
+}
+.services-wrapper {
+  width: 97.8px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.shop1 {
+  min-width: 50px;
+}
+.help1,
+.shop1,
+.signin {
+  text-decoration: none;
+  position: relative;
+  color: inherit;
+  display: inline-block;
+}
+.help1 {
+  font-size: var(--font-size-3xl);
+  min-width: 50px;
+  white-space: nowrap;
+}
+.signin {
+  min-width: 62px;
+}
+.login-icon1,
+.search-icon1 {
+  height: 56.9px;
+  flex: 1;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  object-fit: contain;
+}
+.search-icon1 {
+  height: 52.3px;
+}
+.search1 {
+  text-decoration: none;
+  position: relative;
+  font-size: 25.1px;
+  color: inherit;
+  display: inline-block;
+  min-width: 84px;
+  white-space: nowrap;
+}
+.close-icon1 {
+  height: 47.7px;
+  width: 71.6px;
+  position: relative;
+}
+.frame-parent1,
+.topbar {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+}
+.topbar {
+  width: 1009.5px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 40.8px;
+  font-size: var(--font-size-xl-2);
+}
+.frame-parent1 {
+  width: 1333.6px;
+  align-items: flex-end;
+  justify-content: space-between;
+  top: 0;
+  z-index: 99;
+  position: sticky;
+  gap: var(--gap-xl);
+}
+.logo-content-icon {
+  height: calc(100% + 0.2px);
+  width: 424.5px;
+  position: absolute;
+  margin: 0 !important;
+  top: 0;
+  bottom: -0.2px;
+  left: -55px;
+  max-height: 100%;
+  object-fit: cover;
+}
+.leftside,
+.playstation-icon2 {
+  margin: 0 !important;
+  position: absolute;
+  z-index: 1;
+}
+.playstation-icon2 {
+  height: 481.8px;
+  width: calc(100% - 61px);
+  top: calc(50% - 195.3px);
+  right: 36.9px;
+  left: 24.1px;
+  max-width: 100%;
+  overflow: hidden;
+  object-fit: contain;
+}
+.leftside {
+  width: 369.5px;
+  height: 1086px;
+  right: -24.1px;
+  bottom: -10.6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10.5px;
+}
+.ps5-e-commerce2 {
+  height: 84.4px;
+  flex: 1;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+.ps5-e-commerce-wrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 32px 0 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  debug_commit: bf4bc93;
+  max-width: 100%;
+}
+.your-gateway-to2 {
+  height: 84.4px;
+  position: relative;
+  font-size: 31.4px;
+  display: inline-block;
+  flex-shrink: 0;
+  debug_commit: bf4bc93;
+}
+.stars-child,
+.stars-inner,
+.stars-item {
+  align-self: stretch;
+  width: 56px;
+  position: relative;
+  max-height: 100%;
+  min-height: 70px;
+}
+.stars1 {
+  width: 660.4px;
+  margin: 0 !important;
+  position: absolute;
+  right: -425.3px;
+  bottom: -47.4px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+  z-index: 1;
+}
+.conatainer,
+.ps-controller-icon2 {
+  position: relative;
+  max-width: 100%;
+  flex-shrink: 0;
+  debug_commit: bf4bc93;
+}
+.conatainer {
+  width: 481px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 0 156.6px;
+  box-sizing: border-box;
+  gap: 72.2px;
+}
+.ps-controller-icon2 {
+  align-self: stretch;
+  height: 266px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.ps-controller-frame {
+  height: 308px;
+  width: 156.6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.conatainer-parent,
+.frame-wrapper1 {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+}
+.conatainer-parent {
+  flex: 1;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+}
+.frame-wrapper1 {
+  align-self: stretch;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 var(--padding-17xl) 0 0;
+  box-sizing: border-box;
+}
+.joystick-icon2,
+.vector-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.joystick-icon2 {
+  left: 60.2px;
+  width: 178.6px;
+  height: 225.7px;
+  object-fit: contain;
+  z-index: 1;
+}
+.card32 {
+  height: 333.2px;
+  position: relative;
+}
+.vector-icon1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.controller-icon2 {
+  position: absolute;
+  top: 4.8px;
+  left: 49px;
+  width: 174.2px;
+  height: 131.2px;
+  object-fit: contain;
+  z-index: 1;
+}
+.card22 {
+  height: 333.2px;
+  position: relative;
+}
+.headset-icon2,
+.vector-icon2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.headset-icon2 {
+  top: 11.2px;
+  left: 47.4px;
+  width: 160.5px;
+  height: 195.9px;
+  object-fit: contain;
+  z-index: 1;
+}
+.card12 {
+  height: 333.2px;
+  position: relative;
+}
+.less-than-icon2,
+.more-than-icon2 {
+  height: 94.3px;
+  width: 94.3px;
+  position: relative;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.more-than-icon2 {
+  object-fit: cover;
+}
+.backforwd-arrow2 {
+  width: 985.1px;
+  margin: 0 !important;
+  position: absolute;
+  bottom: 82.8px;
+  left: -85.2px;
+  box-shadow: 0 4.2px 4.19px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 863.1px;
+  z-index: 1;
+}
+.cards2,
+.desktop-inner,
+.frame-parent2 {
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.cards2 {
+  width: 877.6px;
+  display: grid;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 10px;
+  box-sizing: border-box;
+  position: relative;
+  gap: 70.1px;
+  grid-template-columns: repeat(3, minmax(179px, 1fr));
+}
+.desktop-inner,
+.frame-parent2 {
+  display: flex;
+}
+.frame-parent2 {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 63.8px;
+}
+.desktop-inner {
+  width: 1053.2px;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 42px 22.8px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  font-size: 50.3px;
+}
+.ps-controller-icon3 {
+  margin-bottom: -57.600000000000136px;
+  height: 251.4px;
+  width: 200.1px;
+  position: relative;
+  object-fit: cover;
+}
+.bottom-icon-child {
+  align-self: stretch;
+  flex: 1;
+  display: none;
+}
+.discord-new-icon1,
+.facebook-icon1,
+.twitterx-icon1,
+.youtube-logo-icon1 {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: -231.4px;
+  max-height: 100%;
+  width: 82.4px;
+  object-fit: cover;
+}
+.discord-new-icon1,
+.twitterx-icon1,
+.youtube-logo-icon1 {
+  left: -97.7px;
+}
+.discord-new-icon1,
+.twitterx-icon1 {
+  left: 36px;
+}
+.twitterx-icon1 {
+  left: 169.8px;
+}
+.footericon1 {
+  height: 52.4px;
+  width: 235.8px;
+  position: relative;
+}
+.bottom-icon,
+.bottom-icon-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+.bottom-icon {
+  align-self: stretch;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 41.9px;
+}
+.bottom-icon-wrapper {
+  width: 502.8px;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 var(--padding-10xl) 0 0;
+  box-sizing: border-box;
+  max-width: calc(100% - 864px);
+}
+.horizontal-icon1 {
+  margin-bottom: -4.2999999999999545px;
+  height: 4.2px;
+  width: 259.8px;
+  position: relative;
+}
+.alx-se-team1 {
+  height: 71.2px;
+  position: relative;
+  display: inline-block;
+}
+.alx-se-team-wrapper,
+.line {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.alx-se-team-wrapper {
+  flex: 1;
+  align-items: flex-start;
+  min-width: 181px;
+}
+.line {
+  align-self: stretch;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  padding: 0 35px;
+  gap: 12.5px;
+  z-index: 2;
+}
+.line-wrapper,
+.ps-controller-parent {
+  flex: 1;
+  display: flex;
+  box-sizing: border-box;
+}
+.line-wrapper {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 0 3.3px;
+  max-width: calc(100% - 745px);
+}
+.ps-controller-parent {
+  height: 218px;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 0 24.2px;
+  gap: 21px;
+  max-width: 100%;
+}
+.desktop-child {
+  width: 1371.5px;
+  flex-direction: row;
+  padding: 0 var(--padding-11xs);
+  font-size: 41.9px;
+}
+.desktop,
+.desktop-child,
+.desktop1 {
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+.desktop1 {
+  height: 1071.2px;
+  flex: 1;
+  border-radius: 20.95px;
+  background-color: var(--color-white);
+  flex-direction: column;
+  padding: 14.7px 16px 246.8px;
+  position: relative;
+  gap: 6.5px;
+  text-align: left;
+  font-size: var(--font-size-3xl);
+  color: var(--color-black);
+  font-family: var(--font-kadwa);
+}
+.desktop {
+  width: 1440px;
+  flex-direction: row;
+  padding: 0 0 0.5px;
+  line-height: normal;
+  letter-spacing: normal;
+  cursor: pointer;
+}
+@media screen and (max-width: 1050px) {
+  .desktop-inner {
+    padding-left: var(--padding-2xl);
+    padding-right: var(--padding-2xl);
+    box-sizing: border-box;
+  }
+  .desktop1 {
+    padding-top: var(--padding-xl);
+    padding-bottom: 160px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .ps5-e-commerce2 {
+    font-size: 40px;
+  }
+  .your-gateway-to2 {
+    font-size: var(--font-size-6xl);
+  }
+  .conatainer-parent {
+    flex-wrap: wrap;
+  }
+  .cards2 {
+    gap: 35px;
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(179px, 310px));
+  }
+  .frame-parent2 {
+    gap: 32px;
+  }
+  .alx-se-team1 {
+    font-size: 34px;
+  }
+  .desktop1 {
+    height: auto;
+  }
+}
+@media screen and (max-width: 725px) {
+  .topbar {
+    gap: var(--gap-xl);
+  }
+  .conatainer {
+    gap: 36px;
+  }
+  .frame-parent2 {
+    gap: 16px;
+  }
+  .ps-controller-parent {
+    height: auto;
+  }
+  .desktop1 {
+    padding-bottom: 104px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .ps5-e-commerce2 {
+    font-size: var(--font-size-11xl);
+  }
+  .your-gateway-to2 {
+    font-size: 19px;
+  }
+  .conatainer {
+    padding-bottom: 102px;
+    box-sizing: border-box;
+  }
+  .cards2 {
+    gap: 18px;
+    grid-template-columns: minmax(179px, 1fr);
+  }
+  .alx-se-team1 {
+    font-size: var(--font-size-6xl);
+  }
+}

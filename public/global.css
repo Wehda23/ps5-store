@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kadwa:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap");
+body {
+  margin: 0;
+  line-height: normal;
+}
+:root {
+  /* fonts */
+  --font-lato: Lato;
+  --font-kadwa: Kadwa;
+  --font-lora: Lora;
+  --font-montserrat: Montserrat;
+
+  /* font sizes */
+  --font-size-mini-2: 0.888rem;
+  --font-size-11xl: 1.875rem;
+  --font-size-xl: 1.25rem;
+  --font-size-6xl: 1.563rem;
+  --font-size-xl-2: 1.263rem;
+  --font-size-3xl: 1.375rem;
+
+  /* Colors */
+  --color-black: #000;
+  --color-darkslategray: rgba(50, 48, 48, 0.5);
+  --color-gray-100: rgba(22, 22, 22, 0.7);
+  --color-gray-200: rgba(29, 28, 28, 0.7);
+  --color-gray-300: rgba(26, 25, 25, 0.7);
+  --color-aliceblue: #eef2fa;
+  --color-white: #fff;
+
+  /* Gaps */
+  --gap-xl: 1.25rem;
+  --gap-5xs: 0.5rem;
+
+  /* Paddings */
+  --padding-12xs-1: 0.006rem;
+  --padding-5xl: 1.5rem;
+  --padding-27xl: 2.875rem;
+  --padding-10xl: 1.812rem;
+  --padding-11xs: 0.125rem;
+  --padding-mini: 0.937rem;
+  --padding-7xs: 0.375rem;
+  --padding-61xl: 5rem;
+  --padding-5xs: 0.5rem;
+  --padding-xl: 1.25rem;
+  --padding-17xl: 2.25rem;
+  --padding-2xl: 1.312rem;
+
+  /* Border radiuses */
+  --br-mid-8: 17.8px;
+  --br-xs-4: 11.4px;
+  --br-6xl: 25px;
+}
