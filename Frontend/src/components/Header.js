@@ -14,7 +14,7 @@ const Header = () => {
           <li><a href="#">Services</a></li>
           <li><a href="#">Shop</a></li>
           <li><a href="#">Help</a></li>
-          <li><a href="#">Sign In</a></li>
+          <li><a href="#">Sign Up</a></li>
         </ul>
       </nav>
       <div className="search-signin">
