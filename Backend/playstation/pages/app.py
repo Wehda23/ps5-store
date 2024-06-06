@@ -22,3 +22,11 @@ def home_page() -> str:
     Home page route
     """
     return render_template("home_page/index.html")
+
+# login page
+@pages.route("/lobby")
+def login_page() -> str:
+    """
+    Login page route
+    """
+    return render_template("login_page/index.html")
