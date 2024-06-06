@@ -8,11 +8,12 @@
 from flask import Flask
 from playstation.settings import DEBUG
 from playstation.pages.app import pages
-
+from playstation.users.app import users
 
 # Initiate flask application
 app: Flask = Flask(__name__)
 app.register_blueprint(pages)
+app.register_blueprint(users)
 
 
 if __name__ == "__main__":

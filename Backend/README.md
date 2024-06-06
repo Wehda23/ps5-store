@@ -18,3 +18,30 @@ pip install -r requirements.txt
 ```bash
 python manage.py
 ```
+
+## Main Flask Application
+
+In this folder, you will find the Flask application assembled and ready to run. The application is divided into several folders and files for better organization and maintainability. Below is a breakdown of the directory structure and the purpose of each component.
+
+### Directory Structure
+
+```txt
+project_root/
+    playstation/
+        __init__.py
+        settings.py
+        pages/
+            __init__.py
+            app.py
+        users/
+            __init__.py
+            app.py
+        products/
+            __init__.py
+            app.py
+        orders/
+            __init__.py
+            app.py
+    manage.py
+    README.md
+```
