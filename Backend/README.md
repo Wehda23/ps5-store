@@ -44,4 +44,13 @@ project_root/
             app.py
     manage.py
     README.md
+    templates/
+        home_page/
+            index.html
+        login_page/
+            index.html
+    static/
+        css/
+        js/
+        images/
 ```
