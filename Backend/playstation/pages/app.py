@@ -4,10 +4,15 @@
 - Flask blueprint that is concerned with rendering templates
 """
 from flask import Blueprint, abort, render_template
-
+from playstation.settings import TEMPLATES_DIR, STATIC_DIR
 
 # Blueprint
-pages: Blueprint = Blueprint("pages", __name__)
+pages: Blueprint = Blueprint(
+    "pages",
+    __name__,
+    template_folder=TEMPLATES_DIR,
+    static_folder=STATIC_DIR
+)
 
 
 # Home page
@@ -16,4 +21,4 @@ def home_page() -> str:
     """
     Home page route
     """
-    return "Hello, World!! Pages"
+    return render_template("home_page/index.html")
