@@ -2,6 +2,21 @@
 
 This project is about creating a playstation store which represents a simple E-commerce website using Flask as the backend technology.
 
+## Create Virtual Enviroment
+
+If you are running this project in a development stage it is adviced to use python virtual inveiroment
+
+- To create virtual enviroment
+
+```bash
+python -m venv venv
+```
+
+- To Run virtual enviroment
+
+```bash
+venv\Scripts\activate
+```
 
 ## Run Application
 
