@@ -75,3 +75,11 @@ pip install -r requirements.txt
 ```bash
 python manage.py
 ```
+
+## Database Schema
+
+This project utilizes the following database schema to manage and organize data efficiently. The schema defines the structure, relationships, and constraints for the database tables.
+
+![Database Schema](https://i.imghippo.com/files/GQdfW1717777832.png)
+
+The diagram provides a visual representation of the tables, columns, and their relationships, ensuring a clear understanding of the data flow and organization within the system.
