@@ -13,18 +13,24 @@ project_root/
     playstation/
         __init__.py
         settings.py
-        pages/
+        applications/
             __init__.py
-            app.py
-        users/
-            __init__.py
-            app.py
-        products/
-            __init__.py
-            app.py
-        orders/
-            __init__.py
-            app.py
+            pages/
+                __init__.py
+                app.py
+            users/
+                __init__.py
+                app.py
+            products/
+                __init__.py
+                app.py
+            orders/
+                __init__.py
+                app.py
+    models/
+        __init__.py
+    serializers/
+        __init__.py
     manage.py
     README.md
     templates/
