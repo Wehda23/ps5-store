@@ -19,3 +19,6 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 # Database
 DATABASE: str = 'sqlite:///test.db'
+
+# Secret Key
+SECRET_KEY: str = os.urandom(24)
