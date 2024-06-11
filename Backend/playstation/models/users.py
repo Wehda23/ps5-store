@@ -1,11 +1,11 @@
 """
 # Folder that Contains classes/methods for Users Model
 """
-from playstation import db
+from playstation import db, SQLMixin
 from typing import Self
 
 # Users model
-class User(db.Model):
+class User(db.Model, SQLMixin):
     # Basics
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(80), nullable=False)
@@ -27,4 +27,4 @@ class User(db.Model):
         """
         Method for representation
         """
-        return f"<{self.__class__.__name__} {self.username} {self.email}>"
+        return f"<{self.__class__.__name__} {self.email}>"

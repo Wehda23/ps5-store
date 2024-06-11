@@ -1,13 +1,13 @@
 """
 # Folder that Contains classes/methods for Payments Model
 """
-from playstation import db
+from playstation import db, SQLMixin
 from typing import Self
 from playstation.models.orders import Orders
 
 
 # Payments model
-class Payments(db.Model):
+class Payments(db.Model, SQLMixin):
     # Basics
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     amount = db.Column(db.Integer, nullable=False)

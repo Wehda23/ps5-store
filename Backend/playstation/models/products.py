@@ -1,14 +1,14 @@
 """
 # Folder that Contains classes/methods for Products & Categories Models
 """
-from playstation import db
+from playstation import db, SQLMixin
 from typing import Self
 from sqlalchemy import CheckConstraint
 
 
 
 # Products model
-class Product(db.Model):
+class Product(db.Model, SQLMixin):
     # Basics
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(256), nullable=False)
@@ -34,7 +34,7 @@ class Product(db.Model):
         return f"<{self.__class__.__name__} {self.name}>"
 
 
-class Category(db.Model):
+class Category(db.Model, SQLMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(256), nullable=False)
 

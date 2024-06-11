@@ -1,13 +1,13 @@
 """
 # File Contains Orders Model & Methods
 """
-from playstation import db
+from playstation import db, SQLMixin
 from playstation.models.users import User
 from playstation.models.shipping_address import ShippingAddress
 from playstation.models.coupons import Coupons
 
 # Orders Model
-class Orders(db.Model):
+class Orders(db.Model, SQLMixin):
     # Basic
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

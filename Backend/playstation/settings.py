@@ -11,11 +11,12 @@ import os
 DEBUG: bool = True
 
 # Base directory of the project
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Templates and Static paths
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+TEMPLATES_DIR: str = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR: str = os.path.join(BASE_DIR, 'static')
+MEDIA_DIR: str = None
 
 # Database
 DATABASE: str = 'sqlite:///test.db'

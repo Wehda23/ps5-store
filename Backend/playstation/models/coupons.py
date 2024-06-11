@@ -1,11 +1,11 @@
 """
 # File that contains a model Coupons and it's methods
 """
-from playstation import db
+from playstation import db, SQLMixin
 from typing import Self
 
 
-class Coupons(db.Model):
+class Coupons(db.Model, SQLMixin):
     # Basic
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     code = db.Column(db.String(100), nullable=False, unique=True)
