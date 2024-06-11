@@ -51,6 +51,10 @@ class JWTAuthentication(Authentication):
         if user is None:
             return False
 
+        # check if user is an active user
+        if not user.active:
+            return False
+
         # Attach user to the request object
         setattr(request, 'user', user)
 

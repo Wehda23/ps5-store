@@ -7,7 +7,6 @@ from flask import make_response, Response, request
 from functools import wraps
 from playstation.settings import JWT_AUTHENTICATIONS
 from abc import ABC, abstractmethod
-from playstation.models.users import User
 
 
 # Invalid Token Error
@@ -67,15 +66,4 @@ def authentication_classess(
     return decorator
 
 
-# Token class
-class Token:
-    """
-    class to store a token
-    """
 
-    def __init__(self, access_token: str = None, refresh_token: str = None) -> None:
-        """
-        Method used when a new instance is initialized
-        """
-        self.access_token: str = access_token
-        self.refresh_token: str = refresh_token
