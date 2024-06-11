@@ -1,10 +1,9 @@
 """
 # Application that handles the Users API
 """
-
 from flask import Blueprint, make_response, request
 from playstation.models.users import User
-from playstation.permissions import permission_required
+from playstation.admin.permissions import permission_required
 from .permissions import Permission
 
 # Declare route prefix
@@ -24,7 +23,7 @@ def users_test() -> str:
 
 
 # Register User API
-@users_api.route("/register", methods=["POST"])
+@users_api.route("/register", methods=['POST'])
 def register(*args, **kwargs) -> str:
     """
     Register a new user account API
@@ -44,7 +43,7 @@ def register(*args, **kwargs) -> str:
 
 #! This route should be a protected route.
 # Update user information API
-@users_api.route("/update/<int:pk>", methods=["PUT"])
+@users_api.route("/update/<int:pk>", methods=['PUT'])
 @permission_required([Permission])
 def update_user(pk: int) -> str:
     """
@@ -65,7 +64,10 @@ def update_user(pk: int) -> str:
     # Get data from request
     data = request.get_json()
     # Update user
-    user.first_name = data["first_name"]
+    user.first_name = data['first_name']
     # Commit changes
     user.save()
     return "User updated successfully"
+
+
+

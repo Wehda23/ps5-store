@@ -5,9 +5,22 @@
 import jwt
 from datetime import datetime, timezone
 from typing import Self, Optional, Union
-from . import Token, InvalidTokenError
 from playstation.settings import JWT_AUTHENTICATIONS
 from playstation.models.users import User
+
+
+# Token class
+class Token:
+    """
+    class to store a token
+    """
+
+    def __init__(self, access_token: str = None, refresh_token: str = None) -> None:
+        """
+        Method used when a new instance is initialized
+        """
+        self.access_token: str = access_token
+        self.refresh_token: str = refresh_token
 
 
 class TokenUtility:

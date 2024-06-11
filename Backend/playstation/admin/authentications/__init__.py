@@ -7,6 +7,7 @@ from flask import make_response, Response, request
 from functools import wraps
 from playstation.settings import JWT_AUTHENTICATIONS
 from abc import ABC, abstractmethod
+from playstation.models.users import User
 
 
 # Invalid Token Error
