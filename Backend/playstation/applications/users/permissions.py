@@ -1,6 +1,7 @@
 """
 # File that contains permissions required for this application
 """
+
 from playstation.permissions import BasePermission
 from typing import Self
 from flask import Request
@@ -11,6 +12,7 @@ class Permission(BasePermission):
     """
     Class Created to demonstrated permission classes
     """
+
     def has_permission(self: Self, request: Request, *args, **kwargs) -> bool:
         """
         Main method to handle permissions
@@ -22,5 +24,5 @@ class Permission(BasePermission):
             - True in case satisfies all permissions otherwise False
         """
         print(request.get_json())
+        print(request.headers.get("Authorization"))
         return True
-

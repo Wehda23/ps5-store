@@ -5,14 +5,9 @@
 - The application is divided into several folders and files for better organization and maintainability
 - The main application is in the `manage.py` file, the routes are defined in other folders such as  'pages', 'users', 'products' and 'orders'.
 """
+
 from flask import Flask
-from playstation.settings import (
-    DEBUG,
-    TEMPLATES_DIR,
-    STATIC_DIR,
-    DATABASE,
-    SECRET_KEY
-)
+from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR, DATABASE, SECRET_KEY
 from playstation.applications.pages.app import pages
 from playstation.applications.users.app import users_api
 from playstation.applications.orders.app import orders_api
@@ -36,9 +31,9 @@ app.register_blueprint(products_api)
 app.register_blueprint(orders_api)
 
 # Configure Database
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = SECRET_KEY
 
 # Initialize the app with the extension
 db.init_app(app)

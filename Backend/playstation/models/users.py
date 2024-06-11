@@ -1,8 +1,10 @@
 """
 # Folder that Contains classes/methods for Users Model
 """
+
 from playstation import db, SQLMixin
 from typing import Self
+
 
 # Users model
 class User(db.Model, SQLMixin):
@@ -19,9 +21,18 @@ class User(db.Model, SQLMixin):
     active = db.Column(db.Boolean, default=True, nullable=False)
 
     # Dates
-    last_login = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    last_login = db.Column(
+        db.DateTime, nullable=False, default=db.func.current_timestamp()
+    )
+    created_at = db.Column(
+        db.DateTime, nullable=False, default=db.func.current_timestamp()
+    )
+    updated_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=db.func.current_timestamp(),
+        onupdate=db.func.current_timestamp(),
+    )
 
     def __repr__(self: Self):
         """

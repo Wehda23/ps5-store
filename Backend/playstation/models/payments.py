@@ -1,6 +1,7 @@
 """
 # Folder that Contains classes/methods for Payments Model
 """
+
 from playstation import db, SQLMixin
 from typing import Self
 from playstation.models.orders import Orders
@@ -17,11 +18,18 @@ class Payments(db.Model, SQLMixin):
     currency = db.Column(db.String(10), nullable=False, default="$")
 
     # Relationships
-    order_obj = db.relationship('Orders', backref=db.backref('payment', lazy=True))
+    order_obj = db.relationship("Orders", backref=db.backref("payment", lazy=True))
 
     # Dates
-    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    created_at = db.Column(
+        db.DateTime, nullable=False, default=db.func.current_timestamp()
+    )
+    updated_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=db.func.current_timestamp(),
+        onupdate=db.func.current_timestamp(),
+    )
 
     def __repr__(self: Self):
         """

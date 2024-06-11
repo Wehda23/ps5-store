@@ -1,6 +1,7 @@
 """
 # File that contains a model Coupons and it's methods
 """
+
 from playstation import db, SQLMixin
 from typing import Self
 

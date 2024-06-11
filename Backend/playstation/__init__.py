@@ -2,9 +2,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from typing import Self
 
+
 # Base Model Class
 class Base(DeclarativeBase):
     pass
+
 
 # Declare Database
 db: SQLAlchemy = SQLAlchemy(model_class=Base)
@@ -23,7 +25,9 @@ class SQLMixin:
         Method used to save SQL Session
         """
         # Check if instance exists
-        instance: object = db.session.query(self.__class__).filter_by(id=self.id).first()
+        instance: object = (
+            db.session.query(self.__class__).filter_by(id=self.id).first()
+        )
         # Create new instance if instance does not exists
         if instance is None:
             db.session.add(self)
