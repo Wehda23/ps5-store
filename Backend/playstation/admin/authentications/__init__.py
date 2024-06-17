@@ -64,6 +64,3 @@ def authentication_classess(
         return decorated_function
 
     return decorator
-
-
-

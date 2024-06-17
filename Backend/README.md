@@ -83,3 +83,29 @@ This project utilizes the following database schema to manage and organize data 
 ![Database Schema](https://i.imghippo.com/files/GQdfW1717777832.png)
 
 The diagram provides a visual representation of the tables, columns, and their relationships, ensuring a clear understanding of the data flow and organization within the system.
+
+
+# Playstation Package for backend project
+
+This package contains the packages & Applications required for Play Station Store application.
+
+1. admin
+2. applications
+3. models
+4. serializers
+
+## Admin Package
+
+Explain the package
+
+## Applications Package
+
+Explain the package
+
+## Models Package
+
+Explain the package
+
+## Serializers Package
+
+Explain the package

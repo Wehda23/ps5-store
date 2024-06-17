@@ -50,7 +50,8 @@ class RefreshToken:
     """
 
     # Create method to generate access token
-    def create_access_token(self: Self, model: object, id: str = "id") -> str:
+    @staticmethod
+    def create_access_token(model: object, id: str = "id") -> str:
         """
         Generate an access token.
 
@@ -81,7 +82,8 @@ class RefreshToken:
         return access_token
 
     # Create method to generate refresh token.
-    def create_refresh_token(self: Self, model: object, id: str = "id") -> str:
+    @staticmethod
+    def create_refresh_token(model: object, id: str = "id") -> str:
         """
         Generate a refresh token.
 
@@ -112,7 +114,8 @@ class RefreshToken:
         return refresh_token
 
     # Create method to genereate both tokens
-    def for_user(self: Self, user: User, id: str = "id") -> Token:
+    @staticmethod
+    def for_user(user: User, id: str = "id") -> Token:
         """
         Generate tokens for a user.
 
@@ -129,9 +132,9 @@ class RefreshToken:
         # Initialize an instance
         token: Token = Token()
         # Create access_token
-        token.access_token = self.create_access_token(user)
+        token.access_token = RefreshToken.create_access_token(user)
         # Create refresh_token
-        token.refresh_token = self.create_refresh_token(user)
+        token.refresh_token = RefreshToken.create_refresh_token(user)
         # Return the token
         return token
 
