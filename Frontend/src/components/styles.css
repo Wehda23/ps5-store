@@ -1,0 +1,145 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.search-signin {
+    display: flex;
+    align-items: center;
+}
+
+.search-signin a {
+    text-decoration: none;
+    color: #000;
+    margin-left: 20px;
+}
+
+main {
+    text-align: center;
+    padding: 20px;
+}
+
+.carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.carousel-items {
+    display: flex;
+    overflow: hidden;
+    width: 80%;
+}
+
+.carousel-items .item {
+    min-width: 25%;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.carousel-items .item img {
+    width: 100%;
+    height: auto;
+}
+
+.carousel-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.social-icons a {
+    margin: 0 10px;
+}
+
+/* styles.css */
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #000;
+    color: #fff;
+}
+
+.social-icons {
+    display: flex; /* Change display to flex */
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.social-icons a {
+    margin: 0 10px;
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    filter: invert(1);
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+    }
+
+    .search-signin {
+        display: none;
+    }
+
+    .carousel-items .item {
+        min-width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-items .item {
+        min-width: 100%;
+    }
+
+    header {
+        flex-direction: column;
+    }
+}
