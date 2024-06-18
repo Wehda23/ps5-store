@@ -12,7 +12,18 @@ In this folder, you will find the Flask application assembled and ready to run. 
 project_root/
     playstation/
         __init__.py
+        app.py
+        README.md
+        routes.py
+        database.py
         settings.py
+        admin/
+            __init__.py
+            permissions.py
+            authentications/
+                __init__.py
+                jwt_authentication.py
+                token.py
         applications/
             __init__.py
             pages/
@@ -27,12 +38,19 @@ project_root/
             orders/
                 __init__.py
                 app.py
-    models/
-        __init__.py
-    serializers/
-        __init__.py
-    manage.py
-    README.md
+            swagger/
+                __init__.py
+        models/
+            __init__.py
+            user.py
+            products.py
+            orders.py
+            coupons.py
+            payments.py
+            shipping_addresses.py
+        serializers/
+            __init__.py
+            serializer.py
     templates/
         home_page/
             index.html
@@ -42,6 +60,7 @@ project_root/
         css/
         js/
         images/
+        swagger_config.json
 ```
 
 ## Create Virtual Enviroment
@@ -96,15 +115,28 @@ This package contains the packages & Applications required for Play Station Stor
 
 ## Admin Package
 
-Explain the package
+The admin package contains modules related to the administration of the application, such as managing user permissions and authentication mechanisms.
 
 ## Applications Package
 
-Explain the package
+The applications package is divided into sub-packages, each responsible for different functional areas of the application, such as:
+
+- pages: Manages the different pages of the application.
+- users: Handles user-related operations.
+- products: Manages product-related functionalities.
+- orders: Deals with order processing and management.
+- swagger: Contains configuration for API documentation using Swagger.
 
 ## Models Package
 
-Explain the package
+The models package defines the database models for the application. Each model represents a table in the database and includes:
+
+- user.py: User model.
+- products.py: Product model.
+- orders.py: Order model.
+- coupons.py: Coupon model.
+- payments.py: Payment model.
+- shipping_addresses.py: Shipping Address model.
 
 ## Serializers Package
 
