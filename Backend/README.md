@@ -131,6 +131,8 @@ The applications package is divided into sub-packages, each responsible for diff
 
 By using the function `routes` in the file `./routes.py` we can register all our flask blueprints to Flask application
 
+Here is an example of how to set it up:
+
 ```py
 from flask import Flask
 from playstation.routes import routes
@@ -159,6 +161,8 @@ The models package defines the database models for the application. Each model r
 ### Initiate Flask Database Configuration and Models
 
 By using the function `database` in the file `./database.py` we can initiate flask database configurations and models
+
+Here is an example of how to set it up:
 
 ```py
 from flask import Flask
