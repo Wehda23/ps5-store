@@ -85,7 +85,7 @@ This project utilizes the following database schema to manage and organize data 
 The diagram provides a visual representation of the tables, columns, and their relationships, ensuring a clear understanding of the data flow and organization within the system.
 
 
-# Playstation Package for backend project
+# Playstation Packages for backend project
 
 This package contains the packages & Applications required for Play Station Store application.
 

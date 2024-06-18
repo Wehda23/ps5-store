@@ -1,7 +1,18 @@
 """
-# Folder that contains application to handle templates
+# Application that handles the Pages Application
 
-- Flask blueprint that is concerned with rendering templates
+- This is the application that handles all user related actions such as new account creation, profile updates, registeration, login etc..
+
+## Page routes
+
+##### Protected Routes
+- /Products/me: Get the current user's profile
+- /Products/me/update: Update the current user's profile
+- /Products/me/delete: Delete the current user's account
+
+#### Public Routes
+- /Products/register: Register a new user
+- /Products/login: Login a user
 """
 
 from flask import Blueprint, abort, render_template

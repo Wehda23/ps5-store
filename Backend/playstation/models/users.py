@@ -6,6 +6,7 @@ from playstation import db, SQLMixin
 from typing import Self
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 # Add SQLUserMixin
 class UserMixin(SQLMixin):
     """
@@ -18,7 +19,6 @@ class UserMixin(SQLMixin):
         Method used to has password
         """
         return generate_password_hash(password)
-
 
     def check_password(self, password: str) -> bool:
         """
@@ -38,17 +38,18 @@ class UserMixin(SQLMixin):
             - New User
         """
         # Check password key existing
-        if 'password' not in kwargs:
+        if "password" not in kwargs:
             raise ValueError("Password field is required")
 
         # hash password
-        kwargs['password'] = cls.hash_password(kwargs['password'])
+        kwargs["password"] = cls.hash_password(kwargs["password"])
 
         # Create new instance and return new user
         new_user: object = cls(**kwargs)
         # Create user
         new_user.save()
         return new_user
+
 
 # Users model
 class User(db.Model, UserMixin):

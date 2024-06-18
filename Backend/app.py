@@ -7,7 +7,7 @@
 """
 
 from flask import Flask
-from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR, DATABASE, SECRET_KEY
+from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR
 from playstation.routes import routes
 from playstation.database import database
 

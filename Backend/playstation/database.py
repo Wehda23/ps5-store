@@ -1,6 +1,7 @@
 """
 # This file contains every configeration related to flask application database
 """
+
 from flask import Flask
 from playstation import db
 from playstation.models.users import User
@@ -34,7 +35,6 @@ def database(app: Flask) -> None:
     # Create Database Tables
     with app.app_context():
         db.create_all()
-
 
     # Clear Session
     @app.teardown_appcontext

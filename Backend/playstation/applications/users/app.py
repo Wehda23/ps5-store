@@ -14,6 +14,7 @@
 - /users/register: Register a new user
 - /users/login: Login a user
 """
+
 from flask import Blueprint, make_response, request, Response
 from playstation.models.users import User
 from playstation.admin.permissions import permission_required
@@ -25,7 +26,6 @@ from playstation.admin.authentications.token import get_tokens_for_user
 from playstation.admin.authentications import authentication_classess
 from .permissions import Permission
 from .serializers import UserRegisterSerializer
-
 
 # Declare route prefix
 url_prefix: str = "/api/users"
@@ -46,10 +46,15 @@ def register(*args, **kwargs) -> Response:
     # TO DO: Implement user registration logic
     # Get data from request
     data = request.get_json()
+    # Create serializer
+    serializer: UserRegisterSerializer = UserRegisterSerializer(data=data)
+    # Validate data
+    serializer.is_valid()
+    print(serializer.validated_data)
     # New user
-    user: User = User(**data)
+    # user: User = User(**data)
     # Save user
-    user.save()
+    # user.create_user(**data)
     return "User registration API"
 
 

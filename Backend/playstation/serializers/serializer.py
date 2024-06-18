@@ -32,6 +32,13 @@ class AbstractSerializer(ABC):
         return meta
 
     @property
+    def data(self: Self) -> dict:
+        """
+        Property to get serialized model
+        """
+        pass
+
+    @property
     def model(self: Self):
         return getattr(self._meta, "model", None)
 
@@ -99,8 +106,16 @@ class AbstractSerializer(ABC):
 
 
 class Validatable(ABC):
+    @property
+    def validated_data(self: Self) -> dict:
+        pass
+
     @abstractmethod
     def is_valid(self: Self) -> bool:
+        pass
+
+    @abstractmethod
+    def validate(self: Self) -> bool:
         pass
 
 
@@ -125,12 +140,6 @@ class Deletable(ABC):
 class Representable(ABC):
     @abstractmethod
     def to_representation(self, instance: object) -> dict:
-        pass
-
-
-class InternalValueConvertible(ABC):
-    @abstractmethod
-    def to_internal_value(self, data: dict) -> object:
         pass
 
 
