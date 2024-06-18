@@ -156,6 +156,24 @@ The models package defines the database models for the application. Each model r
 - payments.py: Payment model.
 - shipping_addresses.py: Shipping Address model.
 
+### Initiate Flask Database Configuration and Models
+
+By using the function `database` in the file `./database.py` we can initiate flask database configurations and models
+
+```py
+from flask import Flask
+from playstation.database import database
+# Initiate flask application
+app: Flask = Flask(__name__)
+
+# Register routes
+database(app)
+
+if __name__ == "__main__":
+    # Run flask application
+    app.run()
+```
+
 ## Serializers Package
 
 Explain the package
