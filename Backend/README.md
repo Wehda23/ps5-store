@@ -136,11 +136,14 @@ Here is an example of how to set it up:
 ```py
 from flask import Flask
 from playstation.routes import routes
+
+
 # Initiate flask application
 app: Flask = Flask(__name__)
 
 # Register routes
 routes(app)
+
 
 if __name__ == "__main__":
     # Run flask application
@@ -167,11 +170,14 @@ Here is an example of how to set it up:
 ```py
 from flask import Flask
 from playstation.database import database
+
+
 # Initiate flask application
 app: Flask = Flask(__name__)
 
 # Register routes
 database(app)
+
 
 if __name__ == "__main__":
     # Run flask application

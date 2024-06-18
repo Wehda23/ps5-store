@@ -21,9 +21,10 @@ class AbstractSerializer(ABC):
         self.instance: object = instance
         self._data: dict = data
         self.many: bool = many
-        self._errors = None
+        self._errors = []
         self._meta = self.get_meta()  # Access Meta Class
-        self._fields = getattr(self._meta, "fields", None)
+        self.fields = getattr(self._meta, "fields", None)
+        self.write_only: Iterable = getattr(self._meta, "write_only", None)
 
     def get_meta(self: Self):
         meta = getattr(self, "Meta", None)
@@ -52,7 +53,7 @@ class AbstractSerializer(ABC):
         Setter propery method for fields.
 
         Args:
-            - fields (Iterable Python Object): Fields for serializer.
+            - serializer_fields (Iterable Python Object): Fields for serializer.
         """
         # Check if fields is a None
         if serializer_fields is None:
@@ -72,6 +73,37 @@ class AbstractSerializer(ABC):
             ]
 
         self._fields: list[str] = fields
+
+    @property
+    def write_only(self: Self):
+        return self._write_only
+
+    @write_only.setter
+    def write_only(self: Self, serializer_fields: Optional[Iterable[str]]) -> None:
+        """
+        Setter propery method write_only fields.
+
+        Args:
+            - serializer_fields (Iterable Python Object): Fields for serializer.
+        """
+        # Skip if None
+        if serializer_fields is None:
+            return
+
+        # Fields
+        fields: list[str] = [key for key in self.model.__dict__.keys()]
+
+        # Check if all fields
+        if not self.__check_fields(serializer_fields):
+            # Implement All fields logic.
+            fields: list[str] = [
+                key
+                for key in fields
+                if self.__existing_field(key, fields)
+                if key in serializer_fields
+            ]
+
+        self._write_only: list[str] = fields
 
     def __existing_field(self: Self, field: str, fields: list[str]) -> NoReturn:
         """

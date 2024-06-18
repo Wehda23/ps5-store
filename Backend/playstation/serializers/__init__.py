@@ -22,7 +22,7 @@ class SerializerInterface(
     Updatable,
     Deletable,
     Representable,
-    Creatable
+    Creatable,
 ):
     pass
 
@@ -66,10 +66,12 @@ class Serializer(SerializerInterface):
         self.__data_checker()
 
         # validate data
-        self.validate(data)
-
-        # Create validated_data
-        self._validated_data: dict = data
+        if self.validate(data):
+            # Create validated_data
+            self._validated_data: dict = data
+            return True
+        # Data not valid
+        return False
 
     def __data_checker(self: Self) -> Optional[NoReturn]:
         """
@@ -92,7 +94,53 @@ class Serializer(SerializerInterface):
             - bool True in case of validated otherwise False
         """
         # Implement your validation logic here
-        return super().validate()
+        # Check data keys if match the fields of the model or mismatch
+        self.__validate_data_fields(data)
+        # Get all validate methods
+        validate_methods: list[str] = self.__validate_methods()
+
+        # Check Validation methods
+        if validate_methods:
+            for method in validate_methods:
+                try:
+                    # Call each validation method
+                    getattr(self, method)(data)
+                except Exception as e:
+                    self.errors.append(str(e))
+
+        # Check errors
+        if self.errors:
+            return False
+
+        # Return true
+        return True
+
+    def __validate_data_fields(self: Self, data: dict) -> Optional[NoReturn]:
+        """
+        Method used to validate data fields
+        """
+        # Grab fields
+        fields: set = {
+            key for key in self.model.__dict__.keys() if not key.startswith("_")
+        }
+        # Check if data keys match with fields
+        for key in data.keys():
+            if key not in fields:
+                raise ValueError(f"Invalid field: {key}")
+
+    def __validate_methods(self: Self) -> list[str]:
+        """
+        Method to retrieve a list of validation callable methods.
+
+        Returns:
+            - list of (callable) methods
+        """
+        return [
+            method
+            for method in dir(self)
+            if method.startswith("validate_")
+            if callable(getattr(self, method))
+        ]
 
     def save(self: Self) -> object:
         # Implement save logic here
@@ -125,7 +173,15 @@ class Serializer(SerializerInterface):
 
     def to_representation(self, instance: object) -> dict:
         # Implement representation logic here
-        pass
+        fields: list[str] = self.fields
+        # Serialize
+        serialized_data: dict = {
+            field: getattr(instance, field)
+            for field in fields
+        }
+        # Return Serialized data
+        return serialized_data
+
 
 
 # Model Serializer

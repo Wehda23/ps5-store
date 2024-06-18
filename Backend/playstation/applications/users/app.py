@@ -49,8 +49,12 @@ def register(*args, **kwargs) -> Response:
     # Create serializer
     serializer: UserRegisterSerializer = UserRegisterSerializer(data=data)
     # Validate data
-    serializer.is_valid()
-    print(serializer.validated_data)
+    if serializer.is_valid():
+        # Grab validated_data
+        validated_data: dict = serializer.validated_data
+        # Create user
+        user: User = User.create_user(**validated_data)
+        return make_response("Successful Registeration", 201)
     # New user
     # user: User = User(**data)
     # Save user
