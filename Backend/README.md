@@ -92,7 +92,7 @@ pip install -r requirements.txt
 - You can run the application by executing the following command in your terminal:
 
 ```bash
-python manage.py
+python app.py
 ```
 
 ## Database Schema
