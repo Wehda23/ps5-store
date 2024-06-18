@@ -127,6 +127,24 @@ The applications package is divided into sub-packages, each responsible for diff
 - orders: Deals with order processing and management.
 - swagger: Contains configuration for API documentation using Swagger.
 
+### Register Flask Blueprints to Flask
+
+By using the function `routes` in the file `./routes.py` we can register all our flask blueprints to Flask application
+
+```py
+from flask import Flask
+from playstation.routes import routes
+# Initiate flask application
+app: Flask = Flask(__name__)
+
+# Register routes
+routes(app)
+
+if __name__ == "__main__":
+    # Run flask application
+    app.run()
+```
+
 ## Models Package
 
 The models package defines the database models for the application. Each model represents a table in the database and includes:
