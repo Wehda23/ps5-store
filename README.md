@@ -35,16 +35,6 @@ We are always looking for ways to make our site better. User feedback and contin
 - Assists in observing user actions on the website and its performance
 - Gathers opinions and suggestions from users
 
-## Challenges and Solutions
-
-### Fast Load Time Ensuring
-- We optimized the images and used lazy loading for further smoothness in page loading
-
-### Handling High Traffic
-- We implemented load balancing and scaled up our server infrastructure
-
-### Ensuring Data Security
-- Sensitive data was encrypted, and security audits were conducted periodically
 
 ## Unique Features
 - Put a great search functionality via keywords, categories, and filters
@@ -62,12 +52,8 @@ It was fun and gratifying for me to build an e-commerce website related to PlayS
 - Bootstrap
 - Framer Motion
 - React
-- React DOM
-- React Icons
 - React Paginate
 - React Redux
-- React Router DOM
-- React Scripts
 - React Slick
 - React Toastify
 - Redux Persist
