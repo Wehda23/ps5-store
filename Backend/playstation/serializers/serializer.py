@@ -25,6 +25,7 @@ class AbstractSerializer(ABC):
         self._meta = self.get_meta()  # Access Meta Class
         self.fields = getattr(self._meta, "fields", None)
         self.write_only: Iterable = getattr(self._meta, "write_only", None)
+        self.read_only: Iterable = getattr(self._meta, "read_only", {"id"})
 
     def get_meta(self: Self):
         meta = getattr(self, "Meta", None)
@@ -105,6 +106,37 @@ class AbstractSerializer(ABC):
 
         self._write_only: list[str] = fields
 
+    @property
+    def right_only(self: Self):
+        return self._right_only
+
+    @right_only.setter
+    def right_only(self: Self, serializer_fields: Optional[Iterable[str]]) -> None:
+        """
+        Setter propery method right_only fields.
+
+        Args:
+            - serializer_fields (Iterable Python Object): Fields for serializer.
+        """
+        # Skip if None
+        if serializer_fields is None:
+            return
+
+        # Fields
+        fields: list[str] = [key for key in self.model.__dict__.keys()]
+
+        # Check if all fields
+        if not self.__check_fields(serializer_fields):
+            # Implement All fields logic.
+            fields: list[str] = [
+                key
+                for key in fields
+                if self.__existing_field(key, fields)
+                if key in serializer_fields
+            ]
+
+        self._right_only: list[str] = fields
+
     def __existing_field(self: Self, field: str, fields: list[str]) -> NoReturn:
         """
         Check if field exists in fields.
@@ -114,7 +146,7 @@ class AbstractSerializer(ABC):
 
     def __check_fields(self: Self, fields: Optional[Iterable[str]]) -> bool:
         """
-        Helper function to check fields
+        Helper function to check fields specified fields against '__all__'
 
         Args:
             - fields (Optional[Iterable[str]]): Fields

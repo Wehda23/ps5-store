@@ -11,7 +11,12 @@ from typing import Self
 class UserRegisterSerializer(serializers.Serializer):
     class Meta:
         model: object = User
-        fields: list[str] = ["first_name", "email", "last_name", "password"]
+        fields: tuple[str] = (
+            "first_name",
+            "email",
+            "last_name",
+            "password"
+        )
 
     def validate_first_name(self: Self, value: str) -> str:
         """

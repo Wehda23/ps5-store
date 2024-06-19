@@ -53,13 +53,15 @@ def register(*args, **kwargs) -> Response:
         # Grab validated_data
         validated_data: dict = serializer.validated_data
         # Create user
-        user: User = User.create_user(**validated_data)
+        serializer.save()
         return make_response("Successful Registeration", 201)
     # New user
     # user: User = User(**data)
     # Save user
     # user.create_user(**data)
-    return "User registration API"
+    # Catch errors
+    error: list[str] = serializer.errors
+    return make_response(error, 403)
 
 
 # Login User API

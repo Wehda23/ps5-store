@@ -3,7 +3,7 @@
 """
 
 from playstation import db, SQLMixin
-from typing import Self
+from typing import Self, Optional, NoReturn
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -41,15 +41,38 @@ class UserMixin(SQLMixin):
         if "password" not in kwargs:
             raise ValueError("Password field is required")
 
+        # Check email field
+        if "email" not in kwargs:
+            raise ValueError("Email field is required")
+
         # hash password
         kwargs["password"] = cls.hash_password(kwargs["password"])
 
+        # Check user
+        email: str = kwargs.get('email')
+        # Use .__safe() function
+        cls.__safe(email)
+
         # Create new instance and return new user
         new_user: object = cls(**kwargs)
+
         # Create user
         new_user.save()
         return new_user
 
+    @classmethod
+    def __safe(cls, value: Optional[str]) -> Optional[NoReturn]:
+        """
+        Method used to check if there is no duplicate user
+
+        Args:
+            - value (Optional[str]): Value at which to check user existance.
+
+        Raises:
+            - error in case user exists
+        """
+        if value is not None and cls.query.filter_by(email=value).first() is not None:
+            raise ValueError("User already exists")
 
 # Users model
 class User(db.Model, UserMixin):

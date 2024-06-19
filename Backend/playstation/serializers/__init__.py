@@ -108,12 +108,7 @@ class Serializer(SerializerInterface):
                 except Exception as e:
                     self.errors.append(str(e))
 
-        # Check errors
-        if self.errors:
-            return False
-
-        # Return true
-        return True
+        return not bool(self.errors)
 
     def __validate_data_fields(self: Self, data: dict) -> Optional[NoReturn]:
         """
@@ -143,16 +138,67 @@ class Serializer(SerializerInterface):
         ]
 
     def save(self: Self) -> object:
-        # Implement save logic here
-        pass
+        """
+        Method to create new instance of an object or update an existing object
 
-    def update(self: Self) -> object:
+        Returns:
+            - Instance of the model.
+        """
+        # Grab the data
+        data: Optional[dict] = getattr(self, "validated_data", None)
+        # Check data
+        if data is None:
+            raise ValueError("No validated data found")
+        # Check if save method exists
+        self.__check_save()
+        # Check if object instance exists or not
+        # Grab object id
+        object_id: Optional[int] = data.get("id", None)
+        instance: Optional[None] = None
+        # Check if id exists
+        if object_id:
+            # Check if object instance exists or not
+            instance: object = self.model.query.get(object_id)
+            if instance:
+                # Update instance
+                self.instance = self.update(data)
+                return self.instance
+        # Else perform create new instance method
+        self.instance = self.create(data)
+        # Return the instance
+        return self.instance
+
+    def __check_save(self: Self) -> Optional[NoReturn]:
+        """
+        Checker function to check if model object has a method .save()
+
+        Raises:
+            - Error in case the model does not have a method .save()
+        """
+        if not hasattr(self.model, "save"):
+            raise AttributeError("Model object must have a method .save()")
+
+    def update(self: Self, validated_data: dict) -> object:
+        """
+        Method to update an existing object
+        """
         # Implement update logic here
-        pass
+        for key, value in validated_data.items():
+            # Check if model has the key and key is not in read_only fields
+            if hasattr(self.model, key) and key not in self.read_only:
+                setattr(self.model, key, value)
 
     def delete(self: Self) -> None:
+        """
+        Method to delete an existing object
+        """
         # Implement delete logic here
-        pass
+        instance: object = self.instance
+        # Perform delete function
+        if not hasattr(instance, 'delete'):
+            raise AttributeError("Model object must have a method .delete()")
+        # Initiate delete instance
+        instance.delete()
 
     def create(self, validated_data: dict) -> object:
         """
