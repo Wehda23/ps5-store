@@ -5,6 +5,7 @@
 from playstation import db, SQLMixin
 from typing import Self, Optional, NoReturn
 from werkzeug.security import generate_password_hash, check_password_hash
+from .error_handlers import ExistingEmail
 
 
 # Add SQLUserMixin
@@ -49,7 +50,7 @@ class UserMixin(SQLMixin):
         kwargs["password"] = cls.hash_password(kwargs["password"])
 
         # Check user
-        email: str = kwargs.get('email')
+        email: str = kwargs.get("email")
         # Use .__safe() function
         cls.__safe(email)
 
@@ -72,7 +73,8 @@ class UserMixin(SQLMixin):
             - error in case user exists
         """
         if value is not None and cls.query.filter_by(email=value).first() is not None:
-            raise ValueError("User already exists")
+            raise ExistingEmail("User already exists")
+
 
 # Users model
 class User(db.Model, UserMixin):

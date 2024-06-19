@@ -1,9 +1,9 @@
 """
-# File that contains abstract classes for how serializer should be implmented.
+# File that contains abstract classes for how serializer should be implemented.
 """
 
 from abc import ABC, abstractmethod
-from typing import Self, Optional, Iterable, NoReturn
+from typing import Optional, Iterable, NoReturn, Union, Any
 
 
 # Abstract Serializer
@@ -13,138 +13,113 @@ class AbstractSerializer(ABC):
     """
 
     def __init__(
-        self: Self,
+        self,
         instance: Optional[object] = None,
         data: Optional[dict] = None,
         many: bool = False,
     ) -> None:
-        self.instance: object = instance
-        self._data: dict = data
+        self.instance: Optional[object] = instance
+        self._data: Optional[dict] = data
         self.many: bool = many
         self._errors = []
         self._meta = self.get_meta()  # Access Meta Class
-        self.fields = getattr(self._meta, "fields", None)
-        self.write_only: Iterable = getattr(self._meta, "write_only", None)
-        self.read_only: Iterable = getattr(self._meta, "read_only", {"id"})
+        self._fields: Optional[Iterable[str]] = getattr(self._meta, "fields", None)
+        self._write_only: Iterable[str] = getattr(self._meta, "write_only", [])
+        self._read_only: Iterable[str] = getattr(self._meta, "read_only", {"id"})
 
-    def get_meta(self: Self):
+        self.fields = self._fields  # Trigger the fields setter
+        self.write_only = self._write_only  # Trigger the write_only setter
+        self.read_only = self._read_only  # Trigger the read_only setter
+
+    def get_meta(self):
         meta = getattr(self, "Meta", None)
         if meta is None:
             raise AttributeError("Meta class is not defined.")
         return meta
 
     @property
-    def data(self: Self) -> dict:
+    def data(self) -> dict:
         """
         Property to get serialized model
         """
-        pass
+        raise NotImplementedError("data property must be implemented by subclasses")
 
     @property
-    def model(self: Self):
+    def model(self):
         return getattr(self._meta, "model", None)
 
     @property
-    def fields(self: Self):
+    def fields(self) -> Optional[Iterable[str]]:
         return self._fields
 
     @fields.setter
-    def fields(self: Self, serializer_fields: Optional[Iterable[str]]) -> None:
+    def fields(self, serializer_fields: Optional[Iterable[str]]) -> None:
         """
-        Setter propery method for fields.
+        Setter property method for fields.
 
         Args:
             - serializer_fields (Iterable Python Object): Fields for serializer.
         """
-        # Check if fields is a None
         if serializer_fields is None:
             raise ValueError("Fields cannot be None.")
-
-        # Fields
-        fields: list[str] = [key for key in self.model.__dict__.keys()]
-
-        # Check if all fields
+        fields = [key for key in self.model.__dict__.keys()]
         if not self.__check_fields(serializer_fields):
-            # Implement All fields logic.
-            fields: list[str] = [
-                key
-                for key in fields
-                if self.__existing_field(key, fields)
-                if key in serializer_fields
+            fields = [
+                key for key in serializer_fields if self.__existing_field(key, fields)
             ]
-
-        self._fields: list[str] = fields
+        self._fields = fields
 
     @property
-    def write_only(self: Self):
+    def write_only(self) -> Iterable[str]:
         return self._write_only
 
     @write_only.setter
-    def write_only(self: Self, serializer_fields: Optional[Iterable[str]]) -> None:
+    def write_only(self, serializer_fields: Optional[Iterable[str]]) -> None:
         """
-        Setter propery method write_only fields.
+        Setter property method write_only fields.
 
         Args:
             - serializer_fields (Iterable Python Object): Fields for serializer.
         """
-        # Skip if None
         if serializer_fields is None:
             return
-
-        # Fields
-        fields: list[str] = [key for key in self.model.__dict__.keys()]
-
-        # Check if all fields
+        fields = [key for key in self.model.__dict__.keys()]
         if not self.__check_fields(serializer_fields):
-            # Implement All fields logic.
-            fields: list[str] = [
-                key
-                for key in fields
-                if self.__existing_field(key, fields)
-                if key in serializer_fields
+            fields = [
+                key for key in serializer_fields if self.__existing_field(key, fields)
             ]
-
-        self._write_only: list[str] = fields
+        self._write_only = fields
 
     @property
-    def right_only(self: Self):
-        return self._right_only
+    def read_only(self) -> Iterable[str]:
+        return self._read_only
 
-    @right_only.setter
-    def right_only(self: Self, serializer_fields: Optional[Iterable[str]]) -> None:
+    @read_only.setter
+    def read_only(self, serializer_fields: Optional[Iterable[str]]) -> None:
         """
-        Setter propery method right_only fields.
+        Setter property method read_only fields.
 
         Args:
             - serializer_fields (Iterable Python Object): Fields for serializer.
         """
-        # Skip if None
         if serializer_fields is None:
             return
-
-        # Fields
-        fields: list[str] = [key for key in self.model.__dict__.keys()]
-
-        # Check if all fields
+        fields = [key for key in self.model.__dict__.keys()]
         if not self.__check_fields(serializer_fields):
-            # Implement All fields logic.
-            fields: list[str] = [
-                key
-                for key in fields
-                if self.__existing_field(key, fields)
-                if key in serializer_fields
+            fields = [
+                key for key in serializer_fields if self.__existing_field(key, fields)
             ]
+        self._read_only = fields
 
-        self._right_only: list[str] = fields
-
-    def __existing_field(self: Self, field: str, fields: list[str]) -> NoReturn:
+    def __existing_field(self, field: str, fields: list[str]) -> bool:
         """
         Check if field exists in fields.
         """
-        if not field in fields:
+        if field not in fields:
             raise ValueError(f"Field '{field}' does not exist in model.")
+        return True
 
-    def __check_fields(self: Self, fields: Optional[Iterable[str]]) -> bool:
+    def __check_fields(self, fields: Optional[Iterable[str]]) -> bool:
         """
         Helper function to check fields specified fields against '__all__'
 
@@ -154,50 +129,46 @@ class AbstractSerializer(ABC):
         Returns:
             - True in case all fields otherwise False
         """
-        # Check if fields is a str and == "__all__"
         if isinstance(fields, str) and fields == "__all__":
             return True
-
-        # check if a list and contains 1 length
-        if len(fields) == 1 and fields[0] == "__all__":
+        if isinstance(fields, list) and len(fields) == 1 and fields[0] == "__all__":
             return True
-
         return False
 
     @property
-    def errors(self: Self) -> Optional[dict]:
+    def errors(self) -> Optional[dict]:
         return self._errors
 
 
 class Validatable(ABC):
     @property
-    def validated_data(self: Self) -> dict:
+    def validated_data(self) -> dict:
         pass
 
     @abstractmethod
-    def is_valid(self: Self) -> bool:
+    def is_valid(self) -> bool:
         pass
 
     @abstractmethod
-    def validate(self: Self) -> bool:
+    def validate(self) -> bool:
         pass
 
 
 class Saveable(ABC):
     @abstractmethod
-    def save(self: Self) -> object:
+    def save(self) -> object:
         pass
 
 
 class Updatable(ABC):
     @abstractmethod
-    def update(self: Self) -> object:
+    def update(self) -> object:
         pass
 
 
 class Deletable(ABC):
     @abstractmethod
-    def delete(self: Self) -> None:
+    def delete(self) -> None:
         pass
 
 

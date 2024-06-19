@@ -17,6 +17,7 @@
 
 from flask import Blueprint, make_response, request, Response
 from playstation.models.users import User
+from playstation.models.error_handlers import ExistingEmail
 from playstation.admin.permissions import permission_required
 from playstation.admin.authentications.jwt_authentication import (
     JWTAuthentication,
@@ -25,7 +26,7 @@ from playstation.admin.authentications.jwt_authentication import (
 from playstation.admin.authentications.token import get_tokens_for_user
 from playstation.admin.authentications import authentication_classess
 from .permissions import Permission
-from .serializers import UserRegisterSerializer
+from .serializers import UserRegisterSerializer, LoginSerializer
 
 # Declare route prefix
 url_prefix: str = "/api/users"
@@ -43,25 +44,26 @@ def register(*args, **kwargs) -> Response:
     Returns:
         str: Success message or error message 400
     """
-    # TO DO: Implement user registration logic
     # Get data from request
     data = request.get_json()
     # Create serializer
     serializer: UserRegisterSerializer = UserRegisterSerializer(data=data)
-    # Validate data
-    if serializer.is_valid():
-        # Grab validated_data
-        validated_data: dict = serializer.validated_data
-        # Create user
-        serializer.save()
-        return make_response("Successful Registeration", 201)
-    # New user
-    # user: User = User(**data)
-    # Save user
-    # user.create_user(**data)
-    # Catch errors
-    error: list[str] = serializer.errors
-    return make_response(error, 403)
+    try:
+        # Validate data
+        if serializer.is_valid():
+            # Create user
+            serializer.save()
+            return make_response("Successful Registeration", 201)
+        error: list[str] = serializer.errors
+        return make_response(error, 403)
+    except ExistingEmail as e:
+        return make_response("Email is already registered", 409)
+    except Exception as e:
+        # Write Logic to check registeration failed through logs functionality
+        error: str = str(e)
+        # Record Error Through logs
+        # Return a response `Registeration Failed`
+        return make_response("Registeration Failed", 400)
 
 
 # Login User API
@@ -73,14 +75,13 @@ def login(*args, **kwargs) -> Response:
     # Data
     data: dict = request.get_json()
     # Check if user exists
-    user: User = User.query.filter_by(email=data.get("email")).first()
+    serializer: LoginSerializer = LoginSerializer(data=data)
     # if user and user.check_password(data.get("password")):
-    if user:
-        # Generate tokens
-        token: dict[str, str] = get_tokens_for_user(user)
-        return make_response(token, 201)
+    if serializer.is_valid():
+        # Generate Token
+        return make_response(serializer.data, 201)
 
-    error: str = "User Does not exists"
+    error: str = serializer.errors
     return make_response(error, 404)
 
 

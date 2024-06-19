@@ -11,7 +11,7 @@ from .serializer import (
     Representable,
     Creatable,
 )
-from typing import Self, NoReturn, Optional
+from typing import Self, NoReturn, Optional, Iterable
 
 
 # Serializer Interface
@@ -34,6 +34,9 @@ class Serializer(SerializerInterface):
         """
         Property to get data
         """
+        # Check instance
+        if self.instance:
+            return self.to_representation(self.instance)
         # Return self._data
         return self._data
 
@@ -103,8 +106,10 @@ class Serializer(SerializerInterface):
         if validate_methods:
             for method in validate_methods:
                 try:
+                    # Grab the field
+                    field: Optional[str] = data.get(method.replace("validate_", ""))
                     # Call each validation method
-                    getattr(self, method)(data)
+                    getattr(self, method)(field)
                 except Exception as e:
                     self.errors.append(str(e))
 
@@ -195,7 +200,7 @@ class Serializer(SerializerInterface):
         # Implement delete logic here
         instance: object = self.instance
         # Perform delete function
-        if not hasattr(instance, 'delete'):
+        if not hasattr(instance, "delete"):
             raise AttributeError("Model object must have a method .delete()")
         # Initiate delete instance
         instance.delete()
@@ -218,16 +223,15 @@ class Serializer(SerializerInterface):
         return instance
 
     def to_representation(self, instance: object) -> dict:
+        """
+        Convert the model instance into a dictionary representation.
+        """
         # Implement representation logic here
         fields: list[str] = self.fields
         # Serialize
-        serialized_data: dict = {
-            field: getattr(instance, field)
-            for field in fields
-        }
+        serialized_data: dict = {field: getattr(instance, field) for field in fields}
         # Return Serialized data
         return serialized_data
-
 
 
 # Model Serializer
@@ -242,5 +246,11 @@ class ModelSerializer(Serializer):
         # Check model
         if model is None:
             raise ValueError("Model instance is not provided")
+
+        # Treat instance as many instances
+        if self.many:
+            if not isinstance(self.instance, list):
+                raise TypeError("Expected a list of instances with many set to True")
+            return [self.to_representation(instance) for instance in self.instance]
         # Call to_representation method
         return self.to_representation(model)
