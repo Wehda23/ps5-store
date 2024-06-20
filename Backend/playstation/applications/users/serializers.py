@@ -146,7 +146,7 @@ class LoginSerializer(serializers.Serializer):
 
         return user
 
-    def to_representation(self, instance: object) -> dict:
+    def to_representation(self, instance: User) -> dict:
         """
         Method to get serialized user details
         """
@@ -158,6 +158,8 @@ class LoginSerializer(serializers.Serializer):
         token: dict = get_tokens_for_user(instance)
         # Add token
         data["token"] = token
+        # Update last login
+        instance.update_last_login()
         # Return data
         return data
 

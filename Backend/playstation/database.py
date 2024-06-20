@@ -11,8 +11,7 @@ from playstation.models.orders import Orders
 from playstation.models.payments import Payments
 from playstation.models.products import Product, Category
 from playstation.models.shipping_address import ShippingAddress
-from playstation.settings import DATABASE, SECRET_KEY
-
+from playstation.settings import DATABASE
 
 # Create function
 def database(app: Flask) -> None:
@@ -28,7 +27,6 @@ def database(app: Flask) -> None:
     # Database Configurations
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SECRET_KEY"] = SECRET_KEY
 
     # Initialize the app with the extension
     db.init_app(app)

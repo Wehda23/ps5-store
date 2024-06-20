@@ -6,6 +6,7 @@ from typing import Optional, Self
 from flask import request
 from . import Authentication
 from playstation.models.users import User
+from playstation.models.blacklisted_tokens import BlackListedTokens
 from .token import RefreshToken
 
 
@@ -13,6 +14,30 @@ class JWTAuthentication(Authentication):
     """
     Class for JWT Authentication.
     """
+    def check_blacklisted(self: Self, token: str, user: User, field: str = 'access') -> bool:
+        """
+        Check if the token is blacklisted.
+
+        Args:
+            - token (str): String token.
+            - user (User): The user whose tokens are being checked.
+            - field (str): The token field to check (default is 'access').
+
+        Returns:
+            - bool: True if the token is blacklisted, otherwise False.
+        """
+        # Grab the blacklisted tokens
+        blacklisted_tokens: list[BlackListedTokens] = user.blacklisted_tokens
+        # variable for blacklisted token
+        is_blacklisted: bool = False
+        # Loop over the tokens
+        for blacklisted_token in blacklisted_tokens:
+            # Check if access token is blacklisted
+            if getattr(blacklisted_token, field) == token:
+                is_blacklisted: bool = True
+            # Check token lift to delete expired tokens from database
+            blacklisted_token.check_token_life()
+        return is_blacklisted
 
     def decode(self: Self, token: str) -> Optional[dict[str, str]]:
         """
@@ -74,6 +99,10 @@ class JWTAuthentication(Authentication):
         if not user.active:
             return False
 
+        # Check if the token is blacklisted
+        if self.check_blacklisted(token, user):
+            return False
+
         # Attach user to the request object
         setattr(request, "user", user)
 
@@ -85,6 +114,9 @@ class RefreshTokenAuthentication(JWTAuthentication):
     """
     Class for JWT Refresh Token Authentication.
     """
+
+    def check_blacklisted(self: Self, token: str, user: User, field: str = 'refresh') -> bool:
+        return super().check_blacklisted(token, user, field)
 
     def token_type(self: Self, data: dict[str, str]) -> bool:
         """

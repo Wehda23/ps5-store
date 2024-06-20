@@ -7,7 +7,7 @@
 """
 
 from flask import Flask
-from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR
+from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR, SECRET_KEY
 from playstation.routes import routes
 from playstation.database import database
 
@@ -15,6 +15,7 @@ from playstation.database import database
 # Initiate flask application
 app: Flask = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 app.url_map.strict_slashes = False
+app.config["SECRET_KEY"] = SECRET_KEY
 
 # Register routes
 routes(app)

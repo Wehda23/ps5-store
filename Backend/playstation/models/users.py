@@ -112,3 +112,9 @@ class User(db.Model, UserMixin):
         Method for representation
         """
         return f"<{self.__class__.__name__} {self.email}>"
+
+    def update_last_login(self: Self) -> None:
+        """
+        Method used to update last_login attribute
+        """
+        self.last_login = db.func.current_timestamp()
