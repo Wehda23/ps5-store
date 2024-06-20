@@ -133,9 +133,7 @@ The applications package is divided into sub-packages, each responsible for diff
 
 This API handles the registration of new users by validating the provided data and creating a new user account.
 
-### Endpoint
-
-### 1) Register User
+### Register User Endpoint
 
 - **URL**: `/api/users/register`
 - **Method**: `POST`
@@ -233,6 +231,104 @@ When the registration fails due to validation errors or an already registered em
 -   Make sure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
 
 -   Proper error handling should be implemented to provide feedback to the user in case of registration failure.
+
+### Login User Endpoint
+
+- **URL**: `/api/users/login`
+- **Method**: `POST`
+- **Content-Type**: `application/json`
+
+#### Request Body
+
+The following fields are required in the request body:
+
+- `email` (string): The email address of the user.
+- `password` (string): The password for the user account.
+
+#### Response
+
+- **Success (201)**: Login is successful.
+  - **Body**:
+    ```json
+    {
+      "id": 1,
+      "email": "example@example.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "token": {
+        "access": "access token",
+        "refresh": "refresh token"
+      }
+    }
+    ```
+- **Error (404)**: Validation error or login failed.
+  - **Body**: List of validation errors or `Login Failed`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/users/login';
+const data = {
+    email: 'john.doe@example.com',
+    password: 'securePassword123'
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript Axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/users/login';
+const data = {
+    email: 'jane.doe@example.com',
+    password: 'securePassword123'
+};
+
+axios.post(url, data, {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+### Error Handling
+
+When the login fails due to validation errors or incorrect credentials, the response will contain appropriate status codes and error messages. Ensure to handle these responses in your frontend application.
+
+### Status Codes
+
+-   `201`: Created - Login was successful.
+-   `404`: Not Found - Validation errors occurred or login failed.
+
+### Notes
+
+-   Make sure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
+
+-   Proper error handling should be implemented to provide feedback to the user in case of registration failure.
+
 
 ## Register Flask Blueprints to Flask
 
