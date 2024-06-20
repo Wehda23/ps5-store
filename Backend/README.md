@@ -141,7 +141,7 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
 - **Swagger Config File**: `static/swagger_config.json`
 - **Application Name**: "Play Station 5 Store"
 
-![image](https://ibb.co/y8HGwMH)
+![image](https://www.imghippo.com/i/OC43y1718924333.png)
 
 ## Users Application
 
