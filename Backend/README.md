@@ -127,6 +127,18 @@ The applications package is divided into sub-packages, each responsible for diff
 - orders: Deals with order processing and management.
 - swagger: Contains configuration for API documentation using Swagger.
 
+## Swagger Application
+
+The Swagger Application provides interactive API documentation for the PlayStation Store Backend. It allows developers to explore and test the available API endpoints directly from the browser.
+
+### Swagger Configuration
+
+The Swagger UI is configured using the `flask_swagger_ui` package. Below is a summary of the configuration:
+
+- **URL**: `/docs`
+- **Swagger Config File**: `static/swagger_config.json`
+- **Application Name**: "Play Station 5 Store"
+
 ## Users Application
 
 ### User Registration API
