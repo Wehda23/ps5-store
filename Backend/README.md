@@ -48,6 +48,8 @@ project_root/
             coupons.py
             payments.py
             shipping_addresses.py
+            blacklisted_tokens.py
+            error_handlers.py
         serializers/
             __init__.py
             serializer.py
