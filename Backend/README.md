@@ -113,11 +113,11 @@ This package contains the packages & Applications required for Play Station Stor
 3. models
 4. serializers
 
-## Admin Package
+# Admin Package
 
 The admin package contains modules related to the administration of the application, such as managing user permissions and authentication mechanisms.
 
-## Applications Package
+# Applications Package
 
 The applications package is divided into sub-packages, each responsible for different functional areas of the application, such as:
 
@@ -127,13 +127,13 @@ The applications package is divided into sub-packages, each responsible for diff
 - orders: Deals with order processing and management.
 - swagger: Contains configuration for API documentation using Swagger.
 
-### Users Application
+## Users Application
 
-#### User Registration API
+### User Registration API
 
 This API handles the registration of new users by validating the provided data and creating a new user account.
 
-## Endpoint
+### Endpoint
 
 ### Register User
 
@@ -141,7 +141,7 @@ This API handles the registration of new users by validating the provided data a
 - **Method**: `POST`
 - **Content-Type**: `application/json`
 
-##### Request Body
+#### Request Body
 
 The following fields are required in the request body:
 
@@ -150,7 +150,7 @@ The following fields are required in the request body:
 - `email` (string): The email address of the user.
 - `password` (string): The password for the user account.
 
-##### Response
+#### Response
 
 - **Success (201)**: Registration is successful.
   - **Body**: `Successful Registration`
@@ -161,9 +161,9 @@ The following fields are required in the request body:
 - **Error (400)**: Registration failed.
   - **Body**: `Registration Failed`
 
-#### Example Usage
+### Example Usage
 
-#### Using JavaScript Fetch
+### Using JavaScript Fetch
 
 ```javascript
 const url = '/api/users/register';
@@ -190,7 +190,7 @@ fetch(url, {
 });
 ```
 
-#### Using JavaScript axios
+### Using JavaScript axios
 
 ```js
 const axios = require('axios');
@@ -217,24 +217,24 @@ axios.post(url, data, {
 
 ```
 
-#### Error Handling
+### Error Handling
 
 When the registration fails due to validation errors or an already registered email, the response will contain appropriate status codes and error messages. Ensure to handle these responses in your frontend application.
 
-#### Status Codes
+### Status Codes
 
 -   `201`: Created - Registration was successful.
 -   `403`: Forbidden - Validation errors occurred.
 -   `409`: Conflict - Email is already registered.
 -   `400`: Bad Request - Registration failed due to an unspecified error.
 
-#### Notes
+### Notes
 
 -   Make sure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
 
 -   Proper error handling should be implemented to provide feedback to the user in case of registration failure.
 
-### Register Flask Blueprints to Flask
+## Register Flask Blueprints to Flask
 
 By using the function `routes` in the file `./routes.py` we can register all our flask blueprints to Flask application
 
