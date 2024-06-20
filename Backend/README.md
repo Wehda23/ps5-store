@@ -141,6 +141,8 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
 - **Swagger Config File**: `static/swagger_config.json`
 - **Application Name**: "Play Station 5 Store"
 
+![image](https://ibb.co/y8HGwMH)
+
 ## Users Application
 
 ### User Registration API
@@ -682,6 +684,7 @@ The models package defines the database models for the application. Each model r
 - coupons.py: Coupon model.
 - payments.py: Payment model.
 - shipping_addresses.py: Shipping Address model.
+- blacklisted_tokens.py: Black Listed Tokens model.
 
 ### Initiate Flask Database Configuration and Models
 
