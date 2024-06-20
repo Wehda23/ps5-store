@@ -14,7 +14,10 @@ class JWTAuthentication(Authentication):
     """
     Class for JWT Authentication.
     """
-    def check_blacklisted(self: Self, token: str, user: User, field: str = 'access') -> bool:
+
+    def check_blacklisted(
+        self: Self, token: str, user: User, field: str = "access"
+    ) -> bool:
         """
         Check if the token is blacklisted.
 
@@ -114,7 +117,9 @@ class RefreshTokenAuthentication(JWTAuthentication):
     Class for JWT Refresh Token Authentication.
     """
 
-    def check_blacklisted(self: Self, token: str, user: User, field: str = 'refresh') -> bool:
+    def check_blacklisted(
+        self: Self, token: str, user: User, field: str = "refresh"
+    ) -> bool:
         return super().check_blacklisted(token, user, field)
 
     def token_type(self: Self, data: dict[str, str]) -> bool:

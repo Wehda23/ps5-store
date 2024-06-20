@@ -25,7 +25,7 @@ class IsAccountOwner(BasePermission):
             - bool: True in case satisfies all permissions otherwise False
         """
         # grab request user
-        user: Optional[User] = getattr(request, 'user', None)
+        user: Optional[User] = getattr(request, "user", None)
         # Check if user exists
         if user is None:
             return False

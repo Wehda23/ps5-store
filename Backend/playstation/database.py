@@ -13,6 +13,7 @@ from playstation.models.products import Product, Category
 from playstation.models.shipping_address import ShippingAddress
 from playstation.settings import DATABASE
 
+
 # Create function
 def database(app: Flask) -> None:
     """

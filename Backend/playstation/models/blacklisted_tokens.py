@@ -12,11 +12,13 @@ class BlackListedTokensMixin(SQLMixin):
     """
     This class represents a model for BlackListedTokens.
     """
+
     def check_token_life(self: Self) -> None:
         """
         Method to check if the token is expired on refresh duration then deletes it otherwise no action is taken
         """
         pass
+
 
 # Class BlackListedTokens
 class BlackListedTokens(db.Model, BlackListedTokensMixin):
@@ -26,10 +28,10 @@ class BlackListedTokens(db.Model, BlackListedTokensMixin):
     refresh = db.Column(db.String(1000), nullable=False, unique=True)
     access_expiration_date = db.Column(db.DateTime, nullable=False)
     refresh_expiration_date = db.Column(db.DateTime, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
     # Relationship
-    user = db.relationship('User', back_populates='blacklisted_tokens')
+    user = db.relationship("User", back_populates="blacklisted_tokens")
 
     def __repr__(self: Self) -> str:
         """

@@ -1,27 +1,135 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Sample API",
-        "description": "API documentation",
+        "title": "PlayStation 5 E-commerce API",
+        "description": "API documentation for the PlayStation 5 e-commerce website",
         "version": "1.0.0"
     },
-    "basePath": "/",
+    "basePath": "/api",
     "schemes": ["http"],
     "paths": {
-        "/hello": {
-            "get": {
-                "summary": "Get hello world",
-                "description": "Returns hello world",
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
+        "/users/register": {
+            "post": {
+                "summary": "Register a new user",
+                "description": "Handles the registration of new users by validating the provided data and creating a new user account.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that needs to be registered",
+                        "required": true,
                         "schema": {
                             "type": "object",
+                            "required": ["first_name", "last_name", "email", "password"],
                             "properties": {
-                                "hello": {
+                                "first_name": {
+                                    "type": "string"
+                                },
+                                "last_name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
                                     "type": "string"
                                 }
                             }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful Registration",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Validation error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Email already registered",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Registration Failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "summary": "Login user",
+                "description": "Authenticates the user using provided credentials and returns JWT tokens if the login is successful.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User credentials",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["email", "password"],
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Login successful",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "first_name": {
+                                    "type": "string"
+                                },
+                                "last_name": {
+                                    "type": "string"
+                                },
+                                "token": {
+                                    "type": "object",
+                                    "properties": {
+                                        "access": {
+                                            "type": "string"
+                                        },
+                                        "refresh": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation error or login failed",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }

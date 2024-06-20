@@ -4,6 +4,7 @@
 
 import re
 from playstation.admin.validators import BaseValidator
+from playstation.models.users import User
 from typing import Self, Optional, NoReturn
 
 
@@ -132,3 +133,25 @@ class PasswordValidator(BaseValidator):
         length_valid: bool = self.length(password)
         # Return validation results.
         return format_valid and length_valid
+
+
+class IDValidator(BaseValidator):
+    """
+    Class used to validate ID input
+    """
+
+    def validate(self, id: Optional[int]) -> Optional[NoReturn]:
+        """
+        Method used to validate ID input
+
+        Args:
+            - id (int): Id of the user
+
+        Returns:
+            - Nothing
+        """
+        if id is None or id < 0:
+            raise self.raise_exception("Invalid ID")
+
+        if not User.query.filter_by(id=id).first():
+            raise self.raise_exception("User not found")

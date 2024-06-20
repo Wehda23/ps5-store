@@ -166,7 +166,7 @@ class Serializer(SerializerInterface):
             instance: object = self.model.query.get(object_id)
             if instance:
                 # Update instance
-                self.instance = self.update(data)
+                self.instance = self.update(data, instance)
                 return self.instance
         # Else perform create new instance method
         self.instance = self.create(data)
@@ -183,7 +183,7 @@ class Serializer(SerializerInterface):
         if not hasattr(self.model, "save"):
             raise AttributeError("Model object must have a method .save()")
 
-    def update(self: Self, validated_data: dict) -> object:
+    def update(self: Self, validated_data: dict, instance: object) -> object:
         """
         Method to update an existing object
         """
@@ -191,7 +191,11 @@ class Serializer(SerializerInterface):
         for key, value in validated_data.items():
             # Check if model has the key and key is not in read_only fields
             if hasattr(self.model, key) and key not in self.read_only:
-                setattr(self.model, key, value)
+                setattr(instance, key, value)
+        # Save
+        instance.save()
+        # Return instance
+        return instance
 
     def delete(self: Self) -> None:
         """

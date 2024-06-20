@@ -19,6 +19,11 @@ These routes require authentication and appropriate permissions to access:
   - Description: Provides new JWT tokens to authenticated users for session continuity.
   - Authentication: Refresh token required
 
+- **/api/users/logout: Adds the current user's access and refresh tokens to the blacklist to prevent further use.
+  - Method: POST
+  - Description: Adds authentication tokens of the current user to blacklisted tokens
+  - Authentication: JWT required
+
 ### Public Routes
 These routes are accessible without authentication:
 
@@ -45,7 +50,7 @@ from playstation.admin.authentications.jwt_authentication import (
 )
 from playstation.admin.authentications import authentication_classess
 from .permissions import IsAccountOwner
-from .serializers import UserRegisterSerializer, LoginSerializer
+from .serializers import UserRegisterSerializer, LoginSerializer, UpdateUserSerializer
 
 # Declare route prefix
 url_prefix: str = "/api/users"
@@ -136,7 +141,26 @@ def update_user(pk: int) -> Response:
         Response: A success message if the update is successful,
                   otherwise an error message with status 404.
     """
-    return "User updated successfully"
+    # Data
+    data: dict = request.get_json()
+    # Set the id for the user
+    data["id"] = pk
+    # serializer
+    serializer: UpdateUserSerializer = UpdateUserSerializer(data=data)
+    try:
+        if serializer.is_valid():
+            # Update User
+            serializer.save()
+            # Returns updated user details with out without any token modifications
+            return make_response(serializer.data, 200)
+        # Grab Error
+        error: str = serializer.errors
+        return make_response(error, 404)
+    except Exception as e:
+        # Add error message to a logger class to track bugs
+        error: str = str(e)
+        print(e)
+        return make_response("Failed to update user", 404)
 
 
 # Refresh token api

@@ -4,7 +4,8 @@
 
 from playstation import serializers
 from playstation.models.users import User
-from .validators import EmailValidator, NameValidator, PasswordValidator
+from playstation.models.blacklisted_tokens import BlackListedTokens
+from .validators import EmailValidator, NameValidator, PasswordValidator, IDValidator
 from typing import Self
 from playstation.admin.authentications.token import get_tokens_for_user
 
@@ -26,7 +27,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - value (str): first_name of the model instance.
 
         Returns:
-            - Validated first_name
+            - str: Validated first_name
         """
         # Validate name
         NameValidator().validate(value)
@@ -40,7 +41,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - value (str): last_name of the model instance.
 
         Returns:
-            - Validated last_name
+            - str: Validated last_name
         """
         # Validate name
         NameValidator().validate(value)
@@ -54,7 +55,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - value (str): password address to run password validations through
 
         Returns:
-            - Validated password address
+            - str: Validated password address
         """
         # Validate password
         PasswordValidator().validate(value)
@@ -68,7 +69,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - value (str): email address to run email validations through
 
         Returns:
-            - Validated email address
+            - str: Validated email address
         """
         # Validate Email
         EmailValidator().validate(value)
@@ -82,7 +83,7 @@ class UserRegisterSerializer(serializers.Serializer):
         Args:
             - validated_data (dict): Validated data from the serializer
         Returns:
-            - New User instance
+            - User: New User instance
         """
         return self.model.create_user(**validated_data)
 
@@ -162,6 +163,75 @@ class LoginSerializer(serializers.Serializer):
         instance.update_last_login()
         # Return data
         return data
+
+
+# UserUpdateSerializer
+class UpdateUserSerializer(serializers.Serializer):
+    """
+    Serializer for updating user details
+    """
+
+    class Meta:
+        model: User = User
+        fields: list[str] = ["id", "first_name", "last_name", "email"]
+
+    def validate_first_name(self: Self, value: str) -> str:
+        """
+        Method used to validate the first_name field
+
+        Args:
+            - value (str): first_name of the model instance.
+
+        Returns:
+            - str: Validated first_name
+        """
+        # Validate name
+        NameValidator().validate(value)
+        return value
+
+    def validate_last_name(self: Self, value: str) -> str:
+        """
+        Method used to validate the last_name field
+
+        Args:
+            - value (str): last_name of the model instance.
+
+        Returns:
+            - str: Validated last_name
+        """
+        # Validate name
+        NameValidator().validate(value)
+        return value
+
+    def validate_email(self: Self, value: str) -> str:
+        """
+        Method used to validate the email field
+
+        Args:
+            - value (str): email address to run email validations through
+
+        Returns:
+            - str: Validated email address
+        """
+        # Validate Email
+        EmailValidator().validate(value)
+        # Return Email
+        return value
+
+    def validate_id(self: Self, value: int) -> int:
+        """
+        Method used to validate the id field
+
+        Args:
+            - value (int): id of the user
+
+        Returns:
+            - int: id of the user
+        """
+        # Validate ID
+        IDValidator().validate(value)
+        # Return the id
+        return value
 
 
 # User Logout Serializer
