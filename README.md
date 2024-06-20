@@ -74,12 +74,13 @@ It was fun and gratifying for me to build an e-commerce website related to PlayS
 **Backend:**
 - Flask
 - Swagger
-- JWT for Authentications
+- Authentications Package using JWT (Custom Made Package)
 - SQLite for development based database
 - MySQL for Production based database
 - Unittesting
 - SQLAlchemy
-- Permission & Validator packages
+- Permission & Validator packages (Custom Made Package)
+- Serializers (Custom Made Package)
 
 ### Setup and Installation
 
