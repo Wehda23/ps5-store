@@ -331,6 +331,116 @@ When the login fails due to validation errors or incorrect credentials, the resp
 
 -   Proper error handling should be implemented to provide feedback to the user in case of registration failure.
 
+Sure, here is the markdown documentation for the `update_user` endpoint:
+
+---
+
+### Update User Endpoint
+
+- **URL**: `/api/users/update/<int:pk>`
+- **Method**: `PUT`
+- **Content-Type**: `application/json`
+- **Authentication**: `Bearer Access_token` required
+
+#### Description
+
+Allows authenticated users to update their profile information. The user must be the account owner.
+
+#### Request Body
+
+The following fields can be included in the request body:
+
+- `first_name` (string): The new first name of the user.
+- `last_name` (string): The new last name of the user.
+- `email` (string): The new email address of the user.
+
+#### Response
+
+- **Success (200)**: Update is successful.
+  - **Body**:
+    ```json
+    {
+      "id": 1,
+      "first_name": "NewFirstName",
+      "last_name": "NewLastName",
+      "email": "newemail@example.com"
+    }
+    ```
+- **Error (404)**: Validation error or update failed.
+  - **Body**: Error message indicating the cause of failure.
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/users/update/1';
+const data = {
+    first_name: 'NewFirstName',
+    last_name: 'NewLastName',
+    email: 'newemail@example.com'
+};
+
+fetch(url, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer Access_token'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript Axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/users/update/1';
+const data = {
+    first_name: 'NewFirstName',
+    last_name: 'NewLastName',
+    email: 'newemail@example.com'
+};
+
+axios.put(url, data, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer Access_token'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+When the update fails due to validation errors or other issues, the response will contain appropriate status codes and error messages. Ensure to handle these responses in your frontend application.
+
+### Status Codes
+
+-   `200`: OK - Update was successful.
+-   `404`: Not Found - Validation errors occurred or update failed.
+
+### Notes
+
+-   Ensure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
+-   Proper error handling should be implemented to provide feedback to the user in case of update failure.
+
+---
+
+This documentation provides a comprehensive guide on how to use the `update_user` endpoint, including example usage with JavaScript Fetch and Axios.
 
 ## Register Flask Blueprints to Flask
 

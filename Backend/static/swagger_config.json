@@ -134,6 +134,71 @@
                     }
                 }
             }
+        },
+        "/users/update/{pk}": {
+            "put": {
+                "summary": "Update user information",
+                "description": "Allows authenticated users to update their profile information.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "pk",
+                        "type": "integer",
+                        "required": true,
+                        "description": "User ID"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["first_name", "last_name", "email"],
+                            "properties": {
+                                "first_name": {
+                                    "type": "string"
+                                },
+                                "last_name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update successful",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "first_name": {
+                                    "type": "string"
+                                },
+                                "last_name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation error or update failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     }
 }
