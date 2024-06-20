@@ -1,7 +1,18 @@
 # PlayStation 5 E-commerce Website
 
 ## Introduction
-We're proud to share the development journey of our PlayStation 5 e-commerce website. 
+
+Welcome to the development journey of our PlayStation 5 e-commerce website. This project aims to provide a seamless and efficient shopping experience for PlayStation 5 enthusiasts.
+
+### Contributors
+
+- **Waheed Khaled Elhariri** - Backend Engineer
+  - Responsible for designing and implementing the server-side logic, API development, and database management.
+
+- **Zerihun Shiferaw** - Frontend Engineer
+  - In charge of developing the user interface, ensuring a smooth and engaging user experience, and integrating frontend features with backend services.
+
+
 ## Key Takeaways
 - Combining React and Flask for an easier e-commerce experience
 - Emphasis on sleek design and functionality
@@ -62,6 +73,13 @@ It was fun and gratifying for me to build an e-commerce website related to PlayS
 
 **Backend:**
 - Flask
+- Swagger
+- JWT for Authentications
+- SQLite for development based database
+- MySQL for Production based database
+- Unittesting
+- SQLAlchemy
+- Permission & Validator packages
 
 ### Setup and Installation
 
