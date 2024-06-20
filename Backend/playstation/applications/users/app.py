@@ -41,16 +41,16 @@ These routes are accessible without authentication:
 """
 
 from flask import Blueprint, make_response, request, Response
-from playstation.models.users import User
 from playstation.models.error_handlers import ExistingEmail
 from playstation.admin.permissions import permission_required
 from playstation.admin.authentications.jwt_authentication import (
     JWTAuthentication,
     RefreshTokenAuthentication,
 )
+from playstation.admin.authentications.token import get_tokens_for_user
 from playstation.admin.authentications import authentication_classess
 from .permissions import IsAccountOwner
-from .serializers import UserRegisterSerializer, LoginSerializer, UpdateUserSerializer
+from .serializers import UserRegisterSerializer, LoginSerializer, UpdateUserSerializer, BlackListedTokenSerializer
 
 # Declare route prefix
 url_prefix: str = "/api/users"
@@ -174,9 +174,24 @@ def refresh_token(*args, **kwargs) -> Response:
     Returns:
         Response: New JWT tokens.
     """
+    # Get Data
+    data: dict = request.get_json()
     # We have to add the current refresh token and access token to blacklisted token
-    # Generate new tokens
-    return "Refresh token API"
+    serializer: BlackListedTokenSerializer = BlackListedTokenSerializer(data=data)
+    try:
+        if serializer.is_valid():
+            # Blacklist the current token
+            serializer.save()
+            # Generate new tokens
+            token: dict[str, str] = get_tokens_for_user(request.user)
+            # Return new tokens
+            return make_response(token, 201)
+        error: list = serializer.errors
+        return make_response(error, 404)
+    except Exception as e:
+        # Add error message to a logger class to track bugs
+        error: str = str(e)
+        return make_response("Failed to refresh token", 404)
 
 
 # Logout API
@@ -191,8 +206,21 @@ def logout(*args, **kwargs) -> Response:
     Returns:
         Response: Message of a success logout process.
     """
-    # add token to blacklist
-    return "Logged out successfully"
+    # Get data
+    data: dict = request.get_json()
+    # Blacklist serializer
+    serializer: BlackListedTokenSerializer = BlackListedTokenSerializer(data=data)
+    try:
+        if serializer.is_valid():
+            # Blacklist the current token
+            serializer.save()
+            return make_response("Logged out successfully", 200)
+        error: list = serializer.errors
+        return make_response(error, 404)
+    except Exception as e:
+        # Add error message to a logger class to track bugs
+        error: str = str(e)
+        return make_response("Failed to logout", 404)
 
 
 # Reset Password Mechanisim

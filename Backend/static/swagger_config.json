@@ -199,6 +199,99 @@
                     }
                 }
             }
+        },
+        "/users/refresh": {
+            "post": {
+                "summary": "Refresh tokens",
+                "description": "Generates new access and refresh tokens for authenticated users by blacklisting the current tokens.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Current tokens",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["access", "refresh"],
+                            "properties": {
+                                "access": {
+                                    "type": "string"
+                                },
+                                "refresh": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Tokens refreshed successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "access": {
+                                    "type": "string"
+                                },
+                                "refresh": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation error or token refresh failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "post": {
+                "summary": "Logout user",
+                "description": "Logs out the authenticated user by blacklisting the current access and refresh tokens.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Current tokens",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["access", "refresh"],
+                            "properties": {
+                                "access": {
+                                    "type": "string"
+                                },
+                                "refresh": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Logout successful",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation error or logout failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     }
 }

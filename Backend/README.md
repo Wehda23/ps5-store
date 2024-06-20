@@ -440,7 +440,200 @@ When the update fails due to validation errors or other issues, the response wil
 
 ---
 
-This documentation provides a comprehensive guide on how to use the `update_user` endpoint, including example usage with JavaScript Fetch and Axios.
+### Refresh Token Endpoint
+
+- **URL**: `/api/users/refresh`
+- **Method**: `POST`
+- **Content-Type**: `application/json`
+- **Authentication**: `Bearer Refresh_token` required
+
+#### Description
+
+Generates new access and refresh tokens for authenticated users by blacklisting the current tokens.
+
+#### Request Body
+
+The following fields are required in the request body:
+
+- `access` (string): The current access token.
+- `refresh` (string): The current refresh token.
+
+#### Response
+
+- **Success (201)**: Tokens refreshed successfully.
+  - **Body**:
+    ```json
+    {
+      "access": "new_access_token",
+      "refresh": "new_refresh_token"
+    }
+    ```
+- **Error (404)**: Validation error or token refresh failed.
+  - **Body**: List of validation errors or `Failed to refresh token`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/users/refresh';
+const data = {
+    access: 'current_access_token',
+    refresh: 'current_refresh_token'
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer refresh_token'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript Axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/users/refresh';
+const data = {
+    access: 'current_access_token',
+    refresh: 'current_refresh_token'
+};
+
+axios.post(url, data, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer refresh_token'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+When the token refresh fails due to validation errors or other issues, the response will contain appropriate status codes and error messages. Ensure to handle these responses in your frontend application.
+
+### Status Codes
+
+-   `201`: Created - Tokens refreshed successfully.
+-   `404`: Not Found - Validation errors occurred or token refresh failed.
+
+### Notes
+
+-   Ensure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
+-   Proper error handling should be implemented to provide feedback to the user in case of token refresh failure.
+
+---
+
+### Logout Endpoint
+
+- **URL**: `/api/users/logout`
+- **Method**: `POST`
+- **Content-Type**: `application/json`
+- **Authentication**: `Bearer Access_token` required
+
+#### Description
+
+Logs out the authenticated user by blacklisting the current access and refresh tokens.
+
+#### Request Body
+
+The following fields are required in the request body:
+
+- `access` (string): The current access token.
+- `refresh` (string): The current refresh token.
+
+#### Response
+
+- **Success (200)**: Logout successful.
+  - **Body**:
+    ```json
+    "Logged out successfully"
+    ```
+- **Error (404)**: Validation error or logout failed.
+  - **Body**: List of validation errors or `Failed to logout`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/users/logout';
+const data = {
+    access: 'current_access_token',
+    refresh: 'current_refresh_token'
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer access_token'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript Axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/users/logout';
+const data = {
+    access: 'current_access_token',
+    refresh: 'current_refresh_token'
+};
+
+axios.post(url, data, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer access_token'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+When the logout fails due to validation errors or other issues, the response will contain appropriate status codes and error messages. Ensure to handle these responses in your frontend application.
+
+### Status Codes
+
+-   `200`: OK - Logout was successful.
+-   `404`: Not Found - Validation errors occurred or logout failed.
+
+### Notes
+
+-   Ensure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
+-   Proper error handling should be implemented to provide feedback to the user in case of logout failure.
 
 ## Register Flask Blueprints to Flask
 

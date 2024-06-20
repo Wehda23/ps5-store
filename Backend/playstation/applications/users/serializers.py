@@ -234,4 +234,13 @@ class UpdateUserSerializer(serializers.Serializer):
         return value
 
 
+class BlackListedTokenSerializer(serializers.ModelSerializer):
+    """
+    Serializer for BlackListedToken model
+    """
+    class Meta:
+        model: BlackListedTokens = BlackListedTokens
+        fields: list[str] = ['access', 'refresh']
+
+
 # User Logout Serializer
