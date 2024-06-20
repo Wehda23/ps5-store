@@ -57,7 +57,7 @@ def authentication_classess(
             token: str = token.split(" ")[1]
             # Run authorization classes
             for authentication in auth_classes:
-                if not authentication.authenticate(token):
+                if not authentication().authenticate(token):
                     return make_response({"error": "Unauthorized access"}, 401)
             return view(*args, **kwargs)
 

@@ -53,14 +53,13 @@ class JWTAuthentication(Authentication):
 
     def token_type(self: Self, data: dict[str, str]) -> bool:
         """
-        Method used to check if the token type is access token
+        Method used to check if the token type is access token.
 
         Args:
-            - data (dict): dictionary that contains token details.
+            data (dict): Dictionary that contains token details.
 
         Returns:
-            - True: incase token passes.
-            - False: incase it fails.
+            bool: True if the token type is access, otherwise False.
         """
         return data.get("type", None) == "access"
 
@@ -86,7 +85,7 @@ class JWTAuthentication(Authentication):
             return False
 
         # Get user ID from token
-        user_id: int = valid_token.get("user")
+        user_id: int = valid_token.get("User")
 
         # Query the user from the database
         user: Optional[User] = User.query.get(user_id)
@@ -120,13 +119,12 @@ class RefreshTokenAuthentication(JWTAuthentication):
 
     def token_type(self: Self, data: dict[str, str]) -> bool:
         """
-        Method used to check if the token type is refresh token
+        Method used to check if the token type is refresh token.
 
         Args:
-            - data (dict): dictionary that contains token details.
+            data (dict): Dictionary that contains token details.
 
         Returns:
-            - True: incase token passes.
-            - False: incase it fails.
+            bool: True if the token type is refresh, otherwise False.
         """
         return data.get("type", None) == "refresh"

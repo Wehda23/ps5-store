@@ -39,7 +39,7 @@ def permission_required(permissions: list[BasePermission]) -> Union[Callable, Re
         @wraps(view)
         def decorated_function(*args: Any, **kwargs: Any) -> Any:
             for permission in permissions:
-                if not permission().has_permission(request):
+                if not permission().has_permission(request, *args, **kwargs):
                     return jsonify({"message": "Permission denied"}), 403
             return view(*args, **kwargs)
 

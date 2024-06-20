@@ -3,12 +3,13 @@
 """
 
 from playstation.admin.permissions import BasePermission
-from typing import Self
+from playstation.models.users import User
+from typing import Self, Optional
 from flask import Request
 
 
 # Create Permission Class
-class Permission(BasePermission):
+class IsAccountOwner(BasePermission):
     """
     Class Created to demonstrated permission classes
     """
@@ -21,8 +22,12 @@ class Permission(BasePermission):
             - request (Request): Flask Request Class Handler.
 
         Returns:
-            - True in case satisfies all permissions otherwise False
+            - bool: True in case satisfies all permissions otherwise False
         """
-        print(request.get_json())
-        print(request.headers.get("Authorization"))
-        return True
+        # grab request user
+        user: Optional[User] = getattr(request, 'user', None)
+        # Check if user exists
+        if user is None:
+            return False
+        # Check if user pk id is same as request.user id
+        return kwargs.get("pk", None) == user.id

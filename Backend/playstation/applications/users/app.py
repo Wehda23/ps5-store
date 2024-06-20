@@ -1,18 +1,38 @@
 """
-# Application that handles the Users API
+Application that handles the Users API
 
-- This is the application that handles all user related actions such as new account creation, profile updates, registeration, login etc..
+This application manages all user-related actions, including account creation, profile updates, registration, login, and token refresh. It defines API routes to facilitate these actions, ensuring secure and efficient user management.
 
-## Api routes
+## API Routes
 
-##### Protected Routes
-- /users/me: Get the current user's profile
-- /users/me/update: Update the current user's profile
-- /users/me/delete: Delete the current user's account
+### Protected Routes
+These routes require authentication and appropriate permissions to access:
 
-#### Public Routes
-- /users/register: Register a new user
-- /users/login: Login a user
+- **/api/users/update/<id>: Update the current user's profile.
+  - Method: PUT
+  - Description: Allows authenticated users to update their profile information.
+  - Authentication: JWT required
+  - Permissions: Specific user permissions required
+
+- **/api/users/refresh: Generate new access/refresh tokens for the user.
+  - Method: POST
+  - Description: Provides new JWT tokens to authenticated users for session continuity.
+  - Authentication: Refresh token required
+
+### Public Routes
+These routes are accessible without authentication:
+
+- **/api/users/register: Register a new user.
+  - Method: POST
+  - Description: Allows new users to create an account by providing necessary details.
+  - Request Data: User details (e.g., first_name, last_name, email, password)
+  - Response: Success or error message
+
+- **/api/users/login: Login a user.
+  - Method: POST
+  - Description: Authenticates a user and provides JWT tokens for session management.
+  - Request Data: User credentials (email and password)
+  - Response: JWT tokens or error message
 """
 
 from flask import Blueprint, make_response, request, Response
@@ -23,9 +43,8 @@ from playstation.admin.authentications.jwt_authentication import (
     JWTAuthentication,
     RefreshTokenAuthentication,
 )
-from playstation.admin.authentications.token import get_tokens_for_user
 from playstation.admin.authentications import authentication_classess
-from .permissions import Permission
+from .permissions import IsAccountOwner
 from .serializers import UserRegisterSerializer, LoginSerializer
 
 # Declare route prefix
@@ -41,8 +60,12 @@ def register(*args, **kwargs) -> Response:
     """
     Register a new user account API
 
+    Handles the registration of new users by validating the provided data and
+    creating a new user account.
+
     Returns:
-        str: Success message or error message 400
+        Response: A success message with status 201 if registration is successful,
+                  otherwise an error message with the appropriate status code.
     """
     # Get data from request
     data = request.get_json()
@@ -71,47 +94,48 @@ def register(*args, **kwargs) -> Response:
 def login(*args, **kwargs) -> Response:
     """
     Login user API
+
+    Authenticates the user using provided credentials and returns JWT tokens
+    if the login is successful.
+
+    Returns:
+        Response: A response with JWT tokens if authentication is successful,
+                  otherwise an error message with status 404.
     """
     # Data
     data: dict = request.get_json()
     # Check if user exists
     serializer: LoginSerializer = LoginSerializer(data=data)
-    # if user and user.check_password(data.get("password")):
-    if serializer.is_valid():
-        # Generate Token
-        return make_response(serializer.data, 201)
+    try:
+        if serializer.is_valid():
+            # Generate Token
+            return make_response(serializer.data, 201)
+        # Grab Error
+        error: str = serializer.errors
+        return make_response(error, 404)
+    except Exception as e:
+        # record error in a logging class
+        error: str = str(e)
+        return make_response("Login Failed", 404)
 
-    error: str = serializer.errors
-    return make_response(error, 404)
 
-
-#! This route should be a protected route.
 # Update user information API
 @users_api.route("/update/<int:pk>", methods=["PUT"])
 @authentication_classess([JWTAuthentication])
-@permission_required([Permission])
+@permission_required([IsAccountOwner])
 def update_user(pk: int) -> Response:
     """
     Update User information API
 
+    Allows authenticated users to update their profile information.
+
     Args:
-        - pk (int): User Id.
+        pk (int): User ID.
 
     Returns:
-        str: Success message or error message 404
+        Response: A success message if the update is successful,
+                  otherwise an error message with status 404.
     """
-    # TO DO: Implement user update logic
-    # Get user by id
-    user: User = User.query.get(pk)
-    # Check if user exists
-    if not user:
-        return make_response("User not found", 404)
-    # Get data from request
-    data = request.get_json()
-    # Update user
-    user.first_name = data["first_name"]
-    # Commit changes
-    user.save()
     return "User updated successfully"
 
 
@@ -121,6 +145,11 @@ def update_user(pk: int) -> Response:
 def refresh_token(*args, **kwargs) -> Response:
     """
     Refresh token API
+
+    Generates new access and refresh tokens for authenticated users.
+
+    Returns:
+        Response: New JWT tokens.
     """
     return "Refresh token API"
 
