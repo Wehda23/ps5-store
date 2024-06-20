@@ -159,7 +159,6 @@ def update_user(pk: int) -> Response:
     except Exception as e:
         # Add error message to a logger class to track bugs
         error: str = str(e)
-        print(e)
         return make_response("Failed to update user", 404)
 
 

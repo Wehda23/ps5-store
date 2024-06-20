@@ -22,8 +22,8 @@ BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Templates and Static paths
 TEMPLATES_DIR: str = os.path.join(BASE_DIR, "templates")
-STATIC_DIR: str = os.path.join(BASE_DIR, "static")
-MEDIA_DIR: str = None
+STATIC_DIR: str = "static"
+MEDIA_DIR: str = os.path.join(STATIC_DIR, "images")
 
 # Database
 DATABASE: str = "sqlite:///test.db"
