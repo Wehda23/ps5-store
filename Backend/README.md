@@ -133,7 +133,7 @@ The applications package is divided into sub-packages, each responsible for diff
 
 This API handles the registration of new users by validating the provided data and creating a new user account.
 
-### ====> Register User Endpoint
+### Register User Endpoint
 
 - **URL**: `/api/users/register`
 - **Method**: `POST`
@@ -232,7 +232,9 @@ When the registration fails due to validation errors or an already registered em
 
 -   Proper error handling should be implemented to provide feedback to the user in case of registration failure.
 
-### ====> Login User Endpoint
+<hr/>
+
+### Login User Endpoint
 
 - **URL**: `/api/users/login`
 - **Method**: `POST`
