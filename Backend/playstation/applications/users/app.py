@@ -151,7 +151,25 @@ def refresh_token(*args, **kwargs) -> Response:
     Returns:
         Response: New JWT tokens.
     """
+    # We have to add the current refresh token and access token to blacklisted token
+    # Generate new tokens
     return "Refresh token API"
+
+
+# Logout API
+@users_api.route("/logout", methods=["POST"])
+@authentication_classess([JWTAuthentication])
+def logout(*args, **kwargs) -> Response:
+    """
+    Logout API
+
+    Generates new access and refresh tokens for authenticated users.
+
+    Returns:
+        Response: Message of a success logout process.
+    """
+    # add token to blacklist
+    return "Logged out successfully"
 
 
 # Reset Password Mechanisim

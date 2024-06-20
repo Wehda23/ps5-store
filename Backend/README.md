@@ -127,6 +127,113 @@ The applications package is divided into sub-packages, each responsible for diff
 - orders: Deals with order processing and management.
 - swagger: Contains configuration for API documentation using Swagger.
 
+### Users Application
+
+#### User Registration API
+
+This API handles the registration of new users by validating the provided data and creating a new user account.
+
+## Endpoint
+
+### Register User
+
+- **URL**: `/api/users/register`
+- **Method**: `POST`
+- **Content-Type**: `application/json`
+
+##### Request Body
+
+The following fields are required in the request body:
+
+- `first_name` (string): The first name of the user.
+- `last_name` (string): The last name of the user.
+- `email` (string): The email address of the user.
+- `password` (string): The password for the user account.
+
+##### Response
+
+- **Success (201)**: Registration is successful.
+  - **Body**: `Successful Registration`
+- **Error (403)**: Validation error.
+  - **Body**: List of validation errors.
+- **Error (409)**: Email already registered.
+  - **Body**: `Email is already registered`
+- **Error (400)**: Registration failed.
+  - **Body**: `Registration Failed`
+
+#### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/users/register';
+const data = {
+    first_name: 'John',
+    last_name: 'Doe',
+    email: 'john.doe@example.com',
+    password: 'securePassword123'
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```js
+const axios = require('axios');
+
+const url = '/api/users/register';
+const data = {
+    first_name: 'Jane',
+    last_name: 'Doe',
+    email: 'jane.doe@example.com',
+    password: 'securePassword123'
+};
+
+axios.post(url, data, {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+
+```
+
+#### Error Handling
+
+When the registration fails due to validation errors or an already registered email, the response will contain appropriate status codes and error messages. Ensure to handle these responses in your frontend application.
+
+#### Status Codes
+
+-   `201`: Created - Registration was successful.
+-   `403`: Forbidden - Validation errors occurred.
+-   `409`: Conflict - Email is already registered.
+-   `400`: Bad Request - Registration failed due to an unspecified error.
+
+#### Notes
+
+-   Make sure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
+
+-   Proper error handling should be implemented to provide feedback to the user in case of registration failure.
+
 ### Register Flask Blueprints to Flask
 
 By using the function `routes` in the file `./routes.py` we can register all our flask blueprints to Flask application
