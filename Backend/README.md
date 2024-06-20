@@ -134,6 +134,8 @@ The applications package is divided into sub-packages, each responsible for diff
 - products: Manages product-related functionalities.
 - orders: Deals with order processing and management.
 - swagger: Contains configuration for API documentation using Swagger.
+- payments: Handles payment related Operations.
+- shipping_addresses: Handles shipping addresses operations.
 
 ## Swagger Application
 
@@ -147,7 +149,7 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
 - **Swagger Config File**: `static/swagger_config.json`
 - **Application Name**: "Play Station 5 Store"
 
-![image](https://i.imghippo.com/files/OC43y1718924333.png)
+![Swagger](https://i.imghippo.com/files/OC43y1718924333.png)
 
 ## Users Application
 
