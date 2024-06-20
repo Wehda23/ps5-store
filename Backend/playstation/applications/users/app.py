@@ -52,6 +52,7 @@ from playstation.admin.authentications import authentication_classess
 from .permissions import IsAccountOwner
 from .serializers import UserRegisterSerializer, LoginSerializer, UpdateUserSerializer, BlackListedTokenSerializer
 
+
 # Declare route prefix
 url_prefix: str = "/api/users"
 

@@ -38,6 +38,12 @@ project_root/
             orders/
                 __init__.py
                 app.py
+            shipping_addresses/
+                __init__.py
+                app.py
+            payments/
+                __init__.py
+                app.py
             swagger/
                 __init__.py
         models/
