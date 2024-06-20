@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -31,7 +32,8 @@
   },
   "resolutions": {
   "nth-check": ">=2.0.1",
-   "postcss": ">=8.4.31"
+   "postcss": ">=8.4.31",
+   "ws": ">=8.17.1"
 },  
   "eslintConfig": {
     "extends": [

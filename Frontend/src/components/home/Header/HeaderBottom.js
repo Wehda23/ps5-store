@@ -64,23 +64,23 @@ const HeaderBottom = () => {
                   transition={{ duration: 0.5 }}
                   className="absolute top-36 z-50 bg-primeColor w-auto text-[#767676] h-auto p-4 pb-6"
                 >
-                  <Link to={"category/imprimante"}>
+                  <Link to={"category/playstation"}>
                     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                       PlayStation5
                     </li>
                   </Link>
 
-                  <Link to={"category/ancre"}>
+                  <Link to={"category/Accessories"}>
                     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                       Accessories
                     </li>
                   </Link>
-                  <Link to={"category/ruban"}>
+                  <Link to={"category/Games"}>
                     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                       Games
                     </li>
                   </Link>
-                  <Link to={"category/bac"}>
+                  <Link to={"category/ps5-store"}>
                     <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                       ps5-store
                     </li>
