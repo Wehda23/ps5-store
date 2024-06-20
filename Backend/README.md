@@ -135,7 +135,7 @@ This API handles the registration of new users by validating the provided data a
 
 ### Endpoint
 
-### Register User
+### 1) Register User
 
 - **URL**: `/api/users/register`
 - **Method**: `POST`

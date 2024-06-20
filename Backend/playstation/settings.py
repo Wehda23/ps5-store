@@ -4,6 +4,10 @@
 - Debug setting for development/production
 - Templates path
 - Static files path
+- Media files path
+- Secret Key
+- Database
+- JWT Authentication Parameters
 """
 
 import os
