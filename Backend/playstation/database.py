@@ -5,6 +5,7 @@
 from flask import Flask
 from playstation import db
 from playstation.models.users import User
+from playstation.models.blacklisted_tokens import BlackListedTokens
 from playstation.models.coupons import Coupons
 from playstation.models.orders import Orders
 from playstation.models.payments import Payments

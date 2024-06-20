@@ -104,6 +104,9 @@ class User(db.Model, UserMixin):
         onupdate=db.func.current_timestamp(),
     )
 
+    # Relationship
+    blacklisted_tokens = db.relationship('BlackListedTokens', back_populates='user', cascade='all, delete-orphan')
+
     def __repr__(self: Self):
         """
         Method for representation
