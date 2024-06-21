@@ -177,6 +177,8 @@ def refresh_token(*args, **kwargs) -> Response:
     """
     # Get Data
     data: dict = request.get_json()
+    # get user id
+    data['user_id'] = request.user.id
     # We have to add the current refresh token and access token to blacklisted token
     serializer: BlackListedTokenSerializer = BlackListedTokenSerializer(data=data)
     try:
@@ -209,6 +211,8 @@ def logout(*args, **kwargs) -> Response:
     """
     # Get data
     data: dict = request.get_json()
+    # get user id
+    data['user_id'] = request.user.id
     # Blacklist serializer
     serializer: BlackListedTokenSerializer = BlackListedTokenSerializer(data=data)
     try:
@@ -221,6 +225,7 @@ def logout(*args, **kwargs) -> Response:
     except Exception as e:
         # Add error message to a logger class to track bugs
         error: str = str(e)
+        print(e)
         return make_response("Failed to logout", 404)
 
 

@@ -177,6 +177,6 @@ def get_tokens_for_user(user: User) -> dict[str, str]:
     refresh: Token = RefreshToken.for_user(user)
     # Return tokens
     return {
-        "access_token": refresh.access_token,
-        "refresh_token": refresh.refresh_token,
+        "access": refresh.access_token,
+        "refresh": refresh.refresh_token,
     }
