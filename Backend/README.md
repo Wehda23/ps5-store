@@ -25,6 +25,7 @@ project_root/
         README.md
         routes.py
         database.py
+        logger.py
         settings.py
         admin/
             __init__.py
@@ -806,3 +807,73 @@ if __name__ == "__main__":
 ## Serializers Package
 
 Explain the package
+
+## Initializing Loggers in Flask
+
+In Flask applications, initializing loggers ensures proper logging configurations throughout the application. Below are steps and examples for setting up logging in different parts of a Flask project.
+
+### Setting Up Logging in the Flask Application
+
+To configure logging for your Flask application, use the `setup_logging` function from `logger.py`.
+
+#### Example in `app.py`
+
+```python
+from flask import Flask
+from .logger import setup_logging
+
+app = Flask(__name__)
+
+# Setup Logger
+setup_logging(app)
+
+if __name__ == "__main__":
+    app.run()
+```
+
+### Using Loggers in Flask Blueprints
+
+When working with Flask Blueprints, initialize the logger in the `__init__.py` file of your Blueprint module.
+
+#### File Structure Example
+
+```
+project_root/
+    playstation/
+        __init__.py
+        app.py
+        logger.py
+        settings.py
+        applications/
+            __init__.py
+            pages/
+                __init__.py
+                app.py
+            users/
+                __init__.py
+                app.py
+            products/
+                __init__.py
+                app.py
+```
+
+#### Initializing Logger in `users/__init__.py`
+
+```python
+import logging
+from logging import Logger
+from playstation.settings import LOGGING_CONFIGURATION
+
+# Get the logger
+logger: Logger = logging.getLogger(LOGGING_CONFIGURATION["NAME"])
+```
+
+### Using Logger in Blueprint `app.py`
+
+To use the logger in a Flask Blueprint (`app.py`), import it as follows:
+
+```python
+from . import logger
+
+logger.error("An error has occurred")
+```
