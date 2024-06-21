@@ -7,9 +7,15 @@
 """
 
 from flask import Flask
-from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR, SECRET_KEY
+from playstation.settings import (
+    DEBUG,
+    TEMPLATES_DIR,
+    STATIC_DIR,
+    SECRET_KEY,
+)
 from playstation.routes import routes
 from playstation.database import database
+from playstation.logger import setup_logging
 
 
 # Initiate flask application
@@ -22,6 +28,9 @@ routes(app)
 
 # Configure Database
 database(app)
+
+# Set up logger
+setup_logging(app)
 
 
 if __name__ == "__main__":

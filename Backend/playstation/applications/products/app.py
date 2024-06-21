@@ -69,6 +69,8 @@ from playstation.admin.authentications import authentication_classess
 from playstation.admin.authentications.jwt_authentication import JWTAuthentication
 from playstation.admin.permissions import permission_required
 from .permissions import IsAdmin
+from .serializers import CategorySerializer
+from . import logger
 
 # Declare route prefix
 url_prefix: str = "/api/products"
@@ -104,7 +106,6 @@ def create_category(*args, **kwargs) -> Response:
 
 # API to Grab all product categories
 @products_api.route("/categories", methods=['GET'])
-@authentication_classess([JWTAuthentication])
 def get_categories(*args, **kwargs) -> Response:
     """
     Get all product categories
@@ -112,7 +113,15 @@ def get_categories(*args, **kwargs) -> Response:
     Returns:
         Response: A list of all product categories with status 200.
     """
-    return make_response("Product Categories", 200)
+    try:
+        # Get all categories
+        categories = CategorySerializer.get_all_categories()
+        return make_response(categories, 200)
+    except Exception as e:
+        # Add error message to a logger class to track bugs
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Failed to grab product categories", 404)
 
 # API to Update a product category
 @products_api.route("/category/<int:category_id>", methods=['PUT'])

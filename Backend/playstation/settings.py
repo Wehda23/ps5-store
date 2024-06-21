@@ -13,7 +13,6 @@
 import os
 from datetime import timedelta
 
-
 # Debug
 DEBUG: bool = True
 
@@ -39,4 +38,12 @@ JWT_AUTHENTICATIONS: dict = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": "Bearer ",
+}
+
+
+#logging configuration
+LOGGING_COFIGURATION: dict[str, str] ={
+    "NAME": "playstation",
+    "FILE": "app.logs",
+    "FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 }

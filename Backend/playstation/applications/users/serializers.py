@@ -1,5 +1,21 @@
 """
-# File the contains Serializers for User Application
+# File that contains Serializers for User Application
+
+This module defines serializers used in the user application for various user-related operations such as registration, login, updating user details, and managing blacklisted tokens. These serializers are responsible for validating input data, ensuring data integrity, and facilitating data serialization and deserialization processes.
+
+Classes:
+    - UserRegisterSerializer: Serializer for registering a new user.
+    - UserSerializer: Serializer for basic user details.
+    - LoginSerializer: Serializer for user login.
+    - UpdateUserSerializer: Serializer for updating user details.
+    - BlackListedTokenSerializer: Serializer for blacklisted tokens.
+
+Modules:
+    - serializers: Imported from playstation, used for creating custom and model serializers.
+    - models.users: Contains the User model.
+    - models.blacklisted_tokens: Contains the BlackListedTokens model.
+    - validators: Custom validators for email, name, password, and ID fields.
+    - admin.authentications.token: Contains the function to generate authentication tokens for a user.
 """
 
 from playstation import serializers
@@ -12,6 +28,21 @@ from playstation.admin.authentications.token import get_tokens_for_user
 
 # User Registeration serializer
 class UserRegisterSerializer(serializers.Serializer):
+    """
+    Serializer for registering a new user. Validates user input and creates a new User instance.
+
+    Meta:
+        model: User model to be serialized.
+        fields: List of fields to be serialized.
+        write_only: List of fields to be used for write operations only.
+
+    Methods:
+        validate_first_name(value): Validates the first name using NameValidator.
+        validate_last_name(value): Validates the last name using NameValidator.
+        validate_password(value): Validates the password using PasswordValidator.
+        validate_email(value): Validates the email using EmailValidator.
+        create(validated_data): Creates a new User instance with the validated data.
+    """
     class Meta:
         model: object = User
         fields: list[str] = ["first_name", "email", "last_name", "password"]
@@ -91,7 +122,11 @@ class UserRegisterSerializer(serializers.Serializer):
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
     """
-    User serializer class
+    Serializer for basic user details.
+
+    Meta:
+        model: User model to be serialized.
+        fields: List of fields to be serialized.
     """
 
     class Meta:
@@ -107,7 +142,16 @@ class UserSerializer(serializers.ModelSerializer):
 # User Login Serializer
 class LoginSerializer(serializers.Serializer):
     """
-    User login serializer class
+    Serializer for user login. Validates user credentials and returns user details with authentication token.
+
+    Meta:
+        model: User model to be serialized.
+        fields: List of fields to be serialized.
+
+    Methods:
+        validate_password(value): Validates the password by checking if it matches the user's password.
+        validate_email(value): Validates the email and checks if the user exists.
+        to_representation(instance): Serializes user details and adds authentication token to the data.
     """
 
     class Meta:
@@ -168,7 +212,17 @@ class LoginSerializer(serializers.Serializer):
 # UserUpdateSerializer
 class UpdateUserSerializer(serializers.Serializer):
     """
-    Serializer for updating user details
+    Serializer for updating user details. Validates and updates user information.
+
+    Meta:
+        model: User model to be serialized.
+        fields: List of fields to be serialized.
+
+    Methods:
+        validate_first_name(value): Validates the first name using NameValidator.
+        validate_last_name(value): Validates the last name using NameValidator.
+        validate_email(value): Validates the email using EmailValidator.
+        validate_id(value): Validates the user ID using IDValidator.
     """
 
     class Meta:
@@ -236,12 +290,13 @@ class UpdateUserSerializer(serializers.Serializer):
 
 class BlackListedTokenSerializer(serializers.ModelSerializer):
     """
-    Serializer for BlackListedToken model
+    Serializer for BlackListedTokens model. Manages the serialization and deserialization of blacklisted tokens.
+
+    Meta:
+        model: BlackListedTokens model to be serialized.
+        fields: List of fields to be serialized.
     """
 
     class Meta:
         model: BlackListedTokens = BlackListedTokens
         fields: list[str] = ["access", "refresh", "user_id"]
-
-
-# User Logout Serializer

@@ -56,6 +56,7 @@ from .serializers import (
     UpdateUserSerializer,
     BlackListedTokenSerializer,
 )
+from . import logger
 
 
 # Declare route prefix
@@ -96,6 +97,7 @@ def register(*args, **kwargs) -> Response:
         # Write Logic to check registeration failed through logs functionality
         error: str = str(e)
         # Record Error Through logs
+        logger.error(f"Registration failed: {error}")
         # Return a response `Registeration Failed`
         return make_response("Registeration Failed", 400)
 
@@ -127,6 +129,7 @@ def login(*args, **kwargs) -> Response:
     except Exception as e:
         # record error in a logging class
         error: str = str(e)
+        logger.error(f"Login failed: {error}")
         return make_response("Login Failed", 404)
 
 
@@ -165,6 +168,7 @@ def update_user(pk: int) -> Response:
     except Exception as e:
         # Add error message to a logger class to track bugs
         error: str = str(e)
+        logger.error(f"Update User failed: {error}")
         return make_response("Failed to update user", 404)
 
 
@@ -199,6 +203,7 @@ def refresh_token(*args, **kwargs) -> Response:
     except Exception as e:
         # Add error message to a logger class to track bugs
         error: str = str(e)
+        logger.error(f"Refresh token failed: {error}")
         return make_response("Failed to refresh token", 404)
 
 
@@ -230,7 +235,7 @@ def logout(*args, **kwargs) -> Response:
     except Exception as e:
         # Add error message to a logger class to track bugs
         error: str = str(e)
-        print(e)
+        logger.error(f"Logout failed: {error}")
         return make_response("Failed to logout", 404)
 
 
