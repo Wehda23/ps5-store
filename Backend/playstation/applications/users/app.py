@@ -50,7 +50,12 @@ from playstation.admin.authentications.jwt_authentication import (
 from playstation.admin.authentications.token import get_tokens_for_user
 from playstation.admin.authentications import authentication_classess
 from .permissions import IsAccountOwner
-from .serializers import UserRegisterSerializer, LoginSerializer, UpdateUserSerializer, BlackListedTokenSerializer
+from .serializers import (
+    UserRegisterSerializer,
+    LoginSerializer,
+    UpdateUserSerializer,
+    BlackListedTokenSerializer,
+)
 
 
 # Declare route prefix
@@ -178,7 +183,7 @@ def refresh_token(*args, **kwargs) -> Response:
     # Get Data
     data: dict = request.get_json()
     # get user id
-    data['user_id'] = request.user.id
+    data["user_id"] = request.user.id
     # We have to add the current refresh token and access token to blacklisted token
     serializer: BlackListedTokenSerializer = BlackListedTokenSerializer(data=data)
     try:
@@ -212,7 +217,7 @@ def logout(*args, **kwargs) -> Response:
     # Get data
     data: dict = request.get_json()
     # get user id
-    data['user_id'] = request.user.id
+    data["user_id"] = request.user.id
     # Blacklist serializer
     serializer: BlackListedTokenSerializer = BlackListedTokenSerializer(data=data)
     try:

@@ -11,11 +11,13 @@ from playstation.admin.authentications import authentication_classess
 url_prefix: str = "/api/shipping_addresses"
 
 # Blueprint
-shipping_addresses_api: Blueprint = Blueprint("shipping_addresses", __name__, url_prefix=url_prefix)
+shipping_addresses_api: Blueprint = Blueprint(
+    "shipping_addresses", __name__, url_prefix=url_prefix
+)
+
 
 # Test API
 @shipping_addresses_api.route("/", methods=["GET"])
 def base(*args, **kwargs) -> Response:
-    """
-    """
+    """ """
     return "Shipping addresses API"

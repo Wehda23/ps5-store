@@ -238,9 +238,10 @@ class BlackListedTokenSerializer(serializers.ModelSerializer):
     """
     Serializer for BlackListedToken model
     """
+
     class Meta:
         model: BlackListedTokens = BlackListedTokens
-        fields: list[str] = ['access', 'refresh', 'user_id']
+        fields: list[str] = ["access", "refresh", "user_id"]
 
 
 # User Logout Serializer
