@@ -746,6 +746,105 @@ When the request to retrieve product categories fails, the response will contain
 
 <hr/>
 
+## Create Product Category Endpoint
+
+- **URL**: `/api/category`
+- **Method**: `POST`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Admin (IsAdmin)
+
+### Request Body
+
+The request body must include the following JSON object:
+
+```json
+{
+    "name": "Newcategoryname"
+}
+```
+
+### Responses
+
+- **Success (200)**: Category created successfully.
+  - **Body**: `"Category created successfully"`
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors.
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"Unauthorized"`
+
+- **Error (403)**: Forbidden - User does not have sufficient permissions.
+  - **Body**: `"Forbidden"`
+
+### Example Usage
+
+### Using JavaScript Fetch
+
+```javascript
+const url = '/api/category';
+const data = {
+    name: 'Newcategoryname'
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+### Using JavaScript axios
+
+```js
+const axios = require('axios');
+
+const url = '/api/category';
+const data = {
+    name: 'Newcategoryname'
+};
+
+axios.post(url, data, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, and permission denials.
+
+### Status Codes
+
+-   `200`: OK - Category created successfully.
+-   `400`: Bad Request - Invalid input data format.
+-   `401`: Unauthorized - Authentication credentials missing or invalid.
+-   `403`: Forbidden - Insufficient permissions to perform the operation.
+
+### Notes
+
+-   Replace `YOUR_JWT_TOKEN_HERE` with a valid JWT token obtained after successful authentication.
+-   The endpoint requires admin permissions (`IsAdmin`) for successful category creation.
+-   Implement appropriate frontend and backend validations to handle edge cases and ensure robustness of the API.
+
 ## Register Flask Blueprints to Flask
 
 By using the function `routes` in the file `./routes.py` we can register all our flask blueprints to Flask application

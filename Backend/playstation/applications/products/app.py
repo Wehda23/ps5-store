@@ -69,7 +69,7 @@ from playstation.admin.authentications import authentication_classess
 from playstation.admin.authentications.jwt_authentication import JWTAuthentication
 from playstation.admin.permissions import permission_required
 from .permissions import IsAdmin
-from .serializers import CategorySerializer
+from .serializers import CategorySerializer, CreateCategorySerializer
 from . import logger
 
 # Declare route prefix
@@ -99,7 +99,17 @@ def create_category(*args, **kwargs) -> Response:
         # Get the request data
         data = request.get_json()
         # Here should be the logic to create a category
-        return make_response("Product Categories", 200)
+        # Create serializer
+        serializer: CreateCategorySerializer = CreateCategorySerializer(data=data)
+        # Validate the serializer
+        if serializer.is_valid():
+            # Save the category
+            serializer.save()
+            # Return success message
+            return make_response("Category created successfully", 200)
+        # Error
+        error: list[str] = serializer.errors
+        return make_response(error, 400)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
