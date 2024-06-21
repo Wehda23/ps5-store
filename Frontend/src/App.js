@@ -6,6 +6,7 @@ import {
   Route,
   ScrollRestoration,
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "./components/home/Footer/Footer";
 import FooterBottom from "./components/home/Footer/FooterBottom";
 import Header from "./components/home/Header/Header";
@@ -25,6 +26,9 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CommunityForums from "./pages/Privacy/CommunityForums";
+import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
+import SecurityTermsComponent from './pages/Privacy/SecurityTermsComponent';
 
 const Layout = () => {
   return (
@@ -51,6 +55,7 @@ const Layout = () => {
     </div>
   );
 };
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
@@ -59,14 +64,17 @@ const router = createBrowserRouter(
         <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
-        <Route path="/Info" element={<Info />}></Route>
-        <Route path="/Help" element={<Help />}></Route>
+        <Route path="/info" element={<Info />}></Route>
+        <Route path="/help" element={<Help />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
+        <Route path="/community-forums" element={<CommunityForums />}></Route>
+        <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
+        <Route path="/security" element={<SecurityTermsComponent />} />
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>

@@ -88,7 +88,7 @@ const SignUp = () => {
         setErrPassword("Create a password");
       } else {
         if (password.length < 6) {
-          setErrPassword("Passwords must be at least 6 characters");
+          setErrPassword("Passwords must be at least  characters");
         }
       }
       if (!address) {
@@ -151,8 +151,7 @@ const SignUp = () => {
                 Get started fast with PS5-Store
               </span>
               <br />
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
-              nisi dolor recusandae consectetur!
+              Enjoy exclusive games, immersive experiences, and more with PlayStation 5
             </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
@@ -164,8 +163,7 @@ const SignUp = () => {
                 Access all PS5-Store services
               </span>
               <br />
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
-              nisi dolor recusandae consectetur!
+              Unlock a world of entertainment and online gaming with PlayStation 5.
             </p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
@@ -177,23 +175,31 @@ const SignUp = () => {
                 Trusted by online Shoppers
               </span>
               <br />
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
-              nisi dolor recusandae consectetur!
+              Join millions of satisfied gamers enjoying 
+              PlayStation 5's cutting-edge technology.
             </p>
           </div>
           <div className="flex items-center justify-between mt-10">
+          <Link to="/">
+              <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+                © PS5-Store
+              </p>
+            </Link>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-              © PS5-Store
-            </p>
+            <Link to="/community-forums" className="text-gray-300 hover:text-white">
+          Terms
+        </Link>
+          </p>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-              Terms
-            </p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-              Privacy
-            </p>
-            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-              Security
-            </p>
+            <Link to="/privacy-policy" className="text-gray-300 hover:text-white">
+          Privacy
+        </Link>
+      </p>
+      <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+            <Link to="/security" className="text-gray-300 hover:text-white">
+            security
+            </Link> 
+          </p>
           </div>
         </div>
       </div>
@@ -248,7 +254,7 @@ const SignUp = () => {
                     value={email}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="email"
-                    placeholder="john@workemail.com"
+                    placeholder="plyastation5@mail.com"
                   />
                   {errEmail && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -267,7 +273,7 @@ const SignUp = () => {
                     value={phone}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
-                    placeholder="008801234567891"
+                    placeholder="+251912345678"
                   />
                   {errPhone && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -343,7 +349,7 @@ const SignUp = () => {
                     value={country}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
-                    placeholder="Your country"
+                    placeholder="Ethiopia, Kenya,USA, etc."
                   />
                   {errCountry && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -362,7 +368,7 @@ const SignUp = () => {
                     value={zip}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
-                    placeholder="Your country"
+                    placeholder="Addis Abeba, 1000"
                   />
                   {errZip && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
