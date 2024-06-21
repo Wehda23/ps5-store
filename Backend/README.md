@@ -668,6 +668,83 @@ When the logout fails due to validation errors or other issues, the response wil
 -   Ensure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
 -   Proper error handling should be implemented to provide feedback to the user in case of logout failure.
 
+## Products Application
+
+This application manages all product-related actions, including category creation, product creation, updates, and deletion. It defines API routes to facilitate these actions, ensuring secure and efficient product management.
+
+### Get All Product Categories Endpoint
+
+- **URL**: `/api/products/categories`
+- **Method**: `GET`
+- **Content-Type**: `application/json`
+
+#### Response
+
+- **Success (200)**: Categories retrieved successfully.
+  - **Body**: A list of all product categories.
+- **Error (404)**: No categories found.
+  - **Body**: `Failed to grab product categories`
+
+### Example Usage
+
+### Using JavaScript Fetch
+
+```javascript
+const url = '/api/products/categories';
+
+fetch(url, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+### Using JavaScript axios
+
+```js
+const axios = require('axios');
+
+const url = '/api/products/categories';
+
+axios.get(url, {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+
+```
+
+### Error Handling
+
+When the request to retrieve product categories fails, the response will contain appropriate status codes and error messages. Ensure to handle these responses in your frontend application.
+
+### Status Codes
+
+-   `200`: OK - Categories retrieved successfully.
+-   `404`: Not Found - No categories found.
+
+### Notes
+
+-   Make sure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
+
+-   Proper error handling should be implemented to provide feedback to the user in case of retrieval failure.
+
+<hr/>
+
 ## Register Flask Blueprints to Flask
 
 By using the function `routes` in the file `./routes.py` we can register all our flask blueprints to Flask application

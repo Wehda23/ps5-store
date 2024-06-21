@@ -41,9 +41,9 @@ JWT_AUTHENTICATIONS: dict = {
 }
 
 
-#logging configuration
-LOGGING_COFIGURATION: dict[str, str] ={
+# logging configuration
+LOGGING_COFIGURATION: dict[str, str] = {
     "NAME": "playstation",
     "FILE": "app.logs",
-    "FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    "FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 }

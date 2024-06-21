@@ -292,6 +292,29 @@
                     }
                 }
             }
+        },
+        "/products/categories": {
+            "get": {
+                "summary": "Get all product categories",
+                "description": "Retrieves all product categories available.",
+                "responses": {
+                    "200": {
+                        "description": "Categories retrieved successfully",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No categories found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     }
 }

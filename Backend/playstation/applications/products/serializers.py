@@ -1,6 +1,7 @@
 """
 # File that contains serializers for products application
 """
+
 from playstation import serializers
 from playstation.models.products import Product, Category
 from typing import Any
@@ -10,9 +11,9 @@ from typing import Any
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model: Category = Category
-        fields: list[str] = ['id', 'name']
+        fields: list[str] = ["id", "name"]
 
-    @classmethod
+    @staticmethod
     def get_all_categories(*args: Any, **kwargs: Any) -> list[dict]:
         """Grab all product categories"""
         # Get all categories

@@ -1,5 +1,19 @@
 """
 # This file contains every configeration related to flask application database
+
+Usage Example:
+
+```py
+from playstation.database import database
+from flask import Flask
+
+# Initiate your flask application
+app: Flask = Flask(__name__)
+
+
+# Setup database
+database(app)
+```
 """
 
 from flask import Flask

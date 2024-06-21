@@ -43,6 +43,7 @@ class UserRegisterSerializer(serializers.Serializer):
         validate_email(value): Validates the email using EmailValidator.
         create(validated_data): Creates a new User instance with the validated data.
     """
+
     class Meta:
         model: object = User
         fields: list[str] = ["first_name", "email", "last_name", "password"]

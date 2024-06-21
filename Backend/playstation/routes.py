@@ -1,5 +1,19 @@
 """
 # File that contains flask application routes
+
+Usage Example:
+
+```py
+from playstation.routes import routes
+from flask import Flask
+
+# Initiate your flask application
+app: Flask = Flask(__name__)
+
+
+# Setup routes
+routes(app)
+```
 """
 
 from flask import Flask
