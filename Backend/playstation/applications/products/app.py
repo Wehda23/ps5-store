@@ -54,6 +54,14 @@ These routes are accessible without authentication:
 - **/api/products: Get all products.
   - Method: GET
   - Description: Retrieves all products.
+  - Query Parameters:
+    - **category** (str, optional): Filter products by category.
+    - **search** (str, optional): Search products by name or description.
+    - **sort_by** (str, optional): Sort products by specified field (e.g., price, name).
+    - **start** (int, optional): Specify the page number for pagination.
+    - **products** (int, optional): Specify the number of products per page for pagination.
+    - **low_price** (int, optional): Specify the lowerst price for product.
+    - **high_price** (int, optional): Specify the highest price for the product.
 """
 
 from flask import Blueprint, Response, make_response, request
@@ -160,6 +168,15 @@ def get_all_products(*args, **kwargs) -> Response:
     Returns:
         Response: A list of all products with status 200.
     """
+    queries: dict = {
+        "category": request.args.get("category", None), # Category Id
+        "search": request.args.get("search", None), # Word to search for in name of product or in description
+        "sort_by": request.args.get("sort_by", None), # Sort by certain attribute
+        "start": request.args.get("start", 0), # point of the start of products
+        "products": request.args.get("products", 10), # How many products to retrieve from start point
+        "low_price": request.args.get("low_price", None), # Lowest price point
+        "high_price": request.args.get("high_price", None), # highest price point
+    }
     return make_response("Products", 200)
 
 # API to update a product
