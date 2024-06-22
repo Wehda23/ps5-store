@@ -845,6 +845,185 @@ Ensure proper error handling to manage responses for different scenarios like va
 -   The endpoint requires admin permissions (`IsAdmin`) for successful category creation.
 -   Implement appropriate frontend and backend validations to handle edge cases and ensure robustness of the API.
 
+### Update Product Category Endpoint
+
+- **URL**: `/api/category/{category_id}`
+- **Method**: `PUT`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Admin (IsAdmin)
+
+#### Request Body
+
+The request body can include the following JSON object:
+
+```json
+{
+    "name": "New_category_name",
+    "id": 1
+}
+```
+
+The `id` field is optional. If not provided, the `category_id` from the URL will be used.
+
+#### Responses
+
+- **Success (200)**: Category updated successfully.
+  - **Body**: JSON object representing the updated category.
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors.
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"Unauthorized"`
+
+- **Error (403)**: Forbidden - User does not have sufficient permissions.
+  - **Body**: `"Forbidden"`
+
+- **Error (404)**: Not Found - Category not found.
+  - **Body**: `"Category not found"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/category/1';
+const data = {
+    name: 'UpdatedCategoryName'
+};
+
+fetch(url, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```js
+const axios = require('axios');
+
+const url = '/api/category/1';
+const data = {
+    name: 'UpdatedCategoryName'
+};
+
+axios.put(url, data, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, and permission denials.
+
+### Status Codes
+
+-   `200`: OK - Category updated successfully.
+-   `400`: Bad Request - Invalid input data format.
+-   `401`: Unauthorized - Authentication credentials missing or invalid.
+-   `403`: Forbidden - Insufficient permissions to perform the operation.
+-   `404`: Not Found - Category not found.
+
+---
+
+### Delete Product Category Endpoint
+
+- **URL**: `/api/category/{category_id}`
+- **Method**: `DELETE`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Admin (IsAdmin)
+
+#### Responses
+
+- **Success (201)**: Category deleted successfully.
+  - **Body**: `"Category deleted !!"`
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"Unauthorized"`
+
+- **Error (403)**: Forbidden - User does not have sufficient permissions.
+  - **Body**: `"Forbidden"`
+
+- **Error (404)**: Not Found - Category not found.
+  - **Body**: `"Category not found"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/category/1';
+
+fetch(url, {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```js
+const axios = require('axios');
+
+const url = '/api/category/1';
+
+axios.delete(url, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, and permission denials.
+
+### Status Codes
+
+-   `201`: Created - Category deleted successfully.
+-   `401`: Unauthorized - Authentication credentials missing or invalid.
+-   `403`: Forbidden - Insufficient permissions to perform the operation.
+-   `404`: Not Found - Category not found.
+
+
 ## Register Flask Blueprints to Flask
 
 By using the function `routes` in the file `./routes.py` we can register all our flask blueprints to Flask application

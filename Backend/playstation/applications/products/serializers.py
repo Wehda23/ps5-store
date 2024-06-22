@@ -48,3 +48,28 @@ class CreateCategorySerializer(serializers.Serializer):
             raise ValueError("Category already exists")
         # Return the name of the new category
         return value
+
+
+# Delete serializer
+class DeleteCategorySerializer(serializers.Serializer):
+    class Meta:
+        model: Category = Category
+        fields: list[str] = ["id"]
+
+    def validate_id(self: Self, value: int) -> int:
+        """
+        Validation method for id
+
+        Args:
+            value (int): ID of the category
+
+        Returns:
+            Verified Id of the category
+        """
+        # Check if the category exists
+        if not Category.query.get(value):
+            raise ValueError("Category does not exist")
+        # assign instance
+        self.instance = self.to_instance()
+        # Return id
+        return value

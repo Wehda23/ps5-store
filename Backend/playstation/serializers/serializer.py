@@ -182,3 +182,9 @@ class Creatable(ABC):
     @abstractmethod
     def create(self, validated_data: dict) -> dict:
         pass
+
+
+class ToInstance(ABC):
+    @abstractmethod
+    def to_instance(self, data: dict) -> object:
+        pass

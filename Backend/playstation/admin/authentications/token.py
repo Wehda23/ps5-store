@@ -151,14 +151,12 @@ class RefreshToken:
             - dict: The decoded token payload or None if invalid
         """
         try:
-            print("try to decode token ", token)
             return jwt.decode(
                 token,
                 key=JWT_AUTHENTICATIONS["SECRET_KEY"],
                 algorithms=[JWT_AUTHENTICATIONS["ALGORITHM"]],
             )
         except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
-            print("weird error")
             return None
 
 

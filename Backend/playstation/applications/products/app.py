@@ -70,7 +70,7 @@ from playstation.admin.authentications import authentication_classess
 from playstation.admin.authentications.jwt_authentication import JWTAuthentication
 from playstation.admin.permissions import permission_required
 from .permissions import IsAdmin
-from .serializers import CategorySerializer, CreateCategorySerializer
+from .serializers import CategorySerializer, CreateCategorySerializer, DeleteCategorySerializer
 from . import logger
 
 # Declare route prefix
@@ -160,8 +160,20 @@ def update_category(category_id: int, *args, **kwargs) -> Response:
         - 404: Not Found - If the category is not found.
     """
     try:
-        # Logic to update category
-        return make_response("Product Categories", 200)
+        # Get data
+        data = request.get_json()
+        # Check id exists within the body or not.
+        if 'id' not in data:
+            data['id'] = category_id
+        # Serializer
+        serializer: CategorySerializer = CategorySerializer(data=data)
+        if serializer.is_valid():
+            # Update category
+            serializer.save()
+            return make_response(serializer.data, 200)
+        # error
+        error: list[str] = serializer.errors
+        return make_response(serializer.errors, 404)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
@@ -188,8 +200,20 @@ def delete_category(category_id: int, *args, **kwargs) -> Response:
         - 404: Not Found - If the category is not found.
     """
     try:
-        # Logic to delete category
-        return make_response("Product Categories", 200)
+        # Get category
+        data: dict = {
+            "id": category_id
+        }
+        # Serializer
+        serializer: DeleteCategorySerializer = DeleteCategorySerializer(data=data)
+        # Validate serializer
+        if serializer.is_valid():
+            # Delete category
+            serializer.delete()
+            return make_response("Category deleted !!", 201)
+        # Error
+        error: list[str] = serializer.errors
+        return make_response(error, 404)
     except Exception as e:
         error: str = str(e)
         logger.error(error)

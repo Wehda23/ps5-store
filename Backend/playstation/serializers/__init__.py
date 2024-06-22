@@ -10,6 +10,7 @@ from .serializer import (
     Deletable,
     Representable,
     Creatable,
+    ToInstance,
 )
 from typing import Self, NoReturn, Optional, Iterable
 
@@ -23,6 +24,7 @@ class SerializerInterface(
     Deletable,
     Representable,
     Creatable,
+    ToInstance
 ):
     pass
 
@@ -203,6 +205,9 @@ class Serializer(SerializerInterface):
         """
         # Implement delete logic here
         instance: object = self.instance
+        # Check instance
+        if not instance:
+            raise ValueError("Instance does not exist")
         # Perform delete function
         if not hasattr(instance, "delete"):
             raise AttributeError("Model object must have a method .delete()")
@@ -237,6 +242,16 @@ class Serializer(SerializerInterface):
         # Return Serialized data
         return serialized_data
 
+    def to_instance(self, find_by: str = 'id') -> Optional[object]:
+        """
+        Convert the dictionary representation into a model instance.
+        """
+        # Implement instance creation logic here
+
+        if self._data:
+            instance: object = self.model.query.get(self._data[find_by])
+            return instance
+        return None
 
 # Model Serializer
 class ModelSerializer(Serializer):
