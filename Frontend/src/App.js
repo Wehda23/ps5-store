@@ -29,6 +29,7 @@ import "react-toastify/dist/ReactToastify.css";
 import CommunityForums from "./pages/Privacy/CommunityForums";
 import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
 import SecurityTermsComponent from './pages/Privacy/SecurityTermsComponent';
+import Service from './pages/Privacy/Service';
 
 const Layout = () => {
   return (
@@ -75,6 +76,7 @@ const router = createBrowserRouter(
         <Route path="/community-forums" element={<CommunityForums />}></Route>
         <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
         <Route path="/security" element={<SecurityTermsComponent />} />
+        <Route path="/service" element={<Service />}></Route>
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>

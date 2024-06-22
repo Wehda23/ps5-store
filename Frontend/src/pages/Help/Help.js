@@ -24,7 +24,7 @@ const Help = () => {
       <p>Once your order is shipped, you will receive a tracking number via email. You can use this number to track your order on our website or the courier's website.</p>
 
       <h4 className="text-primary mt-4">5. What is the return policy?</h4>
-      <p>If you are not satisfied with your purchase, you can return the product within 30 days of delivery for a full refund. The product must be in its original condition and packaging. Please visit our <a href="/return-policy" className="text-info">Return Policy</a> page for more details.</p>
+      <p>If you are not satisfied with your purchase, you can return the product within 30 days of delivery for a full refund. The product must be in its original condition and packaging. Please visit our <a href="/community-forums" className="text-info">Return Policy</a> page for more details.</p>
 
       <h4 className="text-primary mt-4">6. How can I contact customer support?</h4>
       <p>If you need further assistance, you can contact our customer support team through the following methods:</p>

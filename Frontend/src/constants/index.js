@@ -55,7 +55,7 @@ export const navBarList = [
   {
     _id: 1007,
     title: "services",
-    link: "/",
+    link: "/service",
   },
   {
     _id: 1002,

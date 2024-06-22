@@ -1,0 +1,11 @@
+.rounded-rectangle {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .rounded-rectangle:hover {
+    background-color: #e2e6ea;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  

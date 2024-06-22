@@ -131,11 +131,12 @@ const Contact = () => {
               )}
             </div>
             <button
-              onClick={handlePost}
-              className="w-44 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200"
+            onClick={handlePost}
+            className="w-44 bg-primeColor text-gray-200 h-10 font-titleFont text-base tracking-wide font-semibold hover:bg-black hover:text-white duration-200 rounded-lg"
             >
-              Post
+            Post
             </button>
+
           </div>
         </form>
       )}

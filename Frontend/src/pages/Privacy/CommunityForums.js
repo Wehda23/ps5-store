@@ -26,7 +26,7 @@ const CommunityForums = () => {
       </ul>
 
       <h3 className="text-info mt-5">Join the Discussion</h3>
-      <p>Sign in to participate in the forums. If you don't have an account, <a href="/sign-up" className="text-info">sign up here</a>.</p>
+      <p>Sign in to participate in the forums. If you don't have an account, <a href="/signup" className="text-info">sign up here</a>.</p>
 
       <p>Thank you for being a part of our community. Happy gaming!</p>
     </div>
