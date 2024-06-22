@@ -1,6 +1,16 @@
 # PlayStation Store Backend
 
 This project is about creating a playstation store which represents a simple E-commerce website using Flask as the backend technology.
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Main Flask Application](#main-flask-application)
+3. [Create Virtual Environment](#create-virtual-environment)
+4. [Run Application](#run-application)
+5. [Database Schema](#database-schema)
+6. [Packages Overview](#packages-overview)
+7. [API Documentation](#api-documentation)
+
+## Introduction
 
 The project includes the following features:
 
