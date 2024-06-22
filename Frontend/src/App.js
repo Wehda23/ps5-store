@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -6,7 +7,7 @@ import {
   Route,
   ScrollRestoration,
 } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 import Footer from "./components/home/Footer/Footer";
 import FooterBottom from "./components/home/Footer/FooterBottom";
 import Header from "./components/home/Header/Header";
@@ -26,10 +27,9 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CommunityForums from "./pages/Privacy/CommunityForums";
-import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
-import SecurityTermsComponent from './pages/Privacy/SecurityTermsComponent';
-import Service from './pages/Privacy/Service';
+
+// Import API service functions
+import { getUsers, createUser, getOrders, createOrder } from './components/designLayouts/buttons/integrationservice';
 
 const Layout = () => {
   return (
@@ -57,26 +57,45 @@ const Layout = () => {
   );
 };
 
+// Create a new Home component that fetches data from Flask API
+const HomeWithAPI = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Using the getUsers function from integrationservice.js instead of Axios
+    getUsers()
+      .then(response => {
+        setData(response);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the data!', error);
+      });
+  }, []);
+
+  return (
+    <div>
+      <Home />
+      {data && <p>{data.message}</p>}
+    </div>
+  );
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Layout />}>
         {/* ==================== Header Navlink Start here =================== */}
-        <Route index element={<Home />}></Route>
+        <Route index element={<HomeWithAPI />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
-        <Route path="/info" element={<Info />}></Route>
-        <Route path="/help" element={<Help />}></Route>
+        <Route path="/Info" element={<Info />}></Route>
+        <Route path="/Help" element={<Help />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
-        <Route path="/community-forums" element={<CommunityForums />}></Route>
-        <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
-        <Route path="/security" element={<SecurityTermsComponent />} />
-        <Route path="/service" element={<Service />}></Route>
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
