@@ -369,7 +369,7 @@
                     }
                 }
             }
-        }
+        },
         "/category/{category_id}": {
         "put": {
             "summary": "Update a product category",
@@ -447,9 +447,7 @@
                     }
                 }
             }
-        }
-    }
-    "/category/{category_id}": {
+        },
         "delete": {
             "summary": "Delete a product category",
             "description": "Endpoint to delete a product category with authentication and permission checks.",
