@@ -945,7 +945,7 @@ Ensure proper error handling to manage responses for different scenarios like va
 -   `403`: Forbidden - Insufficient permissions to perform the operation.
 -   `404`: Not Found - Category not found.
 
----
+<hr/>
 
 ### Delete Product Category Endpoint
 

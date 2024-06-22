@@ -370,5 +370,125 @@
                 }
             }
         }
+        "/category/{category_id}": {
+        "put": {
+            "summary": "Update a product category",
+            "description": "Endpoint to update a product category with authentication and permission checks.",
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "category_id",
+                    "type": "integer",
+                    "required": true,
+                    "description": "Category ID"
+                },
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Category object that needs to be updated",
+                    "required": false,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "integer"
+                            }
+                        },
+                        "example": {
+                            "name": "UpdatedCategoryName",
+                            "id": 1
+                        }
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Category updated successfully",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request - Invalid input data",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "401": {
+                    "description": "Unauthorized - Authentication credentials missing or invalid",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "403": {
+                    "description": "Forbidden - Insufficient permissions",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "404": {
+                    "description": "Not Found - Category not found",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+    "/category/{category_id}": {
+        "delete": {
+            "summary": "Delete a product category",
+            "description": "Endpoint to delete a product category with authentication and permission checks.",
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "category_id",
+                    "type": "integer",
+                    "required": true,
+                    "description": "Category ID"
+                }
+            ],
+            "responses": {
+                "201": {
+                    "description": "Category deleted successfully",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "401": {
+                    "description": "Unauthorized - Authentication credentials missing or invalid",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "403": {
+                    "description": "Forbidden - Insufficient permissions",
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                "404": {
+                    "description": "Not Found - Category not found",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
     }
 }
