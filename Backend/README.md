@@ -7,8 +7,6 @@ This project is about creating a playstation store which represents a simple E-c
 3. [Create Virtual Environment](#create-virtual-environment)
 4. [Run Application](#run-application)
 5. [Database Schema](#database-schema)
-6. [Packages Overview](#packages-overview)
-7. [API Documentation](#api-documentation)
 
 ## Introduction
 
