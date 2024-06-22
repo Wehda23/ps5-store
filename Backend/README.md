@@ -973,6 +973,19 @@ To use the logger in a Flask Blueprint (`app.py`), import it as follows:
 
 ```python
 from . import logger
+from flask import Blueprint, make_response, Response
+
+example_api: Blueprint = Blueprint("example_api", __name__)
 
 logger.error("An error has occurred")
+
+@example_api.route("", methods=['GET'])
+def example(*args, **kwargs) -> Response:
+
+    try:
+        # Some code that might raise an exception
+        pass
+    except Exception as e:
+        logger.error(f"An error has occurred: {e}")
+        return make_response("error", 400)
 ```

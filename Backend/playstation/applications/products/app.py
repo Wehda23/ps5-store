@@ -62,6 +62,7 @@ These routes are accessible without authentication:
     - **products** (int, optional): Specify the number of products per page for pagination.
     - **low_price** (int, optional): Specify the lowerst price for product.
     - **high_price** (int, optional): Specify the highest price for the product.
+    - **sale** (int, optional): Specify the sale for the product.
 """
 
 from flask import Blueprint, Response, make_response, request
@@ -237,6 +238,7 @@ def get_all_products(*args, **kwargs) -> Response:
         - products (int, optional): Specify the number of products per page for pagination.
         - low_price (int, optional): Specify the lowest price for product.
         - high_price (int, optional): Specify the highest price for the product.
+        - sale (int, optional): Specify the sale for the product.
 
     Error Codes:
         - 404: Not Found - If no products are found.
@@ -249,6 +251,7 @@ def get_all_products(*args, **kwargs) -> Response:
         "products": request.args.get("products", 10),  # How many products to retrieve from start point
         "low_price": request.args.get("low_price", None),  # Lowest price point
         "high_price": request.args.get("high_price", None),  # highest price point
+        "sale": request.args.get("sale", 0)  # Check if the product on sale or not
     }
     try:
         # Logic to get all products
