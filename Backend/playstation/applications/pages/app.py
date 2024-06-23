@@ -40,3 +40,11 @@ def login_page() -> str:
     Login page route
     """
     return render_template("login_page/index.html")
+
+# login page
+@pages.route("/react_app")
+def react_app() -> str:
+    """
+    Test Integrating react application
+    """
+    return render_template("react_test/index.html")
