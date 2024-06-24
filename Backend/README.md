@@ -10,10 +10,9 @@ This project is about creating a playstation store which represents a simple E-c
 6. [Swagger Application](#swagger-application)
 7. [Users Application](#users-application)
 8. [Register Flask Blueprints to Flask](#register-flask-blueprints-to-flask)
-9. [Serializers Package](#serializers-package)
-10. [File Handler Package](#file-handler-package)
-11. [Initializing Loggers in Flask](#initializing-loggers-in-flask)
-12. [Support my work](#support-my-Work)
+9. [File Handler Package](#file-handler-package)
+10. [Initializing Loggers in Flask](#initializing-loggers-in-flask)
+11. [Support my work](#support-my-Work)
 
 ## Introduction
 
@@ -51,6 +50,10 @@ project_root/
                 token.py
             file_manager/
                 __init__.py
+                file_handler.py
+                image_handler.py
+                storage.py
+                exceptions.py
         applications/
             __init__.py
             pages/
@@ -1099,10 +1102,6 @@ if __name__ == "__main__":
     # Run flask application
     app.run()
 ```
-
-## Serializers Package
-
-Explain the package
 
 ## File Handler Package
 
