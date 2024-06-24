@@ -42,6 +42,8 @@ project_root/
                 __init__.py
                 jwt_authentication.py
                 token.py
+            file_manager/
+                __init__.py
         applications/
             __init__.py
             pages/
@@ -73,7 +75,7 @@ project_root/
             payments.py
             shipping_addresses.py
             blacklisted_tokens.py
-            error_handlers.py
+            exceptions.py
         serializers/
             __init__.py
             serializer.py
@@ -138,6 +140,7 @@ This package contains the packages & Applications required for Play Station Stor
 2. applications
 3. models
 4. serializers
+5. file_manager
 
 # Admin Package
 
@@ -1091,6 +1094,10 @@ if __name__ == "__main__":
 ```
 
 ## Serializers Package
+
+Explain the package
+
+## File Handler Package
 
 Explain the package
 

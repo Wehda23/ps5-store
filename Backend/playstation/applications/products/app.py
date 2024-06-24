@@ -51,6 +51,10 @@ These routes are accessible without authentication:
   - Method: GET
   - Description: Retrieves all product categories.
 
+- **/api/products/<int:product_id>: Get product.
+  - Method: GET
+  - Description: Retrieves product information.
+
 - **/api/products: Get all products.
   - Method: GET
   - Description: Retrieves all products.
@@ -66,12 +70,22 @@ These routes are accessible without authentication:
 """
 
 from flask import Blueprint, Response, make_response, request
+from typing import Optional
 from playstation.admin.authentications import authentication_classess
 from playstation.admin.authentications.jwt_authentication import JWTAuthentication
 from playstation.admin.permissions import permission_required
+from werkzeug.datastructures.file_storage import FileStorage
 from .permissions import IsAdmin
-from .serializers import CategorySerializer, CreateCategorySerializer, DeleteCategorySerializer
+from .serializers import (
+    CategorySerializer,
+    CreateCategorySerializer,
+    DeleteCategorySerializer,
+    CreateProductSerializer,
+    GetProductSerializer,
+    UpdateProductSerializer,
+)
 from . import logger
+
 
 # Declare route prefix
 url_prefix: str = "/api/products"
@@ -163,8 +177,8 @@ def update_category(category_id: int, *args, **kwargs) -> Response:
         # Get data
         data = request.get_json()
         # Check id exists within the body or not.
-        if 'id' not in data:
-            data['id'] = category_id
+        if "id" not in data:
+            data["id"] = category_id
         # Serializer
         serializer: CategorySerializer = CategorySerializer(data=data)
         if serializer.is_valid():
@@ -201,9 +215,7 @@ def delete_category(category_id: int, *args, **kwargs) -> Response:
     """
     try:
         # Get category
-        data: dict = {
-            "id": category_id
-        }
+        data: dict = {"id": category_id}
         # Serializer
         serializer: DeleteCategorySerializer = DeleteCategorySerializer(data=data)
         # Validate serializer
@@ -235,14 +247,153 @@ def create_product(*args, **kwargs) -> Response:
         - 400: Bad Request - If the input data is invalid.
         - 401: Unauthorized - If the user is not authenticated.
         - 403: Forbidden - If the user does not have the required permissions.
+        - 415: Unsupported Media Type - Allowed media types 'application/json' or 'multipart/form-data'
     """
     try:
-        # Logic to create product
-        return make_response("Product Created", 201)
+        # Check content Type
+        if request.content_type.startswith("application/json"):
+            # Get data from request
+            data: dict = request.get_data()
+        elif request.content_type.startswith("multipart/form-data"):
+            # Get data from request
+            data: dict = request.form.to_dict()
+            image_file: Optional[FileStorage] = request.files.get("image", None)
+            data["image_url"] = image_file
+        else:
+            # Invalid content type.
+            return make_response("Invalid content type", 415)
+        # Serializer
+        serializer: CreateProductSerializer = CreateProductSerializer(data=data)
+        # Validate serializer
+        if serializer.is_valid():
+            # Create product
+            serializer.save()
+            return make_response("Product created successfully", 201)
+        # Error
+        error: list[str] = serializer.errors
+        return make_response(error, 400)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
         return make_response("Failed to create product", 400)
+
+
+# Create API to grab product by id
+@products_api.route("/<int:product_id>", methods=["GET"])
+def get_product_by_id(product_id: int) -> Response:
+    """
+    Get a product by id
+
+    Args:
+        product_id (int): The id of the product to retrieve.
+
+    Returns:
+        Response: The product with the specified id and status 200.
+
+    Error Codes:
+        - 404: Not Found - If the product is not found.
+    """
+    # Logic to get product by id
+    data: dict = {
+        "id": product_id,
+    }
+    # Serializer
+    serializer: GetProductSerializer = GetProductSerializer(data=data)
+    try:
+        # Validate serializer
+        if serializer.is_valid():
+            # Return product details
+            return make_response(serializer.data, 200)
+        # Error
+        error: list[str] = serializer.errors
+        return make_response(error, 400)
+    except Exception as e:
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Failed to grab product information", 404)
+
+
+# API to update a product
+@products_api.route("/<int:product_id>", methods=["PUT"])
+@authentication_classess([JWTAuthentication])
+@permission_required([IsAdmin])
+def update_product(product_id: int, *args, **kwargs) -> Response:
+    """
+    Update a product
+
+    Args:
+        product_id (int): Product ID
+
+    Returns:
+        Response: A success message with status 200.
+
+    Error Codes:
+        - 400: Bad Request - If the input data is invalid.
+        - 401: Unauthorized - If the user is not authenticated.
+        - 403: Forbidden - If the user does not have the required permissions.
+        - 404: Not Found - If the product is not found.
+    """
+    # Logic to update product
+    data: dict = request.get_json()
+    # Check product id exists within the data
+    if "id" not in data:
+        # if does not exists embed the product_id as data['id']
+        data["id"] = product_id
+    # Serializer
+    serializer: UpdateProductSerializer = UpdateProductSerializer(data=data)
+    try:
+        # Validate serializer
+        if serializer.is_valid():
+            # Update product
+            serializer.save()
+            return make_response("Product updated successfully", 200)
+        # Logic to update product
+        error: list[str] = serializer.errors
+        return make_response("Product Updated", 400)
+    except Exception as e:
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Failed to update product", 400)
+
+
+# API to delete a product
+@products_api.route("/<int:product_id>", methods=["DELETE"])
+@authentication_classess([JWTAuthentication])
+@permission_required([IsAdmin])
+def delete_product(product_id: int, *args, **kwargs) -> Response:
+    """
+    Delete a product
+
+    Args:
+        product_id (int): Product ID
+
+    Returns:
+        Response: A success message with status 200.
+
+    Error Codes:
+        - 401: Unauthorized - If the user is not authenticated.
+        - 403: Forbidden - If the user does not have the required permissions.
+        - 404: Not Found - If the product is not found.
+    """
+    # Create data
+    data: dict = {
+        "id": product_id,
+    }
+    # Serializer
+    serializer: GetProductSerializer = GetProductSerializer(data=data)
+    try:
+        # Validate data
+        if serializer.is_valid():
+            # Logic to delete product
+            serializer.delete()
+            return make_response("Product Deleted", 200)
+        # error
+        error: list[str] = serializer.errors
+        return make_response(error, 400)
+    except Exception as e:
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Failed to delete product", 404)
 
 
 # API to grab all products
@@ -269,13 +420,17 @@ def get_all_products(*args, **kwargs) -> Response:
     """
     queries: dict = {
         "category": request.args.get("category", None),  # Category Id
-        "search": request.args.get("search", None),  # Word to search for in name of product or in description
+        "search": request.args.get(
+            "search", None
+        ),  # Word to search for in name of product or in description
         "sort_by": request.args.get("sort_by", None),  # Sort by certain attribute
         "start": request.args.get("start", 0),  # point of the start of products
-        "products": request.args.get("products", 10),  # How many products to retrieve from start point
+        "products": request.args.get(
+            "products", 10
+        ),  # How many products to retrieve from start point
         "low_price": request.args.get("low_price", None),  # Lowest price point
         "high_price": request.args.get("high_price", None),  # highest price point
-        "sale": request.args.get("sale", 0)  # Check if the product on sale or not
+        "sale": request.args.get("sale", 0),  # Check if the product on sale or not
     }
     try:
         # Logic to get all products
@@ -284,60 +439,3 @@ def get_all_products(*args, **kwargs) -> Response:
         error: str = str(e)
         logger.error(error)
         return make_response("Failed to retrieve products", 404)
-
-
-# API to update a product
-@products_api.route("/<int:product_id>", methods=["PUT"])
-@authentication_classess([JWTAuthentication])
-@permission_required([IsAdmin])
-def update_product(product_id: int, *args, **kwargs) -> Response:
-    """
-    Update a product
-
-    Args:
-        product_id (int): Product ID
-
-    Returns:
-        Response: A success message with status 200.
-
-    Error Codes:
-        - 400: Bad Request - If the input data is invalid.
-        - 401: Unauthorized - If the user is not authenticated.
-        - 403: Forbidden - If the user does not have the required permissions.
-        - 404: Not Found - If the product is not found.
-    """
-    try:
-        # Logic to update product
-        return make_response("Product Updated", 200)
-    except Exception as e:
-        error: str = str(e)
-        logger.error(error)
-        return make_response("Failed to update product", 400)
-
-
-# API to delete a product
-@products_api.route("/<int:product_id>", methods=["DELETE"])
-@authentication_classess([JWTAuthentication])
-@permission_required([IsAdmin])
-def delete_product(product_id: int, *args, **kwargs) -> Response:
-    """
-    Delete a product
-
-    Args:
-        product_id (int): Product ID
-
-    Returns:
-        Response: A success message with status 200.
-
-    Error Codes:
-        - 401: Unauthorized - If the user is not authenticated.
-        - 403: Forbidden - If the user does not have the required permissions.
-        - 404: Not Found - If the product is not found.
-    """
-    try:
-        # Logic to delete product
-        return make_response("Product Deleted", 200)
-    except Exception as e:
-        error: str = str(e)
-        logger.error(error)
-        return make_response("Failed to delete product", 404)

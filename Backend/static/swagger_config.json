@@ -7,9 +7,28 @@
     },
     "basePath": "/api",
     "schemes": ["http"],
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Operations related to user management"
+        },
+        {
+            "name": "Products",
+            "description": "Operations related to product management"
+        }
+    ],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter 'Bearer' [space] and then your token in the text input below.\n\nExample: 'Bearer abcdef12345'"
+        }
+    },
     "paths": {
         "/users/register": {
             "post": {
+                "tags": ["Users"],
                 "summary": "Register a new user",
                 "description": "Handles the registration of new users by validating the provided data and creating a new user account.",
                 "parameters": [
@@ -22,18 +41,10 @@
                             "type": "object",
                             "required": ["first_name", "last_name", "email", "password"],
                             "properties": {
-                                "first_name": {
-                                    "type": "string"
-                                },
-                                "last_name": {
-                                    "type": "string"
-                                },
-                                "email": {
-                                    "type": "string"
-                                },
-                                "password": {
-                                    "type": "string"
-                                }
+                                "first_name": { "type": "string" },
+                                "last_name": { "type": "string" },
+                                "email": { "type": "string" },
+                                "password": { "type": "string" }
                             }
                         }
                     }
@@ -41,36 +52,29 @@
                 "responses": {
                     "201": {
                         "description": "Successful Registration",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     },
                     "403": {
                         "description": "Validation error",
                         "schema": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         }
                     },
                     "409": {
                         "description": "Email already registered",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     },
                     "400": {
                         "description": "Registration Failed",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     }
                 }
             }
         },
         "/users/login": {
             "post": {
+                "tags": ["Users"],
                 "summary": "Login user",
                 "description": "Authenticates the user using provided credentials and returns JWT tokens if the login is successful.",
                 "parameters": [
@@ -83,12 +87,8 @@
                             "type": "object",
                             "required": ["email", "password"],
                             "properties": {
-                                "email": {
-                                    "type": "string"
-                                },
-                                "password": {
-                                    "type": "string"
-                                }
+                                "email": { "type": "string" },
+                                "password": { "type": "string" }
                             }
                         }
                     }
@@ -99,28 +99,15 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "id": {
-                                    "type": "integer",
-                                    "format": "int64"
-                                },
-                                "email": {
-                                    "type": "string"
-                                },
-                                "first_name": {
-                                    "type": "string"
-                                },
-                                "last_name": {
-                                    "type": "string"
-                                },
+                                "id": { "type": "integer", "format": "int64" },
+                                "email": { "type": "string" },
+                                "first_name": { "type": "string" },
+                                "last_name": { "type": "string" },
                                 "token": {
                                     "type": "object",
                                     "properties": {
-                                        "access": {
-                                            "type": "string"
-                                        },
-                                        "refresh": {
-                                            "type": "string"
-                                        }
+                                        "access": { "type": "string" },
+                                        "refresh": { "type": "string" }
                                     }
                                 }
                             }
@@ -128,15 +115,14 @@
                     },
                     "404": {
                         "description": "Validation error or login failed",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     }
                 }
             }
         },
         "/users/update/{pk}": {
             "put": {
+                "tags": ["Users"],
                 "summary": "Update user information",
                 "description": "Allows authenticated users to update their profile information.",
                 "parameters": [
@@ -156,15 +142,9 @@
                             "type": "object",
                             "required": ["first_name", "last_name", "email"],
                             "properties": {
-                                "first_name": {
-                                    "type": "string"
-                                },
-                                "last_name": {
-                                    "type": "string"
-                                },
-                                "email": {
-                                    "type": "string"
-                                }
+                                "first_name": { "type": "string" },
+                                "last_name": { "type": "string" },
+                                "email": { "type": "string" }
                             }
                         }
                     }
@@ -175,33 +155,24 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "id": {
-                                    "type": "integer",
-                                    "format": "int64"
-                                },
-                                "first_name": {
-                                    "type": "string"
-                                },
-                                "last_name": {
-                                    "type": "string"
-                                },
-                                "email": {
-                                    "type": "string"
-                                }
+                                "id": { "type": "integer", "format": "int64" },
+                                "first_name": { "type": "string" },
+                                "last_name": { "type": "string" },
+                                "email": { "type": "string" }
                             }
                         }
                     },
                     "404": {
                         "description": "Validation error or update failed",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     }
-                }
+                },
+                "security": [{ "Bearer": [] }]
             }
         },
         "/users/refresh": {
             "post": {
+                "tags": ["Users"],
                 "summary": "Refresh tokens",
                 "description": "Generates new access and refresh tokens for authenticated users by blacklisting the current tokens.",
                 "parameters": [
@@ -214,12 +185,8 @@
                             "type": "object",
                             "required": ["access", "refresh"],
                             "properties": {
-                                "access": {
-                                    "type": "string"
-                                },
-                                "refresh": {
-                                    "type": "string"
-                                }
+                                "access": { "type": "string" },
+                                "refresh": { "type": "string" }
                             }
                         }
                     }
@@ -230,26 +197,22 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "access": {
-                                    "type": "string"
-                                },
-                                "refresh": {
-                                    "type": "string"
-                                }
+                                "access": { "type": "string" },
+                                "refresh": { "type": "string" }
                             }
                         }
                     },
                     "404": {
                         "description": "Validation error or token refresh failed",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     }
-                }
+                },
+                "security": [{ "Bearer": [] }]
             }
         },
         "/users/logout": {
             "post": {
+                "tags": ["Users"],
                 "summary": "Logout user",
                 "description": "Logs out the authenticated user by blacklisting the current access and refresh tokens.",
                 "parameters": [
@@ -262,12 +225,8 @@
                             "type": "object",
                             "required": ["access", "refresh"],
                             "properties": {
-                                "access": {
-                                    "type": "string"
-                                },
-                                "refresh": {
-                                    "type": "string"
-                                }
+                                "access": { "type": "string" },
+                                "refresh": { "type": "string" }
                             }
                         }
                     }
@@ -278,23 +237,21 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "message": {
-                                    "type": "string"
-                                }
+                                "message": { "type": "string" }
                             }
                         }
                     },
                     "404": {
                         "description": "Validation error or logout failed",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     }
-                }
+                },
+                "security": [{ "Bearer": [] }]
             }
         },
         "/products/categories": {
             "get": {
+                "tags": ["Products"],
                 "summary": "Get all product categories",
                 "description": "Retrieves all product categories available.",
                 "responses": {
@@ -302,22 +259,19 @@
                         "description": "Categories retrieved successfully",
                         "schema": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         }
                     },
                     "404": {
                         "description": "No categories found",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     }
                 }
             }
         },
         "/products/category": {
             "post": {
+                "tags": ["Products"],
                 "summary": "Create a new product category",
                 "description": "Endpoint to create a new product category with authentication and permission checks.",
                 "parameters": [
@@ -329,9 +283,7 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "name": {
-                                    "type": "string"
-                                }
+                                "name": { "type": "string" }
                             },
                             "example": {
                                 "name": "Newcategoryname"
@@ -343,150 +295,132 @@
                     "200": {
                         "description": "Category created successfully",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" }
+                            }
                         }
                     },
                     "400": {
                         "description": "Bad Request - Invalid input data",
                         "schema": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         }
                     },
                     "401": {
                         "description": "Unauthorized - Authentication credentials missing or invalid",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
                     },
                     "403": {
                         "description": "Forbidden - Insufficient permissions",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "schema": { "type": "string" }
+                    },
+                    "404": {
+                        "description": "Not Found - Endpoint not found",
+                        "schema": { "type": "string" }
                     }
-                }
+                },
+                "security": [{ "Bearer": [] }]
             }
         },
         "/category/{category_id}": {
-        "put": {
-            "summary": "Update a product category",
-            "description": "Endpoint to update a product category with authentication and permission checks.",
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "category_id",
-                    "type": "integer",
-                    "required": true,
-                    "description": "Category ID"
-                },
-                {
-                    "in": "body",
-                    "name": "body",
-                    "description": "Category object that needs to be updated",
-                    "required": false,
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
+            "put": {
+                "tags": ["Products"],
+                "summary": "Update a product category",
+                "description": "Endpoint to update a product category with authentication and permission checks.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "category_id",
+                        "type": "integer",
+                        "required": true,
+                        "description": "Category ID"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Category object that needs to be updated",
+                        "required": false,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" },
+                                "id": { "type": "integer" }
                             },
-                            "id": {
-                                "type": "integer"
-                            }
-                        },
-                        "example": {
-                            "name": "UpdatedCategoryName",
-                            "id": 1
-                        }
-                    }
-                }
-            ],
-            "responses": {
-                "200": {
-                    "description": "Category updated successfully",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "id": {
-                                "type": "integer"
+                            "example": {
+                                "name": "UpdatedCategoryName",
+                                "id": 1
                             }
                         }
                     }
-                },
-                "400": {
-                    "description": "Bad Request - Invalid input data",
-                    "schema": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": { "type": "string" },
+                                "id": { "type": "integer" }
+                            }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid input data",
+                        "schema": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication credentials missing or invalid",
+                        "schema": { "type": "string" }
+                    },
+                    "403": {
+                        "description": "Forbidden - Insufficient permissions",
+                        "schema": { "type": "string" }
+                    },
+                    "404": {
+                        "description": "Not Found - Category not found",
+                        "schema": { "type": "string" }
                     }
                 },
-                "401": {
-                    "description": "Unauthorized - Authentication credentials missing or invalid",
-                    "schema": {
-                        "type": "string"
+                "security": [{ "Bearer": [] }]
+            },
+            "delete": {
+                "tags": ["Products"],
+                "summary": "Delete a product category",
+                "description": "Endpoint to delete a product category with authentication and permission checks.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "category_id",
+                        "type": "integer",
+                        "required": true,
+                        "description": "Category ID"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Category deleted successfully",
+                        "schema": { "type": "string" }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Authentication credentials missing or invalid",
+                        "schema": { "type": "string" }
+                    },
+                    "403": {
+                        "description": "Forbidden - Insufficient permissions",
+                        "schema": { "type": "string" }
+                    },
+                    "404": {
+                        "description": "Not Found - Category not found",
+                        "schema": { "type": "string" }
                     }
                 },
-                "403": {
-                    "description": "Forbidden - Insufficient permissions",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                "404": {
-                    "description": "Not Found - Category not found",
-                    "schema": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
-        "delete": {
-            "summary": "Delete a product category",
-            "description": "Endpoint to delete a product category with authentication and permission checks.",
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "category_id",
-                    "type": "integer",
-                    "required": true,
-                    "description": "Category ID"
-                }
-            ],
-            "responses": {
-                "201": {
-                    "description": "Category deleted successfully",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                "401": {
-                    "description": "Unauthorized - Authentication credentials missing or invalid",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                "403": {
-                    "description": "Forbidden - Insufficient permissions",
-                    "schema": {
-                        "type": "string"
-                    }
-                },
-                "404": {
-                    "description": "Not Found - Category not found",
-                    "schema": {
-                        "type": "string"
-                    }
-                }
+                "security": [{ "Bearer": [] }]
             }
         }
-    }
     }
 }

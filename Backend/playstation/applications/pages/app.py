@@ -41,6 +41,7 @@ def login_page() -> str:
     """
     return render_template("login_page/index.html")
 
+
 # login page
 @pages.route("/react_app")
 def react_app() -> str:

@@ -24,7 +24,7 @@ class SerializerInterface(
     Deletable,
     Representable,
     Creatable,
-    ToInstance
+    ToInstance,
 ):
     pass
 
@@ -40,7 +40,7 @@ class Serializer(SerializerInterface):
         if self.instance:
             return self.to_representation(self.instance)
         # Return self._data
-        return self._data
+        return self.validated_data
 
     @property
     def validated_data(self: Self) -> dict:
@@ -111,7 +111,7 @@ class Serializer(SerializerInterface):
                     # Grab the field
                     field: Optional[str] = data.get(method.replace("validate_", ""))
                     # Call each validation method
-                    getattr(self, method)(field)
+                    self._data[field] = getattr(self, method)(field)
                 except Exception as e:
                     self.errors.append(str(e))
 
@@ -238,20 +238,24 @@ class Serializer(SerializerInterface):
         # Implement representation logic here
         fields: list[str] = self.fields
         # Serialize
-        serialized_data: dict = {field: getattr(instance, field) for field in fields}
+        serialized_data: dict = {
+            field: getattr(instance, field)
+            for field in fields
+            if field not in self.write_only
+        }
         # Return Serialized data
         return serialized_data
 
-    def to_instance(self, find_by: str = 'id') -> Optional[object]:
+    def to_instance(self, find_by: str = "id") -> Optional[object]:
         """
         Convert the dictionary representation into a model instance.
         """
         # Implement instance creation logic here
-
         if self._data:
             instance: object = self.model.query.get(self._data[find_by])
             return instance
         return None
+
 
 # Model Serializer
 class ModelSerializer(Serializer):
@@ -264,6 +268,7 @@ class ModelSerializer(Serializer):
         model: object = self.instance
         # Check model
         if model is None:
+
             raise ValueError("Model instance is not provided")
 
         # Treat instance as many instances

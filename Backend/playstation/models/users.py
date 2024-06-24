@@ -5,7 +5,7 @@
 from playstation import db, SQLMixin
 from typing import Self, Optional, NoReturn
 from werkzeug.security import generate_password_hash, check_password_hash
-from .error_handlers import ExistingEmail
+from .exceptions import ExistingEmail
 
 
 # Add SQLUserMixin

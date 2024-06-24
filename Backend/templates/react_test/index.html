@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/static/images/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/vite.svg') }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React</title>
-    <script type="module" crossorigin src="/static/js/index-DbMNdUTD.js"></script>
-    <link rel="stylesheet" crossorigin href="/static/css/index-DiwrgTda.css">
+    <script type="module" crossorigin src="{{ url_for('static', filename='js/index-DbMNdUTD.js') }}"></script>
+    <link rel="stylesheet" crossorigin href="{{ url_for('static', filename='css/index-DiwrgTda.css') }}">
   </head>
   <body>
     <div id="root"></div>

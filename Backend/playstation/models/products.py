@@ -5,6 +5,8 @@
 from playstation import db, SQLMixin
 from typing import Self
 from sqlalchemy import CheckConstraint
+from playstation.settings import MEDIA_DIR
+import os
 
 
 # Products model
@@ -15,9 +17,15 @@ class Product(db.Model, SQLMixin):
     description = db.Column(db.String(2056), nullable=True)
     price = db.Column(db.Float, nullable=False)
     discount = db.Column(
-        db.Float, CheckConstraint("discount >= 0 AND discount <= 100"), nullable=False
+        db.Float,
+        CheckConstraint("discount >= 0 AND discount <= 100"),
+        nullable=False,
+        default=0,
     )
     stock = db.Column(db.Integer, nullable=False)
+    image_url = db.Column(
+        db.String(2056), default=os.path.join(MEDIA_DIR, "default.png"), nullable=False
+    )
 
     # Permissions and Status
     is_sale = db.Column(db.Boolean, default=False, nullable=False)

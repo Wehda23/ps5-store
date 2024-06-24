@@ -7,12 +7,7 @@
 """
 
 from flask import Flask
-from playstation.settings import (
-    DEBUG,
-    TEMPLATES_DIR,
-    STATIC_DIR,
-    SECRET_KEY,
-)
+from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR, SECRET_KEY, MEDIA_DIR
 from playstation.routes import routes
 from playstation.database import database
 from playstation.logger import setup_logging
@@ -22,6 +17,9 @@ from playstation.logger import setup_logging
 app: Flask = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 app.url_map.strict_slashes = False
 app.config["SECRET_KEY"] = SECRET_KEY
+app.config["UPLOAD_FOLDER"] = MEDIA_DIR
+app.config["MAX_CONTENT_LENGTH"] = 500 * 1000 * 1000
+
 
 # Register routes
 routes(app)

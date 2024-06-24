@@ -23,12 +23,13 @@ BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR: str = os.path.join(BASE_DIR, "templates")
 STATIC_DIR: str = "static"
 MEDIA_DIR: str = os.path.join(STATIC_DIR, "images")
+ALLOW_IMAGE_TYPES: set[str] = {"png", "jpg", "jpeg"}
 
 # Database
 DATABASE: str = "sqlite:///test.db"
 
 # Secret Key
-SECRET_KEY: str = os.urandom(24)
+SECRET_KEY: str = os.urandom(24) if not DEBUG else "test_flask_application"
 
 
 # JWT Authentication
@@ -47,3 +48,11 @@ LOGGING_COFIGURATION: dict[str, str] = {
     "FILE": "app.logs",
     "FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 }
+
+# Storage
+STORAGE: str = ""
+
+# If amazon storage
+AWS_ACCESS_KEY_ID: str = ""
+AWS_SECRET_ACCESS_KEY: str = ""
+AWS_STORAGE_BUCKET_NAME: str = ""

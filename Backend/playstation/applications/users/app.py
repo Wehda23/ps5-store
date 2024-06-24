@@ -41,7 +41,7 @@ These routes are accessible without authentication:
 """
 
 from flask import Blueprint, make_response, request, Response
-from playstation.models.error_handlers import ExistingEmail
+from playstation.models.exceptions import ExistingEmail
 from playstation.admin.permissions import permission_required
 from playstation.admin.authentications.jwt_authentication import (
     JWTAuthentication,
