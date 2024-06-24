@@ -1100,7 +1100,7 @@ Explain the package
 
 ## File Handler Package
 
-Explain the package
+Explain the package (Amazon and localstorage are supported)
 
 ## Initializing Loggers in Flask
 
