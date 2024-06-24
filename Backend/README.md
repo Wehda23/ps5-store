@@ -7,7 +7,13 @@ This project is about creating a playstation store which represents a simple E-c
 3. [Create Virtual Environment](#create-virtual-environment)
 4. [Run Application](#run-application)
 5. [Database Schema](#database-schema)
-6. [Support my work](#support-my-Work)
+6. [Swagger Application](#swagger-application)
+7. [Users Application](#users-application)
+8. [Register Flask Blueprints to Flask](#register-flask-blueprints-to-flask)
+9. [Serializers Package](#serializers-package)
+10. [File Handler Package](#file-handler-package)
+11. [Initializing Loggers in Flask](#initializing-loggers-in-flask)
+12. [Support my work](#support-my-Work)
 
 ## Introduction
 
