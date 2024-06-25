@@ -111,7 +111,7 @@ class Serializer(SerializerInterface):
                     # Grab the field
                     field: Optional[str] = data.get(method.replace("validate_", ""))
                     # Call each validation method
-                    self._data[field] = getattr(self, method)(field)
+                    getattr(self, method)(field)
                 except Exception as e:
                     self.errors.append(str(e))
 

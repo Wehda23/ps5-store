@@ -276,9 +276,7 @@ class CreateProductSerializer(serializers.Serializer):
         if isinstance(value, FileStorage):
             value: str = image_handler.save_image(
                 value,
-                upload_dir=os.path.join(
-                    MEDIA_DIR, self._data.get("category_id", "random")
-                ),
+                upload_dir=os.path.join(MEDIA_DIR, self._data.get("name", "random")),
             )
         elif value is None:
             # Use default Image
