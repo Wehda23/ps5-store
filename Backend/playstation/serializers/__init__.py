@@ -72,8 +72,6 @@ class Serializer(SerializerInterface):
 
         # validate data
         if self.validate(data):
-            # Create validated_data
-            self._validated_data: dict = data
             return True
         # Data not valid
         return False
@@ -95,6 +93,9 @@ class Serializer(SerializerInterface):
         """
         Method used to validate data.
 
+        Creates:
+            self._validated_data is created when using this function
+
         Returns:
             - bool True in case of validated otherwise False
         """
@@ -103,15 +104,18 @@ class Serializer(SerializerInterface):
         self.__validate_data_fields(data)
         # Get all validate methods
         validate_methods: list[str] = self.__validate_methods()
-
+        # Create validated_data
+        self._validated_data: dict = data
         # Check Validation methods
         if validate_methods:
             for method in validate_methods:
                 try:
+                    # Grab key
+                    key: str = method.replace("validate_", "")
                     # Grab the field
-                    field: Optional[str] = data.get(method.replace("validate_", ""))
+                    value: Optional[str] = data.get(key)
                     # Call each validation method
-                    getattr(self, method)(field)
+                    self._validated_data[key] = getattr(self, method)(value)
                 except Exception as e:
                     self.errors.append(str(e))
 

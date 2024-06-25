@@ -191,12 +191,12 @@ class CreateProductSerializer(serializers.Serializer):
         # Return Validated name
         return value
 
-    def validate_price(self: Self, value: int) -> int:
+    def validate_price(self: Self, value: float) -> float:
         """
         Validation method for price
 
         Args:
-            value (int): price of the product
+            value (float): price of the product
 
         Raises:
             ValueError: Price cannot be negative.
@@ -205,7 +205,7 @@ class CreateProductSerializer(serializers.Serializer):
             Verified price of the product
         """
         # Value must be more than 0
-        if value < 0:
+        if float(value) < 0:
             raise ValueError("Price cannot be negative")
         # Return validated value
         return value
@@ -236,7 +236,7 @@ class CreateProductSerializer(serializers.Serializer):
             Verified stock of the product
         """
         # Check if value is more than 0
-        if value <= 0:
+        if int(value) <= 0:
             raise ValueError("Stock must be more than 0")
         return value
 
