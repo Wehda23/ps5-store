@@ -333,15 +333,25 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
         - 403: Forbidden - If the user does not have the required permissions.
         - 404: Not Found - If the product is not found.
     """
-    # Logic to update product
-    data: dict = request.get_json()
-    # Check product id exists within the data
-    if "id" not in data:
-        # if does not exists embed the product_id as data['id']
-        data["id"] = product_id
-    # Serializer
-    serializer: UpdateProductSerializer = UpdateProductSerializer(data=data)
     try:
+        # Check content Type
+        if request.content_type.startswith("application/json"):
+            # Get data from request
+            data: dict = request.get_data()
+        elif request.content_type.startswith("multipart/form-data"):
+            # Get data from request
+            data: dict = request.form.to_dict()
+            image_file: Optional[FileStorage] = request.files.get("image", None)
+            data["image_url"] = image_file
+        else:
+            # Invalid content type.
+            return make_response("Invalid content type", 415)
+        # Check product id exists within the data
+        if "id" not in data:
+            # if does not exists embed the product_id as data['id']
+            data["id"] = product_id
+        # Serializer
+        serializer: UpdateProductSerializer = UpdateProductSerializer(data=data)
         # Validate serializer
         if serializer.is_valid():
             # Update product

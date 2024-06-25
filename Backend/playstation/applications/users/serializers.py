@@ -209,6 +209,13 @@ class LoginSerializer(serializers.Serializer):
         # Return data
         return data
 
+    def save(self, *args, **kwargs) -> None:
+        """
+        We need to override parent .save() method to avoid any error
+        As this serializer was only meant to validated login infromation
+        """
+        pass
+
 
 # UserUpdateSerializer
 class UpdateUserSerializer(serializers.Serializer):

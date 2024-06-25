@@ -100,6 +100,20 @@ class ProductSerializer(serializers.ModelSerializer):
             "image_url",
         ]
 
+    def to_representation(self, instance: Product) -> dict:
+        """
+        Custom representation of the product
+
+        Adjustment where it also grabs the category of the product with the information
+        """
+        data: dict = super().to_representation(instance)
+        # Get the category data
+        category: Category = Category.query.get(data.pop("category_id"))
+        # Add the category name to the data
+        data["category"] = CategorySerializer(instance=category).data
+        # Return data
+        return data
+
 
 # Get Product serializer
 class GetProductSerializer(serializers.Serializer):
@@ -123,6 +137,8 @@ class GetProductSerializer(serializers.Serializer):
         # Check if the product exists
         if not ProductValidatorByID().validate(value):
             raise ValueError("Product does not exist")
+        # assign instance
+        self.instance: Product = self.to_instance()
         return value
 
     def to_representation(self, instance: object) -> dict:
@@ -136,11 +152,14 @@ class GetProductSerializer(serializers.Serializer):
             dict: representation of the product
         """
         # Get the product by id
-        product: Product = self.to_instance(self._data["id"])
+        product: Product = self.instance
         # Serializer
         serializer = ProductSerializer(instance=product)
         # Return serialized data
         return serializer.data
+
+    def get_products(self, *args, **kwargs) -> list[dict]:
+        pass
 
     def delete(self) -> None:
         """
