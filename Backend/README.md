@@ -188,6 +188,8 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
 
 This API handles the registration of new users by validating the provided data and creating a new user account.
 
+<hr/>
+
 ### Register User Endpoint
 
 - **URL**: `/api/users/register`
@@ -388,7 +390,7 @@ When the login fails due to validation errors or incorrect credentials, the resp
 
 Sure, here is the markdown documentation for the `update_user` endpoint:
 
----
+<hr/>
 
 ### Update User Endpoint
 
@@ -493,7 +495,7 @@ When the update fails due to validation errors or other issues, the response wil
 -   Ensure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
 -   Proper error handling should be implemented to provide feedback to the user in case of update failure.
 
----
+<hr/>
 
 ### Refresh Token Endpoint
 
@@ -593,7 +595,7 @@ When the token refresh fails due to validation errors or other issues, the respo
 -   Ensure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
 -   Proper error handling should be implemented to provide feedback to the user in case of token refresh failure.
 
----
+<hr/>
 
 ### Logout Endpoint
 
@@ -689,6 +691,8 @@ When the logout fails due to validation errors or other issues, the response wil
 
 -   Ensure your backend server is running and accessible at the base URL specified in the `fetch` or `axios` call.
 -   Proper error handling should be implemented to provide feedback to the user in case of logout failure.
+
+<hr/>
 
 ## Products Application
 
@@ -865,6 +869,8 @@ Ensure proper error handling to manage responses for different scenarios like va
 -   Replace `YOUR_JWT_TOKEN_HERE` with a valid JWT token obtained after successful authentication.
 -   The endpoint requires admin permissions (`IsAdmin`) for successful category creation.
 -   Implement appropriate frontend and backend validations to handle edge cases and ensure robustness of the API.
+
+<hr/>
 
 ### Update Product Category Endpoint
 
@@ -1045,6 +1051,8 @@ Ensure proper error handling to manage responses for different scenarios like va
 -   `404`: Not Found - Category not found.
 
 Got it! Here’s an updated README.md description that includes the specific handling for `fetch` and `axios`.
+
+<hr/>
 
 ### Create New Product Endpoint
 
@@ -1375,11 +1383,6 @@ Ensure proper error handling to manage responses for different scenarios like va
 
 <hr/>
 
-Sure! Here is the `README.md` description for the "Delete Product" API and the corresponding Swagger JSON file definition.
-
-### README.md
-
-```md
 ### Delete Product Endpoint
 
 - **URL**: `/api/products/{product_id}`
