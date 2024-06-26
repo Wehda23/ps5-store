@@ -182,21 +182,24 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
 
 ![Swagger](https://i.postimg.cc/CL4jvR4s/Screenshot-58.png)
 
-# Table of Contents
+## Table of Contents
 
 - [User Application](#user-application)
-  - [User Registration](#user-registration-api)
+  - [User Registration API](#user-registration-api)
   - [Register User Endpoint](#register-user-endpoint)
   - [Login User Endpoint](#login-user-endpoint)
   - [Update User Endpoint](#update-user-endpoint)
   - [Refresh Token Endpoint](#refresh-token-endpoint)
   - [Logout Endpoint](#logout-endpoint)
-- [Product Application](#products-application)
-  - [Get All Product Categories](#get-all-product-categories-endpoint)
-  - [Create Product Category](#create-product-category-endpoint)
-  - [Update Product Category](#update-product-category-endpoint)
-  - [Delete Product Category](#delete-product-category-endpoint)
-  - [Create New Product](#create-new-product-endpoint)
+- [Product Application](#product-application)
+  - [Get All Product Categories Endpoint](#get-all-product-categories-endpoint)
+  - [Create Product Category Endpoint](#create-product-category-endpoint)
+  - [Update Product Category Endpoint](#update-product-category-endpoint)
+  - [Delete Product Category Endpoint](#delete-product-category-endpoint)
+  - [Create New Product Endpoint](#create-new-product-endpoint)
+  - [Get Product By ID Endpoint](#get-product-by-id-endpoint)
+  - [Update Product Endpoint](#update-product-endpoint)
+  - [Delete Product Endpoint](#delete-product-endpoint)
 
 
 ## Users Application
