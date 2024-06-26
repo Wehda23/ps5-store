@@ -14,6 +14,7 @@ from .validators import (
     ProductValidatorByName,
     ProductNameByLength,
     ImageUrlValidator,
+    ProductValidatorByImageURL
 )
 import os
 from typing import Any, Self, Optional
@@ -166,7 +167,7 @@ class GetProductSerializer(serializers.Serializer):
         Method to delete a product
         """
         # Make sure the instance is identified
-        self.instance: Product = self.to_instance(self._data["id"])
+        self.instance: Product = self.to_instance()
         # Delete instance
         super().delete()
 
@@ -315,7 +316,7 @@ class UpdateProductSerializer(serializers.Serializer):
 
     class Meta:
         model: Product = Product
-        fields: list = ["id", "name", "description", "price", "stock", "category_id"]
+        fields: list = ["id", "name", "description", "price", "stock", "category_id", "image_url"]
 
     def validate_id(self: Self, value: int) -> int:
         """
@@ -366,7 +367,7 @@ class UpdateProductSerializer(serializers.Serializer):
             Verified price of the product
         """
         # Value must be more than 0
-        if value < 0:
+        if float(value) < 0:
             raise ValueError("Price cannot be negative")
         # Return validated value
         return value
@@ -397,7 +398,7 @@ class UpdateProductSerializer(serializers.Serializer):
             Verified stock of the product
         """
         # Check if value is more than 0
-        if value <= 0:
+        if int(value) <= 0:
             raise ValueError("Stock must be more than 0")
         return value
 
@@ -419,4 +420,35 @@ class UpdateProductSerializer(serializers.Serializer):
             raise ValueError("Category does not exist")
 
         # Return Valiaated Id
+        return value
+
+    def validate_image_url(self: Self, value: Optional[str]) -> str:
+        """
+        Validation method for image_url
+
+        Args:
+            value (str): image_url of the product
+
+        Raises:
+            Url is not valid
+
+        Returns:
+            Verified image_url of the product
+        """
+        # Check if a product with the same image link exists
+        if ProductValidatorByImageURL().validate(value):
+            # Do nothing
+            pass
+        elif isinstance(value, FileStorage):
+            value: str = image_handler.save_image(
+                value,
+                upload_dir=os.path.join(MEDIA_DIR, self._data.get("name", "random")),
+            )
+        elif value is None:
+            # Use default Image
+            value: str = os.path.join(MEDIA_DIR, "default.png")
+        # validate url
+        elif not ImageUrlValidator().validate(value):
+            raise ValueError("Url is not valid")
+        # Return the link to the image
         return value

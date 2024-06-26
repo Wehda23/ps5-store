@@ -443,6 +443,7 @@ def get_all_products(*args, **kwargs) -> Response:
         "sale": request.args.get("sale", 0),  # Check if the product on sale or not
     }
     try:
+        print(queries)
         # Logic to get all products
         return make_response("Products", 200)
     except Exception as e:

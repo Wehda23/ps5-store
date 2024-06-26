@@ -1044,6 +1044,428 @@ Ensure proper error handling to manage responses for different scenarios like va
 -   `403`: Forbidden - Insufficient permissions to perform the operation.
 -   `404`: Not Found - Category not found.
 
+Got it! Here’s an updated README.md description that includes the specific handling for `fetch` and `axios`.
+
+### Create New Product Endpoint
+
+- **URL**: `/api/products`
+- **Method**: `POST`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Admin (IsAdmin)
+
+#### Request Body
+
+The request body can include the following JSON object:
+
+```json
+{
+   "image": "<Image file>",
+   "name": "product new name",
+   "price": 100.0,
+   "description": "product description",
+   "stock": 50,
+   "category_id": 1
+}
+```
+
+In the case of `application/json` content type, the `image_url` field is used instead of `image` and contains the hyperlink to an image.
+
+#### Responses
+
+- **Success (201)**: Product created successfully.
+  - **Body**: `"Product created successfully"`
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors or `"Failed to create product"`
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"Unauthorized"`
+
+- **Error (403)**: Forbidden - User does not have sufficient permissions.
+  - **Body**: `"Forbidden"`
+
+- **Error (415)**: Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'.
+  - **Body**: `"Invalid content type"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/products';
+const data = new FormData();
+data.append('image', imageFile); // imageFile is a file object
+data.append('name', 'NewProduct');
+data.append('price', 100.0);
+data.append('description', 'Product description');
+data.append('stock', 50);
+data.append('category_id', 1);
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+    },
+    body: data
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/products';
+const data = new FormData();
+data.append('image', imageFile); // imageFile is a file object
+data.append('name', 'NewProduct');
+data.append('price', 100.0);
+data.append('description', 'Product description');
+data.append('stock', 50);
+data.append('category_id', 1);
+
+axios.post(url, data, {
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'multipart/form-data'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, and permission denials.
+
+### Status Codes
+
+-   `201`: Created - Product created successfully.
+-   `400`: Bad Request - Invalid input data format.
+-   `401`: Unauthorized - Authentication credentials missing or invalid.
+-   `403`: Forbidden - Insufficient permissions to perform the operation.
+-   `415`: Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'.
+
+<hr/>
+
+### Get Product by ID Endpoint
+
+- **URL**: `/api/products/{product_id}`
+- **Method**: `GET`
+- **Authentication**: None
+- **Permissions**: None
+
+#### Parameters
+
+- **Path Parameter**:
+  - `product_id` (integer, required): The ID of the product to retrieve.
+
+#### Responses
+
+- **Success (200)**: Product retrieved successfully.
+  - **Body**: JSON object representing the product details.
+
+  ```json
+  {
+      "category": {
+          "id": 1,
+          "name": "Play Station"
+      },
+      "description": "Gaming Console",
+      "id": 1,
+      "image_url": "static\\images\\Play Station 5\\82209737.jpg",
+      "name": "Play Station 5",
+      "price": 499.99,
+      "stock": 99
+  }
+  ```
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors.
+
+- **Error (404)**: Not Found - Product not found.
+  - **Body**: `"Failed to grab product information"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/products/1';
+
+fetch(url, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/products/1';
+
+axios.get(url, {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like invalid input data and product not found.
+
+### Status Codes
+
+- `200`: OK - Product retrieved successfully.
+- `400`: Bad Request - Invalid input data format.
+- `404`: Not Found - Product not found.
+
+<hr/>
+
+### Update Product Endpoint
+
+- **URL**: `/api/products/{product_id}`
+- **Method**: `PUT`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Admin (IsAdmin)
+
+#### Parameters
+
+- **Path Parameter**:
+  - `product_id` (integer, required): The ID of the product to update.
+
+#### Request Body
+
+The request body can include the following JSON object:
+
+```json
+{
+  "image": "<Image file>",
+  "name": "Updated Product Name",
+  "price": 150.0,
+  "description": "Updated product description",
+  "stock": 30,
+  "category_id": 2
+}
+```
+
+In the case of `application/json` content type, the `image_url` field is used instead of `image` and contains the hyperlink to an image.
+
+#### Responses
+
+- **Success (200)**: Product updated successfully.
+  - **Body**: `"Product updated successfully"`
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors or `"Failed to update product"`
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"Unauthorized"`
+
+- **Error (403)**: Forbidden - User does not have sufficient permissions.
+  - **Body**: `"Forbidden"`
+
+- **Error (404)**: Not Found - Product not found.
+  - **Body**: `"Product not found"`
+
+- **Error (415)**: Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'.
+  - **Body**: `"Invalid content type"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/products/1';
+const data = new FormData();
+data.append('image', imageFile); // imageFile is a file object
+data.append('name', 'Updated Product Name');
+data.append('price', 150.0);
+data.append('description', 'Updated product description');
+data.append('stock', 30);
+data.append('category_id', 2);
+
+fetch(url, {
+    method: 'PUT',
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+    },
+    body: data
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/products/1';
+const data = new FormData();
+data.append('image', imageFile); // imageFile is a file object
+data.append('name', 'Updated Product Name');
+data.append('price', 150.0);
+data.append('description', 'Updated product description');
+data.append('stock', 30);
+data.append('category_id', 2);
+
+axios.put(url, data, {
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'multipart/form-data'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, and permission denials.
+
+### Status Codes
+
+- `200`: OK - Product updated successfully.
+- `400`: Bad Request - Invalid input data format.
+- `401`: Unauthorized - Authentication credentials missing or invalid.
+- `403`: Forbidden - Insufficient permissions to perform the operation.
+- `404`: Not Found - Product not found.
+- `415`: Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'.
+
+<hr/>
+
+Sure! Here is the `README.md` description for the "Delete Product" API and the corresponding Swagger JSON file definition.
+
+### README.md
+
+```md
+### Delete Product Endpoint
+
+- **URL**: `/api/products/{product_id}`
+- **Method**: `DELETE`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Admin (IsAdmin)
+
+#### Parameters
+
+- **Path Parameter**:
+  - `product_id` (integer, required): The ID of the product to delete.
+
+#### Responses
+
+- **Success (200)**: Product deleted successfully.
+  - **Body**: `"Product Deleted"`
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors.
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"Unauthorized"`
+
+- **Error (403)**: Forbidden - User does not have sufficient permissions.
+  - **Body**: `"Forbidden"`
+
+- **Error (404)**: Not Found - Product not found.
+  - **Body**: `"Failed to delete product"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/products/1';
+
+fetch(url, {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => response.text())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/products/1';
+
+axios.delete(url, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like invalid input data, authentication failures, and permission denials.
+
+### Status Codes
+
+- `200`: OK - Product deleted successfully.
+- `400`: Bad Request - Invalid input data format.
+- `401`: Unauthorized - Authentication credentials missing or invalid.
+- `403`: Forbidden - Insufficient permissions to perform the operation.
+- `404`: Not Found - Product not found.
+
+<hr/>
 
 ## Register Flask Blueprints to Flask
 

@@ -166,14 +166,11 @@ class LoginSerializer(serializers.Serializer):
         # Grab email
         email: str = self._data.get("email")
         # Check if user exists
-        user: User = self.validate_email(email)
+        self.validate_email(email)
 
         # Check if password is correct
-        if not user.check_password(value):
+        if not self.instance.check_password(value):
             raise Exception("Incorrect password")
-
-        # Assign self.instance
-        self.instance: User = user
 
         return value
 
@@ -190,7 +187,10 @@ class LoginSerializer(serializers.Serializer):
         if not user:
             raise Exception("User does not exist")
 
-        return user
+        # Assign self.instance
+        self.instance: User = user
+
+        return value
 
     def to_representation(self, instance: User) -> dict:
         """

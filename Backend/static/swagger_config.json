@@ -421,6 +421,284 @@
                 },
                 "security": [{ "Bearer": [] }]
             }
+        },
+        "/products": {
+            "post": {
+                "tags": ["Products"],
+                "summary": "Create a new product",
+                "description": "Endpoint to create a new product with authentication and permission checks.",
+                "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Product object that needs to be created",
+                    "required": true,
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "image": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Image file"
+                        },
+                        "name": {
+                        "type": "string",
+                        "description": "Product name"
+                        },
+                        "price": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Price of the product"
+                        },
+                        "description": {
+                        "type": "string",
+                        "description": "Product description"
+                        },
+                        "stock": {
+                        "type": "integer",
+                        "description": "Quantity of the product available"
+                        },
+                        "category_id": {
+                        "type": "integer",
+                        "description": "Category ID"
+                        }
+                    },
+                    "example": {
+                        "name": "NewProduct",
+                        "price": 100.0,
+                        "description": "Product description",
+                        "stock": 50,
+                        "category_id": 1
+                    }
+                    }
+                }
+                ],
+                "responses": {
+                "201": {
+                    "description": "Product created successfully",
+                    "schema": {
+                    "type": "string",
+                    "example": "Product created successfully"
+                    }
+                },
+                "400": {
+                    "description": "Bad Request - Invalid input data",
+                    "schema": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                    }
+                },
+                "401": {
+                    "description": "Unauthorized - Authentication credentials missing or invalid",
+                    "schema": { "type": "string" }
+                },
+                "403": {
+                    "description": "Forbidden - Insufficient permissions",
+                    "schema": { "type": "string" }
+                },
+                "415": {
+                    "description": "Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'",
+                    "schema": { "type": "string" }
+                }
+                },
+                "security": [{ "Bearer": [] }]
+            }
+        },
+    "/products/{product_id}": {
+        "get": {
+            "tags": ["Products"],
+            "summary": "Get a product by ID",
+            "description": "Endpoint to retrieve a product by its ID.",
+            "parameters": [
+            {
+                "in": "path",
+                "name": "product_id",
+                "type": "integer",
+                "required": true,
+                "description": "Product ID"
+            }
+            ],
+            "responses": {
+            "200": {
+                "description": "Product retrieved successfully",
+                "schema": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" }
+                    }
+                    },
+                    "description": { "type": "string" },
+                    "id": { "type": "integer" },
+                    "image_url": { "type": "string" },
+                    "name": { "type": "string" },
+                    "price": { "type": "number", "format": "float" },
+                    "stock": { "type": "integer" }
+                },
+                "example": {
+                    "category": {
+                    "id": 1,
+                    "name": "Play Station"
+                    },
+                    "description": "Gaming Console",
+                    "id": 1,
+                    "image_url": "static\\images\\Waheed Khaled\\82209737.jpg",
+                    "name": "Play Station 5",
+                    "price": 499.99,
+                    "stock": 99
+                }
+                }
+            },
+            "400": {
+                "description": "Bad Request - Invalid input data",
+                "schema": {
+                "type": "array",
+                "items": { "type": "string" }
+                }
+            },
+            "404": {
+                "description": "Not Found - Product not found",
+                "schema": { "type": "string" }
+            }
+            }
+        },
+        "put": {
+            "tags": ["Products"],
+            "summary": "Update a product",
+            "description": "Endpoint to update a product with authentication and permission checks.",
+            "parameters": [
+                {
+                "in": "path",
+                "name": "product_id",
+                "type": "integer",
+                "required": true,
+                "description": "Product ID"
+                },
+                {
+                "in": "body",
+                "name": "body",
+                "description": "Product object that needs to be updated",
+                "required": true,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                    "image": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Image file"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Product name"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Price of the product"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Product description"
+                    },
+                    "stock": {
+                        "type": "integer",
+                        "description": "Quantity of the product available"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "description": "Category ID"
+                    }
+                    },
+                    "example": {
+                    "name": "Updated Product Name",
+                    "price": 150.0,
+                    "description": "Updated product description",
+                    "stock": 30,
+                    "category_id": 2
+                    }
+                }
+                }
+            ],
+            "responses": {
+                "200": {
+                "description": "Product updated successfully",
+                "schema": {
+                    "type": "string",
+                    "example": "Product updated successfully"
+                }
+                },
+                "400": {
+                "description": "Bad Request - Invalid input data",
+                "schema": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
+                },
+                "401": {
+                "description": "Unauthorized - Authentication credentials missing or invalid",
+                "schema": { "type": "string" }
+                },
+                "403": {
+                "description": "Forbidden - Insufficient permissions",
+                "schema": { "type": "string" }
+                },
+                "404": {
+                "description": "Not Found - Product not found",
+                "schema": { "type": "string" }
+                },
+                "415": {
+                "description": "Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'",
+                "schema": { "type": "string" }
+                }
+            },
+            "security": [{ "Bearer": [] }]
+        },
+        "delete": {
+            "tags": ["Products"],
+            "summary": "Delete a product",
+            "description": "Endpoint to delete a product with authentication and permission checks.",
+            "parameters": [
+                {
+                "in": "path",
+                "name": "product_id",
+                "type": "integer",
+                "required": true,
+                "description": "Product ID"
+                }
+            ],
+            "responses": {
+                "200": {
+                "description": "Product deleted successfully",
+                "schema": {
+                    "type": "string",
+                    "example": "Product Deleted"
+                }
+                },
+                "400": {
+                "description": "Bad Request - Invalid input data",
+                "schema": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
+                },
+                "401": {
+                "description": "Unauthorized - Authentication credentials missing or invalid",
+                "schema": { "type": "string" }
+                },
+                "403": {
+                "description": "Forbidden - Insufficient permissions",
+                "schema": { "type": "string" }
+                },
+                "404": {
+                "description": "Not Found - Product not found",
+                "schema": { "type": "string" }
+                }
+            },
+            "security": [{ "Bearer": [] }]
         }
     }
+}
 }
