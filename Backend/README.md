@@ -182,6 +182,23 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
 
 ![Swagger](https://i.postimg.cc/CL4jvR4s/Screenshot-58.png)
 
+# Table of Contents
+
+- [User Application](#user-application)
+  - [User Registration](#user-registration-api)
+  - [Register User Endpoint](#register-user-endpoint)
+  - [Login User Endpoint](#login-user-endpoint)
+  - [Update User Endpoint](#update-user-endpoint)
+  - [Refresh Token Endpoint](#refresh-token-endpoint)
+  - [Logout Endpoint](#logout-endpoint)
+- [Product Application](#products-application)
+  - [Get All Product Categories](#get-all-product-categories-endpoint)
+  - [Create Product Category](#create-product-category-endpoint)
+  - [Update Product Category](#update-product-category-endpoint)
+  - [Delete Product Category](#delete-product-category-endpoint)
+  - [Create New Product](#create-new-product-endpoint)
+
+
 ## Users Application
 
 ### User Registration API
