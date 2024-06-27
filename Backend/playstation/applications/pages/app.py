@@ -84,3 +84,27 @@ def get_static_image(file_path: str) -> Response:
         # Error Log the error
         logger.error(f"Error getting image {e}, path={relative_path}")
         return send_from_directory(MEDIA_DIR, "default.png", as_attachment=False)
+
+
+# JavaScript handling route
+@pages.route("/js/<path:file_name>")
+def get_static_js(file_name: str) -> Response:
+    """
+    Get a JS file from the JavaScript files.
+    """
+    if file_name.endswith(".js"):
+        javascript_dir = os.path.join(STATIC_DIR, "js")
+        return send_from_directory(javascript_dir, file_name, as_attachment=False)
+    abort(404)
+
+
+# CSS handling route
+@pages.route("/css/<path:file_name>")
+def get_static_css(file_name: str) -> Response:
+    """
+    Get a CSS file from the CSS files.
+    """
+    if file_name.endswith(".css"):
+        css_dir = os.path.join(STATIC_DIR, "css")
+        return send_from_directory(css_dir, file_name, as_attachment=False)
+    abort(404)
