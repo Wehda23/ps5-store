@@ -13,10 +13,14 @@
 #### Public Routes
 - /Products/register: Register a new user
 - /Products/login: Login a user
+- /images/<str:file_path>
 """
 
-from flask import Blueprint, abort, render_template
-from playstation.settings import TEMPLATES_DIR, STATIC_DIR
+from flask import Blueprint, abort, render_template, send_from_directory, Response
+from playstation.settings import TEMPLATES_DIR, STATIC_DIR, MEDIA_DIR
+from .serializer import CheckImageSerializer
+from . import logger
+import os
 
 # Blueprint
 pages: Blueprint = Blueprint(
@@ -49,3 +53,34 @@ def react_app() -> str:
     Test Integrating react application
     """
     return render_template("react_test/index.html")
+
+
+# Image handling route
+@pages.route("/images/<path:file_path>")
+def get_static_image(file_path: str) -> Response:
+    """
+    Get an image from the media folder
+    """
+    # Get the image
+    image: str = file_path.split("/")[-1]
+    # Sub Directory
+    directory_path: str = os.path.join(MEDIA_DIR, file_path.split("/")[0])
+    # Get the full relative path to the image
+    relative_path: str = os.path.join(MEDIA_DIR, file_path)
+    # Normalize
+    relative_path: str = os.path.normpath(relative_path)
+    directory_path: str = os.path.normpath(directory_path)
+    # Check if the image exists
+    data = {"image_url": relative_path.replace(STATIC_DIR, "")}
+    try:
+        # Check if the image exists
+        serializer = CheckImageSerializer(data=data)
+        if serializer.is_valid():
+            # Return the image
+            return send_from_directory(directory_path, image, as_attachment=False)
+        # Error
+        return send_from_directory(MEDIA_DIR, "default.png", as_attachment=False)
+    except Exception as e:
+        # Error Log the error
+        logger.error(f"Error getting image {e}, path={relative_path}")
+        return send_from_directory(MEDIA_DIR, "default.png", as_attachment=False)

@@ -14,7 +14,7 @@ from .validators import (
     ProductValidatorByName,
     ProductNameByLength,
     ImageUrlValidator,
-    ProductValidatorByImageURL
+    ProductValidatorByImageURL,
 )
 import os
 from typing import Any, Self, Optional
@@ -297,6 +297,7 @@ class CreateProductSerializer(serializers.Serializer):
             value: str = image_handler.save_image(
                 value,
                 upload_dir=os.path.join(MEDIA_DIR, self._data.get("name", "random")),
+                safe=True,  # Specifiy safe to replace the entire static directory from the path.
             )
         elif value is None:
             # Use default Image
@@ -316,7 +317,15 @@ class UpdateProductSerializer(serializers.Serializer):
 
     class Meta:
         model: Product = Product
-        fields: list = ["id", "name", "description", "price", "stock", "category_id", "image_url"]
+        fields: list = [
+            "id",
+            "name",
+            "description",
+            "price",
+            "stock",
+            "category_id",
+            "image_url",
+        ]
 
     def validate_id(self: Self, value: int) -> int:
         """
@@ -347,8 +356,8 @@ class UpdateProductSerializer(serializers.Serializer):
             raise ValueError("Name should be between 3 and 255 characters")
 
         # Cehck if product with same name exists
-        if ProductValidatorByName().validate(value):
-            raise ValueError("Product with same name already exists")
+        if not ProductValidatorByName().validate(value):
+            raise ValueError("Product with same that name does not exists")
 
         # Return Validated name
         return value

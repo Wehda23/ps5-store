@@ -142,7 +142,8 @@ class ProductValidatorByImageURL(BaseValidator):
     """
     Check if a product with the same image link exists
     """
-    def _validate_image_url(url: str) -> bool:
+
+    def _validate_image_url(self: Self, url: str) -> bool:
         """
         Validate if the image URL is a valid HTTPS URL and points to an image file.
         """

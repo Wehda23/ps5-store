@@ -337,7 +337,7 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
         # Check content Type
         if request.content_type.startswith("application/json"):
             # Get data from request
-            data: dict = request.get_data()
+            data: dict = request.get_json()
         elif request.content_type.startswith("multipart/form-data"):
             # Get data from request
             data: dict = request.form.to_dict()
@@ -359,7 +359,7 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
             return make_response("Product updated successfully", 200)
         # Logic to update product
         error: list[str] = serializer.errors
-        return make_response("Product Updated", 400)
+        return make_response(error, 400)
     except Exception as e:
         error: str = str(e)
         logger.error(error)

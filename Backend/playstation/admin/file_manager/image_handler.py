@@ -6,7 +6,7 @@ import os
 from PIL import Image
 from .file_handler import FileHandler
 from .exceptions import InvalidFileTypeException
-from playstation.settings import MEDIA_DIR, ALLOW_IMAGE_TYPES
+from playstation.settings import MEDIA_DIR, ALLOW_IMAGE_TYPES, STATIC_DIR
 
 
 class ImageHandler(FileHandler):
@@ -24,6 +24,7 @@ class ImageHandler(FileHandler):
         file,
         upload_dir: str = MEDIA_DIR,
         allowed_extensions: set = ALLOW_IMAGE_TYPES,
+        safe: bool = False,
     ):
         """
         Saves the provided image file to the specified upload directory.
@@ -32,6 +33,7 @@ class ImageHandler(FileHandler):
             file: The image file to be saved.
             upload_dir (str): The directory where the file should be saved.
             allowed_extensions (set, optional): A set of allowed file extensions. Defaults to {'png', 'jpg', 'jpeg'}.
+            safe (bool, optional): Whether to save the file in a safe manner. Defaults to False
 
         Returns:
             str: The path where the image was saved.
@@ -43,7 +45,7 @@ class ImageHandler(FileHandler):
             raise InvalidFileTypeException(f"Invalid file type: {file.filename}")
         file_path = self.save_file(file, upload_dir)
         self._validate_image(file_path)
-        return file_path
+        return file_path if not safe else file_path.replace(STATIC_DIR, "")
 
     def _is_allowed_file(self, filename, allowed_extensions):
         """
