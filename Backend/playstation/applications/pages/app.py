@@ -75,7 +75,7 @@ def get_static_image(file_path: str) -> Response:
     try:
         # Check if the image exists
         serializer = CheckImageSerializer(data=data)
-        if serializer.is_valid():
+        if serializer.is_valid() and ".." not in file_path:
             # Return the image
             return send_from_directory(directory_path, image, as_attachment=False)
         # Error
@@ -92,7 +92,7 @@ def get_static_js(file_name: str) -> Response:
     """
     Get a JS file from the JavaScript files.
     """
-    if file_name.endswith(".js"):
+    if file_name.endswith(".js") and ".." not in file_name:
         javascript_dir = os.path.join(STATIC_DIR, "js")
         return send_from_directory(javascript_dir, file_name, as_attachment=False)
     abort(404)
@@ -104,7 +104,7 @@ def get_static_css(file_name: str) -> Response:
     """
     Get a CSS file from the CSS files.
     """
-    if file_name.endswith(".css"):
+    if file_name.endswith(".css") and ".." not in file_name:
         css_dir = os.path.join(STATIC_DIR, "css")
         return send_from_directory(css_dir, file_name, as_attachment=False)
     abort(404)

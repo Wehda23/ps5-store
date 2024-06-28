@@ -11,8 +11,10 @@ from .serializer import (
     Representable,
     Creatable,
     ToInstance,
+    ExtendsPydantic,
 )
 from typing import Self, NoReturn, Optional, Iterable
+from pydantic import BaseModel, ValidationError
 
 
 # Serializer Interface
@@ -25,6 +27,7 @@ class SerializerInterface(
     Representable,
     Creatable,
     ToInstance,
+    ExtendsPydantic,
 ):
     pass
 
@@ -118,6 +121,9 @@ class Serializer(SerializerInterface):
                     self._validated_data[key] = getattr(self, method)(value)
                 except Exception as e:
                     self.errors.append(str(e))
+        # Validate using pydantic
+        if self.pydantic_model and isinstance(self.pydantic_model, BaseModel):
+            getattr(self, "validate_pydantic")(self.validated_data)
 
         return not bool(self.errors)
 
@@ -147,6 +153,16 @@ class Serializer(SerializerInterface):
             if method.startswith("validate_")
             if callable(getattr(self, method))
         ]
+
+    def validate_pydantic(self: Self, validated_data: dict) -> Optional[BaseModel]:
+        """Validate data using Pydantic."""
+        try:
+            return self.pydantic_model(**validated_data)
+        except ValidationError as e:
+            self.errors.extends(**e.errors())
+        except Exception as e:
+            self.errors.append(str(e))
+        return None
 
     def save(self: Self) -> object:
         """

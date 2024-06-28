@@ -3,7 +3,8 @@
 """
 
 from abc import ABC, abstractmethod
-from typing import Optional, Iterable, NoReturn, Union, Any
+from typing import Optional, Iterable, Self
+from pydantic import BaseModel
 
 
 # Abstract Serializer
@@ -136,7 +137,7 @@ class AbstractSerializer(ABC):
         return False
 
     @property
-    def errors(self) -> Optional[dict]:
+    def errors(self) -> Optional[list]:
         return self._errors
 
 
@@ -187,4 +188,12 @@ class Creatable(ABC):
 class ToInstance(ABC):
     @abstractmethod
     def to_instance(self, data: dict) -> object:
+        pass
+
+
+class ExtendsPydantic(ABC):
+    pydantic_model: BaseModel | None
+
+    @abstractmethod
+    def validate_pydantic(self: Self, data: dict) -> None:
         pass
