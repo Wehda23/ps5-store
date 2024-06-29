@@ -84,6 +84,8 @@ from .serializers import (
     GetProductSerializer,
     UpdateProductSerializer,
 )
+from .serializers.pydantic_serializer import ProductsQuery
+from pydantic import ValidationError
 from . import logger
 
 
@@ -428,24 +430,17 @@ def get_all_products(*args, **kwargs) -> Response:
     Error Codes:
         - 404: Not Found - If no products are found.
     """
-    queries: dict = {
-        "category": request.args.get("category", None),  # Category Id
-        "search": request.args.get(
-            "search", None
-        ),  # Word to search for in name of product or in description
-        "sort_by": request.args.get("sort_by", None),  # Sort by certain attribute
-        "start": request.args.get("start", 0),  # point of the start of products
-        "products": request.args.get(
-            "products", 10
-        ),  # How many products to retrieve from start point
-        "low_price": request.args.get("low_price", None),  # Lowest price point
-        "high_price": request.args.get("high_price", None),  # highest price point
-        "sale": request.args.get("sale", 0),  # Check if the product on sale or not
-    }
+    queries: dict = request.args.to_dict()
     try:
-        print(queries)
+        serializer = ProductsQuery(**queries)
+        print(serializer.model_dump())
         # Logic to get all products
         return make_response("Products", 200)
+    except ValidationError as e:
+        # Grab error to logs
+        errors: list = e.errors()
+        logger.error(errors)
+        return make_response("Failed to retrieve products", 404)
     except Exception as e:
         error: str = str(e)
         logger.error(error)

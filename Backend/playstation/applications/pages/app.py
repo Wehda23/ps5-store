@@ -1,19 +1,30 @@
 """
-# Application that handles the Pages Application
+# Pages Application
 
-- This is the application that handles all user related actions such as new account creation, profile updates, registeration, login etc..
+This module handles the rendering of templates for various pages and serves static files such as images, JavaScript, and CSS files.
 
-## Page routes
+## Views
 
-##### Protected Routes
-- /Products/me: Get the current user's profile
-- /Products/me/update: Update the current user's profile
-- /Products/me/delete: Delete the current user's account
+### Home Page
+- **/**: Render the home page.
 
-#### Public Routes
-- /Products/register: Register a new user
-- /Products/login: Login a user
-- /images/<str:file_path>
+### Login Page
+- **/lobby**: Render the login page.
+
+### React App Page
+- **/react_app**: Render a page to test integrating a React application.
+
+### Static File Serving
+
+#### Images
+- **/images/<path:file_path>**: Serve images from the media folder.
+
+#### JavaScript
+- **/js/<path:file_name>**: Serve JavaScript files from the static directory.
+
+#### CSS
+- **/css/<path:file_name>**: Serve CSS files from the static directory.
+
 """
 
 from flask import Blueprint, abort, render_template, send_from_directory, Response
@@ -28,69 +39,77 @@ pages: Blueprint = Blueprint(
 )
 
 
-# Home page
 @pages.route("/")
 def home_page() -> str:
     """
-    Home page route
+    Render the home page.
+
+    Returns:
+        str: The rendered home page template.
     """
     return render_template("home_page/index.html")
 
 
-# login page
 @pages.route("/lobby")
 def login_page() -> str:
     """
-    Login page route
+    Render the login page.
+
+    Returns:
+        str: The rendered login page template.
     """
     return render_template("login_page/index.html")
 
 
-# login page
 @pages.route("/react_app")
 def react_app() -> str:
     """
-    Test Integrating react application
+    Render a page to test integrating a React application.
+
+    Returns:
+        str: The rendered React test page template.
     """
     return render_template("react_test/index.html")
 
 
-# Image handling route
 @pages.route("/images/<path:file_path>")
 def get_static_image(file_path: str) -> Response:
     """
-    Get an image from the media folder
+    Serve an image from the media folder.
+
+    Args:
+        file_path (str): The relative path to the image file.
+
+    Returns:
+        Response: The image file response or a default image if the file is not found or invalid.
     """
-    # Get the image
     image: str = file_path.split("/")[-1]
-    # Sub Directory
     directory_path: str = os.path.join(MEDIA_DIR, file_path.split("/")[0])
-    # Get the full relative path to the image
     relative_path: str = os.path.join(MEDIA_DIR, file_path)
-    # Normalize
-    relative_path: str = os.path.normpath(relative_path)
-    directory_path: str = os.path.normpath(directory_path)
-    # Check if the image exists
+    relative_path = os.path.normpath(relative_path)
+    directory_path = os.path.normpath(directory_path)
     data = {"image_url": relative_path.replace(STATIC_DIR, "")}
+
     try:
-        # Check if the image exists
         serializer = CheckImageSerializer(data=data)
         if serializer.is_valid() and ".." not in file_path:
-            # Return the image
             return send_from_directory(directory_path, image, as_attachment=False)
-        # Error
         return send_from_directory(MEDIA_DIR, "default.png", as_attachment=False)
     except Exception as e:
-        # Error Log the error
         logger.error(f"Error getting image {e}, path={relative_path}")
         return send_from_directory(MEDIA_DIR, "default.png", as_attachment=False)
 
 
-# JavaScript handling route
 @pages.route("/js/<path:file_name>")
 def get_static_js(file_name: str) -> Response:
     """
-    Get a JS file from the JavaScript files.
+    Serve a JavaScript file from the static directory.
+
+    Args:
+        file_name (str): The name of the JavaScript file.
+
+    Returns:
+        Response: The JavaScript file response or a 404 error if the file is not found or invalid.
     """
     if file_name.endswith(".js") and ".." not in file_name:
         javascript_dir = os.path.join(STATIC_DIR, "js")
@@ -98,11 +117,16 @@ def get_static_js(file_name: str) -> Response:
     abort(404)
 
 
-# CSS handling route
 @pages.route("/css/<path:file_name>")
 def get_static_css(file_name: str) -> Response:
     """
-    Get a CSS file from the CSS files.
+    Serve a CSS file from the static directory.
+
+    Args:
+        file_name (str): The name of the CSS file.
+
+    Returns:
+        Response: The CSS file response or a 404 error if the file is not found or invalid.
     """
     if file_name.endswith(".css") and ".." not in file_name:
         css_dir = os.path.join(STATIC_DIR, "css")
