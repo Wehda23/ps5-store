@@ -191,7 +191,7 @@ class ToInstance(ABC):
         pass
 
 
-class ExtendsPydantic:
+class ExtendsPydantic(ABC):
     pydantic_model: Optional[BaseModel] = None
 
     @abstractmethod

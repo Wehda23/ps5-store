@@ -16,6 +16,7 @@ from .validators import (
     ImageUrlValidator,
     ProductValidatorByImageURL,
 )
+from .pydantic_serializer import ProductsQuery
 import os
 from typing import Any, Self, Optional
 
@@ -159,9 +160,6 @@ class GetProductSerializer(serializers.Serializer):
         # Return serialized data
         return serializer.data
 
-    def get_products(self, *args, **kwargs) -> list[dict]:
-        pass
-
     def delete(self) -> None:
         """
         Method to delete a product
@@ -171,6 +169,21 @@ class GetProductSerializer(serializers.Serializer):
         # Delete instance
         super().delete()
 
+    @classmethod
+    def get_products(cls: "GetProductSerializer", queries: dict[str, str]) -> Optional[list[dict]]:
+        """
+        Method to get products
+        Args:
+            queries (dict[str, str]): queries to filter products
+        Returns:
+            Optional[list[dict]]: list of products
+        """
+        # Get the products
+        pydantic_model: ProductsQuery = ProductsQuery(**queries)
+        # Get verified queries
+        queries: dict[str, str] = pydantic_model.model_dump()
+
+        return queries
 
 # Create Product serializer
 class CreateProductSerializer(serializers.Serializer):

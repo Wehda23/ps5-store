@@ -47,7 +47,7 @@ class ProductsQuery(BaseModel):
     @classmethod
     def check_category(cls, v: str):
         """Check if category is valid"""
-        if v.isalpha() or v.isalnum():
-            if isinstance(v, str) and v != 'all':
-                raise ValueError('Category must be an integer or the string "all"')
+        if isinstance(v, str) and v != 'all' and v.isalpha():
+            # By default return all
+            return "all"
         return v
