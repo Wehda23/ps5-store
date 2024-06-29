@@ -64,9 +64,9 @@ These routes are accessible without authentication:
     - **sort_by** (str, optional): Sort products by specified field (e.g., price, name).
     - **start** (int, optional): Specify the page number for pagination.
     - **products** (int, optional): Specify the number of products per page for pagination.
-    - **low_price** (int, optional): Specify the lowerst price for product.
+    - **low_price** (int, optional): Specify the lowest price for product.
     - **high_price** (int, optional): Specify the highest price for the product.
-    - **sale** (int, optional): Specify the sale for the product.
+    - **sale** (bool, optional): Specify if the product is on sale.
 """
 
 from flask import Blueprint, Response, make_response, request
@@ -74,7 +74,7 @@ from typing import Optional
 from playstation.admin.authentications import authentication_classess
 from playstation.admin.authentications.jwt_authentication import JWTAuthentication
 from playstation.admin.permissions import permission_required
-from werkzeug.datastructures.file_storage import FileStorage
+from werkzeug.datastructures import FileStorage
 from .permissions import IsAdmin
 from .serializers import (
     CategorySerializer,
@@ -84,6 +84,8 @@ from .serializers import (
     GetProductSerializer,
     UpdateProductSerializer,
 )
+from .serializers.exceptions import InvalidCategoriesDelimiter, InvalidCategoriesOption
+from sqlalchemy.exc import SQLAlchemyError
 from pydantic import ValidationError
 from . import logger
 
@@ -223,7 +225,7 @@ def delete_category(category_id: int, *args, **kwargs) -> Response:
         if serializer.is_valid():
             # Delete category
             serializer.delete()
-            return make_response("Category deleted !!", 201)
+            return make_response("Category deleted successfully", 200)
         # Error
         error: list[str] = serializer.errors
         return make_response(error, 404)
@@ -273,6 +275,10 @@ def create_product(*args, **kwargs) -> Response:
         # Error
         error: list[str] = serializer.errors
         return make_response(error, 400)
+    except SQLAlchemyError as e:
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Database error while creating product", 500)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
@@ -361,6 +367,10 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
         # Logic to update product
         error: list[str] = serializer.errors
         return make_response(error, 400)
+    except SQLAlchemyError as e:
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Database error while updating product", 500)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
@@ -397,10 +407,14 @@ def delete_product(product_id: int, *args, **kwargs) -> Response:
         if serializer.is_valid():
             # Logic to delete product
             serializer.delete()
-            return make_response("Product Deleted", 200)
+            return make_response("Product deleted successfully", 200)
         # error
         error: list[str] = serializer.errors
         return make_response(error, 400)
+    except SQLAlchemyError as e:
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Database error while deleting product", 500)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
@@ -438,7 +452,17 @@ def get_all_products(*args, **kwargs) -> Response:
         # Grab error to logs
         errors: list = e.errors()
         return make_response(errors, 404)
+    except (InvalidCategoriesOption, InvalidCategoriesDelimiter) as e:
+        # Grab error to logs
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Forbidden Request", 403)
+    except SQLAlchemyError as e:
+        # Grab error to logs
+        error: str = str(e)
+        logger.error(error)
+        return make_response("Failed to retrieve products", 500)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
-        return make_response("Failed to retrieve products", 404)
+        return make_response("Failed to retrieve products", 500)

@@ -1,9 +1,9 @@
 """
-# Module contains serializers for product query api
+# Module: products_query_serializer
+# This module contains serializers for the product query API.
+# It includes the definition of query parameters and validation logic using Pydantic.
 """
 
-from playstation import serializers
-from playstation.models.products import Product, Category
 from pydantic import (
     BaseModel,
     StrictInt,
@@ -14,9 +14,13 @@ from pydantic import (
 )
 from typing import Union, Optional
 from enum import Enum
+from .exceptions import InvalidCategoriesDelimiter, InvalidCategoriesOption
 
-# Choices for sort
+# Enum for sorting choices
 class SortByChoices(str, Enum):
+    """
+    Enum class for sorting options.
+    """
     price = "price"
     price_desc = "price_desc"
     name = "name"
@@ -25,29 +29,39 @@ class SortByChoices(str, Enum):
     date_desc = "date_desc"
 
 class ProductsQuery(BaseModel):
-    """Serializer for product query api"""
-    # Configuration Pydantic V2
+    """
+    Serializer for product query API.
+    Defines the query parameters and their validation logic using Pydantic.
+    """
+
+    # Configuration for Pydantic V2
     model_config = ConfigDict(
-        extra = 'forbid',
-        validate_default = True, # Ensure default values are validated
-        use_enum_values = True  # Serialize enum fields using their values
+        extra='forbid',  # Forbid extra fields not defined in the model
+        validate_default=True,  # Ensure default values are validated
+        use_enum_values=True  # Serialize enum fields using their values
     )
 
     # Fields
     category: Union[StrictInt, StrictStr] = 'all'  # Field that can be an int (ID) or the string "all"
-    search: Optional[StrictStr] = None  # Optional Field
-    sort_by: SortByChoices = SortByChoices.date  # Optional Field
-    start: int = Field(0, ge=0)  # Optional Field, int
-    products: int = Field(10, ge=10, le=40)  # Optional Field, int
-    low_price: Optional[int] = Field(None, ge=0)  # Optional Field, int or None
-    high_price: Optional[int] = Field(None, ge=0)  # Optional Field, int or None
-    sale: bool = False  # Optional Field, StrictBool
+    search: Optional[StrictStr] = None  # Optional search field
+    sort_by: SortByChoices = SortByChoices.date  # Optional sort by field, default is 'date'
+    start: int = Field(0, ge=0)  # Optional start field, must be >= 0
+    products: int = Field(10, ge=10, le=40)  # Optional products field, must be between 10 and 40
+    low_price: Optional[int] = Field(None, ge=0)  # Optional low price field, must be >= 0
+    high_price: Optional[int] = Field(None, ge=0)  # Optional high price field, must be >= 0
+    sale: bool = False  # Optional sale field, default is False
 
     @field_validator('category')
     @classmethod
     def check_category(cls, v: str):
-        """Check if category is valid"""
-        if isinstance(v, str) and v != 'all' and v.isalpha():
-            # By default return all
-            return "all"
+        """
+        Validator method for the 'category' field.
+        Ensures the category is either 'all', an integer, or a valid delimited string of integers.
+        """
+        if isinstance(v, str) and v != 'all':
+            if v.isalpha():
+                raise InvalidCategoriesOption(f"Only allowed string option is 'all', you entered: {v}")
+            # Check if the value is not entirely numeric and not a valid delimited string of numbers
+            if not v.isdigit() and not v.replace("-", "").isdigit():
+                raise InvalidCategoriesDelimiter(f"Only allowed category delimiter is '-', you entered: {v}")
         return v

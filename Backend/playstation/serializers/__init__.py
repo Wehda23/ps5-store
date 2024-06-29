@@ -154,8 +154,9 @@ class Serializer(SerializerInterface):
         return [
             method
             for method in dir(self)
-            if method.startswith("validate_")
-            if callable(getattr(self, method))
+            if method.startswith("validate_") # Get all validate methods
+            if method.replace("validate_", "") in self.fields   # Check if validation method matchs name of a field
+            if callable(getattr(self, method)) # Check if it is a callable method
         ]
 
     def validate_pydantic(self: Self, validated_data: dict) -> Optional[BaseModel]:
