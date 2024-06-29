@@ -191,8 +191,8 @@ class ToInstance(ABC):
         pass
 
 
-class ExtendsPydantic(ABC):
-    pydantic_model: BaseModel | None
+class ExtendsPydantic:
+    pydantic_model: Optional[BaseModel] = None
 
     @abstractmethod
     def validate_pydantic(self: Self, data: dict) -> None:

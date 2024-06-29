@@ -109,6 +109,8 @@ class Serializer(SerializerInterface):
         validate_methods: list[str] = self.__validate_methods()
         # Create validated_data
         self._validated_data: dict = data
+        # Get Fields
+        fields: set[str] = set(self.fields)
         # Check Validation methods
         if validate_methods:
             for method in validate_methods:
@@ -117,12 +119,14 @@ class Serializer(SerializerInterface):
                     key: str = method.replace("validate_", "")
                     # Grab the field
                     value: Optional[str] = data.get(key)
-                    # Call each validation method
-                    self._validated_data[key] = getattr(self, method)(value)
+                    # Check if field is in fields
+                    if key in fields:
+                        # Call each validation method
+                        self._validated_data[key] = getattr(self, method)(value)
                 except Exception as e:
                     self.errors.append(str(e))
         # Validate using pydantic
-        if self.pydantic_model and isinstance(self.pydantic_model, BaseModel):
+        if self.pydantic_model is not None:
             getattr(self, "validate_pydantic")(self.validated_data)
 
         return not bool(self.errors)
@@ -157,7 +161,10 @@ class Serializer(SerializerInterface):
     def validate_pydantic(self: Self, validated_data: dict) -> Optional[BaseModel]:
         """Validate data using Pydantic."""
         try:
-            return self.pydantic_model(**validated_data)
+            model: BaseModel = getattr(self, "pydantic_model")
+            if not model:
+                raise Exception("No Pydantic model defined")
+            return model(**validated_data)
         except ValidationError as e:
             self.errors.extends(**e.errors())
         except Exception as e:
@@ -257,9 +264,11 @@ class Serializer(SerializerInterface):
         """
         # Implement representation logic here
         fields: list[str] = self.fields
+        # Get all attributes as a dictionary
+        instance_dict = instance.__dict__
         # Serialize
         serialized_data: dict = {
-            field: getattr(instance, field)
+            field: instance_dict.get(field)
             for field in fields
             if field not in self.write_only
         }

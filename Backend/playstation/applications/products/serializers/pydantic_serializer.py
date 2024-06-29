@@ -8,8 +8,9 @@ from pydantic import (
     BaseModel,
     StrictInt,
     StrictStr,
-    StrictBool,
-    field_validator
+    field_validator,
+    ConfigDict,
+    Field
 )
 from typing import Union, Optional
 from enum import Enum
@@ -25,24 +26,28 @@ class SortByChoices(str, Enum):
 
 class ProductsQuery(BaseModel):
     """Serializer for product query api"""
+    # Configuration Pydantic V2
+    model_config = ConfigDict(
+        extra = 'forbid',
+        validate_default = True, # Ensure default values are validated
+        use_enum_values = True  # Serialize enum fields using their values
+    )
 
+    # Fields
     category: Union[StrictInt, StrictStr] = 'all'  # Field that can be an int (ID) or the string "all"
     search: Optional[StrictStr] = None  # Optional Field
     sort_by: SortByChoices = SortByChoices.date  # Optional Field
-    start: StrictInt = 0  # Optional Field, StrictInt
-    products: StrictInt = 10  # Optional Field, StrictInt
-    low_price: Optional[StrictInt] = None  # Optional Field, StrictInt or None
-    high_price: Optional[StrictInt] = None  # Optional Field, StrictInt or None
-    sale: StrictBool = False  # Optional Field, StrictBool
-
-    class Config:
-        extra = 'forbid'
-        validate_default = True # Ensure default values are validated
-        use_enum_values = True  # Serialize enum fields using their values
+    start: int = Field(0, ge=0)  # Optional Field, int
+    products: int = Field(10, ge=10, le=40)  # Optional Field, int
+    low_price: Optional[int] = Field(None, ge=0)  # Optional Field, int or None
+    high_price: Optional[int] = Field(None, ge=0)  # Optional Field, int or None
+    sale: bool = False  # Optional Field, StrictBool
 
     @field_validator('category')
     @classmethod
-    def check_category(cls, v):
-        if isinstance(v, str) and v != 'all':
-            raise ValueError('Category must be an integer or the string "all"')
+    def check_category(cls, v: str):
+        """Check if category is valid"""
+        if v.isalpha() or v.isalnum():
+            if isinstance(v, str) and v != 'all':
+                raise ValueError('Category must be an integer or the string "all"')
         return v

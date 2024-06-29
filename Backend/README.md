@@ -24,6 +24,8 @@ The project includes the following features:
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
 ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+[![Pydantic v2](https://img.shields.io/badge/Pydantic-v2-blue)](https://pydantic-docs.helpmanual.io/)
+
 
 ## Main Flask Application
 

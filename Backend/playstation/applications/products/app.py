@@ -432,6 +432,7 @@ def get_all_products(*args, **kwargs) -> Response:
     """
     queries: dict = request.args.to_dict()
     try:
+        print(queries)
         serializer = ProductsQuery(**queries)
         print(serializer.model_dump())
         # Logic to get all products
@@ -439,8 +440,7 @@ def get_all_products(*args, **kwargs) -> Response:
     except ValidationError as e:
         # Grab error to logs
         errors: list = e.errors()
-        logger.error(errors)
-        return make_response("Failed to retrieve products", 404)
+        return make_response(errors, 404)
     except Exception as e:
         error: str = str(e)
         logger.error(error)
