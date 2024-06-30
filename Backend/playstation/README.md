@@ -169,37 +169,54 @@ if __name__ == "__main__":
 
 ### Using Loggers in Flask Blueprints
 
-Initialize the logger in the `__init__.py` file of your Blueprint module.
+Use `current_app.logger` to log messages within your Blueprint modules.
 
 #### Example in `users/__init__.py`
 
 ```python
-import logging
-from logging import Logger
-from playstation.settings import LOGGING_CONFIGURATION
+"""
+Initiate logger for Flask Blueprint application
+"""
+from flask import Blueprint
 
-# Get the logger
-logger: Logger = logging.getLogger(LOGGING_CONFIGURATION["NAME"])
+# Declare route prefix
+url_prefix = "/api/users"
+
+# Blueprint
+users_api = Blueprint("users", __name__, url_prefix=url_prefix)
+
+# Import routes to register them with the blueprint
+from . import app  # Ensure that this is done at the end
 ```
 
 ### Using Logger in Blueprint `app.py`
 
 ```python
-from . import logger
-from flask import Blueprint, make_response, Response
+from flask import current_app, Blueprint, make_response, request, Response
+from playstation.models.exceptions import ExistingEmail
+from .serializers import UserRegisterSerializer
 
-example_api = Blueprint("example_api", __name__)
+# Import blueprint from __init__.py
+from . import users_api
 
-logger.error("An error has occurred")
-
-@example_api.route("", methods=['GET'])
-def example(*args, **kwargs) -> Response:
+# Register User API
+@users_api.route("/register", methods=["POST"])
+def register(*args, **kwargs) -> Response:
+    data = request.get_json()
+    serializer = UserRegisterSerializer(data=data)
     try:
-        # Some code that might raise an exception
-        pass
+        if serializer.is_valid():
+            serializer.save()
+            return make_response("Successful Registration", 201)
+        error = serializer.errors
+        return make_response(error, 403)
+    except ExistingEmail as e:
+        current_app.logger.error(str(e))
+        return make_response("Email is already registered", 409)
     except Exception as e:
-        logger.error(f"An error has occurred: {e}")
-        return make_response("error", 400)
+        error = str(e)
+        current_app.logger.error(f"Registration failed: {error}")
+        return make_response("Registration Failed", 400)
 ```
 
 ## ⚙️ Configuration

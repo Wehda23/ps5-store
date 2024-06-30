@@ -8,10 +8,14 @@ logger.error("Error has occured")
 ```
 """
 
-import logging
-from logging import Logger
+from flask import Blueprint
 from playstation.settings import LOGGING_COFIGURATION
 
 
-# Get the loggger
-logger: Logger = logging.getLogger(LOGGING_COFIGURATION["NAME"])
+# Declare route prefix
+url_prefix: str = "/api/products"
+
+# Blueprint
+products_api: Blueprint = Blueprint("products_api", __name__, url_prefix=url_prefix)
+
+from . import app

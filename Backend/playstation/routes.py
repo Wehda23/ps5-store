@@ -18,9 +18,9 @@ routes(app)
 
 from flask import Flask
 from playstation.applications.pages.app import pages
-from playstation.applications.users.app import users_api
+from playstation.applications.users import users_api
 from playstation.applications.orders.app import orders_api
-from playstation.applications.products.app import products_api
+from playstation.applications.products import products_api
 from playstation.applications.shipping_addresses.app import shipping_addresses_api
 from playstation.applications.payments.app import payments_api
 from playstation.applications.swagger import swaggerui_blueprint

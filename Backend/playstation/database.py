@@ -56,4 +56,5 @@ def database(app: Flask) -> None:
         """
         Closes session after each request or application context shutdown to avoid leaks
         """
+        print("Database Close session")
         db.session.remove()

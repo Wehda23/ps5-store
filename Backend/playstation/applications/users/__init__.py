@@ -1,17 +1,13 @@
 """
 Initiate logger for Flask Blueprint application
-
-```py
-from . import logger
-
-logger.error("Error has occured")
-```
 """
-
-import logging
-from logging import Logger
+from flask import Blueprint
 from playstation.settings import LOGGING_COFIGURATION
 
+# Declare route prefix
+url_prefix: str = "/api/users"
 
-# Get the loggger
-logger: Logger = logging.getLogger(LOGGING_COFIGURATION["NAME"])
+# Blueprint
+users_api: Blueprint = Blueprint("users", __name__, url_prefix=url_prefix)
+
+from . import app

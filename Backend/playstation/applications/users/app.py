@@ -39,8 +39,8 @@ These routes are accessible without authentication:
   - Request Data: User credentials (email and password)
   - Response: JWT tokens or error message
 """
-
-from flask import Blueprint, make_response, request, Response
+from logging import Logger
+from flask import  current_app, Blueprint, make_response, request, Response
 from playstation.models.exceptions import ExistingEmail
 from playstation.admin.permissions import permission_required
 from playstation.admin.authentications.jwt_authentication import (
@@ -56,14 +56,7 @@ from .serializers import (
     UpdateUserSerializer,
     BlackListedTokenSerializer,
 )
-from . import logger
-
-
-# Declare route prefix
-url_prefix: str = "/api/users"
-
-# Blueprint
-users_api: Blueprint = Blueprint("users", __name__, url_prefix=url_prefix)
+from . import users_api
 
 
 # Register User API
@@ -92,12 +85,13 @@ def register(*args, **kwargs) -> Response:
         error: list[str] = serializer.errors
         return make_response(error, 403)
     except ExistingEmail as e:
+        current_app.logger.error(str(e))
         return make_response("Email is already registered", 409)
     except Exception as e:
         # Write Logic to check registeration failed through logs functionality
         error: str = str(e)
         # Record Error Through logs
-        logger.error(f"Registration failed: {error}")
+        current_app.logger.error(f"Registration failed: {error}")
         # Return a response `Registeration Failed`
         return make_response("Registeration Failed", 400)
 
@@ -129,7 +123,7 @@ def login(*args, **kwargs) -> Response:
     except Exception as e:
         # record error in a logging class
         error: str = str(e)
-        logger.error(f"Login failed: {error}")
+        current_app.logger.error(f"Login failed: {error}")
         return make_response("Login Failed", 404)
 
 
@@ -166,9 +160,9 @@ def update_user(pk: int) -> Response:
         error: str = serializer.errors
         return make_response(error, 404)
     except Exception as e:
-        # Add error message to a logger class to track bugs
+        # Add error message to a current_app.logger class to track bugs
         error: str = str(e)
-        logger.error(f"Update User failed: {error}")
+        current_app.logger.error(f"Update User failed: {error}")
         return make_response("Failed to update user", 404)
 
 
@@ -201,9 +195,9 @@ def refresh_token(*args, **kwargs) -> Response:
         error: list = serializer.errors
         return make_response(error, 404)
     except Exception as e:
-        # Add error message to a logger class to track bugs
+        # Add error message to a current_app.logger class to track bugs
         error: str = str(e)
-        logger.error(f"Refresh token failed: {error}")
+        current_app.logger.error(f"Refresh token failed: {error}")
         return make_response("Failed to refresh token", 404)
 
 
@@ -233,9 +227,9 @@ def logout(*args, **kwargs) -> Response:
         error: list = serializer.errors
         return make_response(error, 404)
     except Exception as e:
-        # Add error message to a logger class to track bugs
+        # Add error message to a current_app.logger class to track bugs
         error: str = str(e)
-        logger.error(f"Logout failed: {error}")
+        current_app.logger.error(f"Logout failed: {error}")
         return make_response("Failed to logout", 404)
 
 

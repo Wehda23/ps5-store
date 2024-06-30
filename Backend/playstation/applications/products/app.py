@@ -69,7 +69,7 @@ These routes are accessible without authentication:
     - **sale** (bool, optional): Specify if the product is on sale.
 """
 
-from flask import Blueprint, Response, make_response, request
+from flask import current_app, Response, make_response, request
 from typing import Optional
 from playstation.admin.authentications import authentication_classess
 from playstation.admin.authentications.jwt_authentication import JWTAuthentication
@@ -87,14 +87,7 @@ from .serializers import (
 from .serializers.exceptions import InvalidCategoriesDelimiter, InvalidCategoriesOption
 from sqlalchemy.exc import SQLAlchemyError
 from pydantic import ValidationError
-from . import logger
-
-
-# Declare route prefix
-url_prefix: str = "/api/products"
-
-# Blueprint
-products_api: Blueprint = Blueprint("products_api", __name__, url_prefix=url_prefix)
+from . import products_api
 
 
 # API to Create product category
@@ -130,7 +123,7 @@ def create_category(*args, **kwargs) -> Response:
         return make_response(error, 400)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to create product category", 400)
 
 
@@ -152,7 +145,7 @@ def get_categories(*args, **kwargs) -> Response:
         return make_response(categories, 200)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to grab product categories", 404)
 
 
@@ -193,7 +186,7 @@ def update_category(category_id: int, *args, **kwargs) -> Response:
         return make_response(serializer.errors, 404)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to update product category", 400)
 
 
@@ -231,7 +224,7 @@ def delete_category(category_id: int, *args, **kwargs) -> Response:
         return make_response(error, 404)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to delete product category", 404)
 
 
@@ -277,11 +270,11 @@ def create_product(*args, **kwargs) -> Response:
         return make_response(error, 400)
     except SQLAlchemyError as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Database error while creating product", 500)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to create product", 400)
 
 
@@ -316,7 +309,7 @@ def get_product_by_id(product_id: int) -> Response:
         return make_response(error, 400)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to grab product information", 404)
 
 
@@ -369,11 +362,11 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
         return make_response(error, 400)
     except SQLAlchemyError as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Database error while updating product", 500)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to update product", 400)
 
 
@@ -413,11 +406,11 @@ def delete_product(product_id: int, *args, **kwargs) -> Response:
         return make_response(error, 400)
     except SQLAlchemyError as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Database error while deleting product", 500)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to delete product", 404)
 
 
@@ -452,17 +445,22 @@ def get_all_products(*args, **kwargs) -> Response:
         # Grab error to logs
         errors: list = e.errors()
         return make_response(errors, 404)
-    except (InvalidCategoriesOption, InvalidCategoriesDelimiter) as e:
+    except InvalidCategoriesOption as e:
         # Grab error to logs
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
+        return make_response("Forbidden Request", 403)
+    except InvalidCategoriesDelimiter as e:
+        # Grab error to logs
+        error: str = str(e)
+        current_app.logger.error(error)
         return make_response("Forbidden Request", 403)
     except SQLAlchemyError as e:
         # Grab error to logs
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to retrieve products", 500)
     except Exception as e:
         error: str = str(e)
-        logger.error(error)
+        current_app.logger.error(error)
         return make_response("Failed to retrieve products", 500)
