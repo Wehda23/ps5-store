@@ -17,6 +17,29 @@ from typing import Self, NoReturn, Optional, Iterable
 from pydantic import BaseModel, ValidationError
 
 
+# Serializer Exceptions
+class SerializerError(Exception):
+    """
+    Serializer Error
+
+    You must apply excpetion as following otherwise an error will occure
+
+    ```py
+    from playstation import serializer
+
+    raise serializer.SerializerError(TypeError, "Error Message")
+
+    # Your code will be catched to form a message like this
+    try:
+        # Code
+    except SerializerError as e:
+        message: str = e.args[1] # Exception message
+        type: Exception = e.args[0] # Exception Type
+    """
+
+    pass
+
+
 # Serializer Interface
 class SerializerInterface(
     AbstractSerializer,
@@ -123,12 +146,30 @@ class Serializer(SerializerInterface):
                     if key in fields:
                         # Call each validation method
                         self._validated_data[key] = getattr(self, method)(value)
+                except SerializerError as e:
+                    # add to error
+                    self.errors.append(
+                        {
+                            "msg": str(e.args[1]),
+                            "field": key,
+                            "input": (
+                                value
+                                if key != "password"
+                                else "" if key in self.write_only else ""
+                            ),
+                            "type": f"{e.args[0].__name__}",
+                        }
+                    )
                 except Exception as e:
                     self.errors.append(
                         {
                             "msg": str(e),
                             "field": key,
-                            "input": value if key != "password" else "" if key in self.write_only else "",
+                            "input": (
+                                value
+                                if key != "password"
+                                else "" if key in self.write_only else ""
+                            ),
                             "type": f"{type(e).__name__}",
                         }
                     )
@@ -176,13 +217,23 @@ class Serializer(SerializerInterface):
             return model(**validated_data)
         except ValidationError as e:
             self.errors.extends(**e.errors())
+        except SerializerError as e:
+            # add to error
+            self.errors.append(
+                {
+                    "msg": str(
+                        e.args[1]
+                    ),  # error message SerializerError(<class Exception>, error_message)
+                    "type": f"{e.args[0].__name__}",  # Excpetion class name,
+                }
+            )
         except AttributeError as e:
             # error
-            error: dict = {"msg": str(e), "type": f"{type(e)}"}
+            error: dict = {"msg": str(e), "type": f"{type(e).__name__}"}
             self.errors.append(error)
         except Exception as e:
             # error
-            error: dict = {"msg": str(e), "type": f"{type(e)}"}
+            error: dict = {"msg": str(e), "type": f"{type(e).__name__}"}
             self.errors.append(error)
         return None
 

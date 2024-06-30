@@ -170,7 +170,7 @@ class LoginSerializer(serializers.Serializer):
 
         # Check if password is correct
         if not self.instance.check_password(value):
-            raise Exception("Incorrect password")
+            raise serializers.SerializerError(ValueError, "Incorrect password")
 
         return value
 
@@ -185,7 +185,7 @@ class LoginSerializer(serializers.Serializer):
 
         # Check if user exists
         if not user:
-            raise Exception("User does not exist")
+            raise serializers.SerializerError(ValueError, "User does not exist")
 
         # Assign self.instance
         self.instance: User = user
