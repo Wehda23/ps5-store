@@ -232,11 +232,11 @@ class GetProductSerializer(serializers.Serializer):
         # Grab validated queries
         validated_queries: dict[str, str] = pydantic_model.model_dump()
         # Retrieve products
-        # products: list[Product] = cls.get_products_query(validated_queries)
+        products: list[Product] = cls.get_products_query(validated_queries)
         # Serialize products
-        # serializer: ProductSerializer = ProductSerializer(instance=products, many=True)
+        serializer: ProductSerializer = ProductSerializer(instance=products, many=True)
         # Return Serialized Data
-        return validated_queries
+        return serializer.data
 
     @classmethod
     def get_products_query(cls, validated_queries: dict) -> list[Product]:
