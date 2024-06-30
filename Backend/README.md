@@ -40,6 +40,8 @@ project_root/
             index.html
         login_page/
             index.html
+        react_test/ // This folder is to show how to host react app on flask.
+            index.html
     static/
         css/
         js/
