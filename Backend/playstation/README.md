@@ -245,3 +245,73 @@ AWS_ACCESS_KEY_ID = "your_access_key_id"
 AWS_SECRET_ACCESS_KEY = "your_secret_access_key"
 AWS_STORAGE_BUCKET_NAME = "your_bucket_name"
 ```
+
+## 🔐 Using .env File
+
+For better security and flexibility, store sensitive information like database credentials, secret keys, and API keys in a `.env` file. Use the `python-dotenv` package to load these environment variables into your Flask application.
+
+### Installing python-dotenv
+
+```sh
+pip install python-dotenv
+```
+
+### Creating a .env File
+
+Create a `.env` file in your project root and add your environment-specific variables:
+
+```env
+# .env
+DEBUG=True
+SECRET_KEY=your_secret_key
+DATABASE=mysql+pymysql://username:password@host/database_name
+AWS_ACCESS_KEY_ID=your_access_key_id
+AWS_SECRET_ACCESS_KEY=your_secret_access_key
+AWS_STORAGE_BUCKET_NAME=your_bucket_name
+```
+
+### Loading Environment Variables in Flask
+
+Update `settings.py` to load variables from the `.env` file:
+
+```python
+import os
+from dotenv import load_dotenv
+from datetime import timedelta
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Debug
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# Secret Key
+SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key")
+
+# Database
+DATABASE = os.getenv("DATABASE", "sqlite:///test.db")
+
+# JWT Authentication
+JWT_AUTHENTICATIONS = {
+    "SECRET_KEY": SECRET_KEY,
+    "ALGORITHM": "HS256",
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": "Bearer ",
+}
+
+# Logging configuration
+LOGGING_CONFIGURATION = {
+    "NAME": "playstation",
+    "FILE": "app.logs",
+    "FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+}
+
+# Storage configuration
+STORAGE = os.getenv("STORAGE", "")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
+```
+
+Using a `.env` file helps keep your configuration secure and allows for easy changes without modifying the codebase directly.
