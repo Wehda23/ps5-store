@@ -1,0 +1,15 @@
+# Ignore .env files
+.env
+**/.env
+
+# Ignore __pycache__ directories
+__pycache__/
+**/__pycache__/
+
+# Ignore log files
+*.log
+*.logs
+
+# Ignore instance folder
+instance/
+**/instance/
