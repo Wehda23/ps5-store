@@ -1,6 +1,9 @@
 # PlayStation Store Backend
 
 This project is about creating a playstation store which represents a simple E-commerce website using Flask as the backend technology.
+
+- Later updates to this README.md where it will include installation of the project and setup and Cloud hosting of the project only.
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Main Flask Application](#main-flask-application)
@@ -35,10 +38,24 @@ In this folder, you will find the Flask application assembled and ready to run. 
 
 ```txt
 project_root/
+    app.py
+    app.logs
+    requirements.txt
+    README.md // Overview about backend, Installation, Setup and hosting steps.
+    templates/
+        home_page/
+            index.html
+        login_page/
+            index.html
+    static/
+        css/
+        js/
+        images/
+        swagger_config.json
     playstation/
         __init__.py
         app.py
-        README.md
+        README.md // Explains the Playstation Package
         routes.py
         database.py
         logger.py
@@ -57,6 +74,7 @@ project_root/
                 storage.py
                 exceptions.py
         applications/
+            README.md // Explains how to interact with APIs and API end points
             __init__.py
             pages/
                 __init__.py
@@ -91,16 +109,6 @@ project_root/
         serializers/
             __init__.py
             serializer.py
-    templates/
-        home_page/
-            index.html
-        login_page/
-            index.html
-    static/
-        css/
-        js/
-        images/
-        swagger_config.json
 ```
 
 ## Create Virtual Enviroment

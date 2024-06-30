@@ -32,7 +32,7 @@ class EmailValidator(BaseValidator):
         """
         # Check Regex Email
         if not re.fullmatch(self.regex, email):
-            raise self.raise_exception("Invalid email address.")
+            raise self.raise_exception(ValueError, "Invalid email address.")
 
 
 # Name Validating
@@ -56,7 +56,7 @@ class NameValidator(BaseValidator):
         """
         # Check if name contains only alphabets
         if not name.isalpha():
-            raise self.raise_exception("Your first name can only contain characters.")
+            raise self.raise_exception(ValueError, "Your first name can only contain characters.")
 
 
 # Password Validating
@@ -81,10 +81,12 @@ class PasswordValidator(BaseValidator):
         """
         if len(password) < 8:
             raise self.raise_exception(
+                ValueError,
                 "Password should be longer than 8 characters|numbers|special characters."
             )
         elif len(password) > 128:
             raise self.raise_exception(
+                ValueError,
                 "Password should be less than 128 characters|numbers|special characters."
             )
         else:
@@ -104,11 +106,13 @@ class PasswordValidator(BaseValidator):
         # Validate password for at least containing Alphabetical characters A-Z a-z.
         if not any(char.isalpha() for char in password):
             raise self.raise_exception(
+                ValueError,
                 "Password should contain at least one character A-Z a-z."
             )
         # Validate password for at least containing  Numeric characters 0-9.
         if not any(number.isnumeric() for number in password):
             raise self.raise_exception(
+                ValueError,
                 "Password should contain at least one number 0-9."
             )
         # Return Valid Password
@@ -151,7 +155,7 @@ class IDValidator(BaseValidator):
             - Nothing
         """
         if id is None or id < 0:
-            raise self.raise_exception("Invalid ID")
+            raise self.raise_exception(ValueError, "Invalid ID")
 
         if not User.query.filter_by(id=id).first():
-            raise self.raise_exception("User not found")
+            raise self.raise_exception(ValueError, "User not found")

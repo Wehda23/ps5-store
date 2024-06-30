@@ -25,7 +25,7 @@ class CategoryValidatorByName(BaseValidator):
         """
         # Check if there is a duplicate category name
         if Category.query.filter_by(name=data).first():
-            raise ValueError("Category already exists")
+            raise self.raise_exception(ValueError, "Category already exists")
 
 
 class CategoryValidatorByID(BaseValidator):

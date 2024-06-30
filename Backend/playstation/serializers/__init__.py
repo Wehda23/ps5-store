@@ -13,7 +13,7 @@ from .serializer import (
     ToInstance,
     ExtendsPydantic,
 )
-from typing import Self, NoReturn, Optional, Iterable
+from typing import Self, NoReturn, Optional
 from pydantic import BaseModel, ValidationError
 
 

@@ -62,7 +62,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - str: Validated first_name
         """
         # Validate name
-        NameValidator().validate(value)
+        NameValidator(serializers.SerializerError).validate(value)
         return value
 
     def validate_last_name(self: Self, value: str) -> str:
@@ -76,7 +76,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - str: Validated last_name
         """
         # Validate name
-        NameValidator().validate(value)
+        NameValidator(serializers.SerializerError).validate(value)
         return value
 
     def validate_password(self: Self, value: str) -> str:
@@ -90,7 +90,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - str: Validated password address
         """
         # Validate password
-        PasswordValidator().validate(value)
+        PasswordValidator(serializers.SerializerError).validate(value)
         return value
 
     def validate_email(self: Self, value: str) -> str:
@@ -104,7 +104,7 @@ class UserRegisterSerializer(serializers.Serializer):
             - str: Validated email address
         """
         # Validate Email
-        EmailValidator().validate(value)
+        EmailValidator(serializers.SerializerError).validate(value)
         # Return Email
         return value
 
@@ -248,7 +248,7 @@ class UpdateUserSerializer(serializers.Serializer):
             - str: Validated first_name
         """
         # Validate name
-        NameValidator().validate(value)
+        NameValidator(serializers.SerializerError).validate(value)
         return value
 
     def validate_last_name(self: Self, value: str) -> str:
@@ -262,7 +262,7 @@ class UpdateUserSerializer(serializers.Serializer):
             - str: Validated last_name
         """
         # Validate name
-        NameValidator().validate(value)
+        NameValidator(serializers.SerializerError).validate(value)
         return value
 
     def validate_email(self: Self, value: str) -> str:
@@ -276,7 +276,7 @@ class UpdateUserSerializer(serializers.Serializer):
             - str: Validated email address
         """
         # Validate Email
-        EmailValidator().validate(value)
+        EmailValidator(serializers.SerializerError).validate(value)
         # Return Email
         return value
 
@@ -291,7 +291,7 @@ class UpdateUserSerializer(serializers.Serializer):
             - int: id of the user
         """
         # Validate ID
-        IDValidator().validate(value)
+        IDValidator(serializers.SerializerError).validate(value)
         # Return the id
         return value
 

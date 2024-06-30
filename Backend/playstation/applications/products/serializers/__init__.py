@@ -88,7 +88,7 @@ class CreateCategorySerializer(serializers.Serializer):
         Returns:
             str: Validated category name.
         """
-        CategoryValidatorByName().validate(value)
+        CategoryValidatorByName(serializers.SerializerError).validate(value)
         return value
 
 
@@ -119,7 +119,7 @@ class DeleteCategorySerializer(serializers.Serializer):
             int: Validated category ID.
         """
         if not CategoryValidatorByID().validate(value):
-            raise ValueError("Category does not exist")
+            raise serializers.SerializerError(ValueError, "Category does not exist")
         self.instance = self.to_instance()
         return value
 
