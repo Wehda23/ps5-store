@@ -13,3 +13,6 @@ __pycache__/
 # Ignore instance folder
 instance/
 **/instance/
+
+# Virtual enviroment
+venv/

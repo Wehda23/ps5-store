@@ -11,10 +11,16 @@
 """
 
 import os
+from dotenv import load_dotenv
 from datetime import timedelta
 
+
+# Load ENV
+load_dotenv()
+
+
 # Debug
-DEBUG: bool = True
+DEBUG: bool = os.getenv("DEBUG", "False") == "True"
 
 # Base directory of the project
 BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,10 +32,10 @@ MEDIA_DIR: str = os.path.join(STATIC_DIR, "images")
 ALLOW_IMAGE_TYPES: set[str] = {"png", "jpg", "jpeg"}
 
 # Database
-DATABASE: str = "sqlite:///test.db"
+DATABASE: str = os.getenv("DATABASE", "sqlite:///test.db")
 
 # Secret Key
-SECRET_KEY: str = os.urandom(24) if not DEBUG else "test_flask_application"
+SECRET_KEY: str = os.getenv("SECRET_KEY", os.urandom(24))
 
 
 # JWT Authentication
@@ -50,9 +56,9 @@ LOGGING_COFIGURATION: dict[str, str] = {
 }
 
 # Storage
-STORAGE: str = ""
+STORAGE: str = os.getenv("STORAGE", "")
 
 # If amazon storage
-AWS_ACCESS_KEY_ID: str = ""
-AWS_SECRET_ACCESS_KEY: str = ""
-AWS_STORAGE_BUCKET_NAME: str = ""
+AWS_ACCESS_KEY_ID: str = os.getenv("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_ACCESS_KEY: str = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+AWS_STORAGE_BUCKET_NAME: str = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
