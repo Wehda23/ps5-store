@@ -2,8 +2,6 @@
 
 This project creates a PlayStation store representing a simple e-commerce website using Flask as the backend technology.
 
-- Future updates will include detailed installation, setup, and cloud hosting instructions.
-
 ## 🌟 Introduction
 
 The project includes the following features:
