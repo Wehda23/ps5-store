@@ -288,6 +288,15 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 # Secret Key
 SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key")
 
+# Base directory of the project
+BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Templates and Static paths
+TEMPLATES_DIR: str = os.path.join(BASE_DIR, "templates")
+STATIC_DIR: str = "static"
+MEDIA_DIR: str = os.path.join(STATIC_DIR, "images")
+ALLOW_IMAGE_TYPES: set[str] = {"png", "jpg", "jpeg"}
+
 # Database
 DATABASE = os.getenv("DATABASE", "sqlite:///test.db")
 
