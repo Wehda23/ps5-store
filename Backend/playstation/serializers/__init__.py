@@ -124,7 +124,14 @@ class Serializer(SerializerInterface):
                         # Call each validation method
                         self._validated_data[key] = getattr(self, method)(value)
                 except Exception as e:
-                    self.errors.append(str(e))
+                    self.errors.append(
+                        {
+                            "msg": str(e),
+                            "field": key,
+                            "input": value if key != "password" else "" if key in self.write_only else "",
+                            "type": f"{type(e).__name__}",
+                        }
+                    )
         # Validate using pydantic
         if self.pydantic_model is not None:
             getattr(self, "validate_pydantic")(self.validated_data)
@@ -154,9 +161,10 @@ class Serializer(SerializerInterface):
         return [
             method
             for method in dir(self)
-            if method.startswith("validate_") # Get all validate methods
-            if method.replace("validate_", "") in self.fields   # Check if validation method matchs name of a field
-            if callable(getattr(self, method)) # Check if it is a callable method
+            if method.startswith("validate_")  # Get all validate methods
+            if method.replace("validate_", "")
+            in self.fields  # Check if validation method matchs name of a field
+            if callable(getattr(self, method))  # Check if it is a callable method
         ]
 
     def validate_pydantic(self: Self, validated_data: dict) -> Optional[BaseModel]:
@@ -164,12 +172,18 @@ class Serializer(SerializerInterface):
         try:
             model: BaseModel = getattr(self, "pydantic_model")
             if not model:
-                raise Exception("No Pydantic model defined")
+                raise AttributeError("No Pydantic model defined")
             return model(**validated_data)
         except ValidationError as e:
             self.errors.extends(**e.errors())
+        except AttributeError as e:
+            # error
+            error: dict = {"msg": str(e), "type": f"{type(e)}"}
+            self.errors.append(error)
         except Exception as e:
-            self.errors.append(str(e))
+            # error
+            error: dict = {"msg": str(e), "type": f"{type(e)}"}
+            self.errors.append(error)
         return None
 
     def save(self: Self) -> object:

@@ -36,6 +36,7 @@ from sqlalchemy.orm import Query
 import os
 from typing import Any, Optional, Union
 
+
 # Category Serializer
 class CategorySerializer(serializers.ModelSerializer):
     """
@@ -231,9 +232,9 @@ class GetProductSerializer(serializers.Serializer):
         # Grab validated queries
         validated_queries: dict[str, str] = pydantic_model.model_dump()
         # Retrieve products
-        #products: list[Product] = cls.get_products_query(validated_queries)
+        # products: list[Product] = cls.get_products_query(validated_queries)
         # Serialize products
-        #serializer: ProductSerializer = ProductSerializer(instance=products, many=True)
+        # serializer: ProductSerializer = ProductSerializer(instance=products, many=True)
         # Return Serialized Data
         return validated_queries
 
@@ -271,7 +272,7 @@ class GetProductSerializer(serializers.Serializer):
         Returns:
             Query: Filtered SQLAlchemy query object.
         """
-        if validated_queries.get('sale'):
+        if validated_queries.get("sale"):
             query = query.filter(Product.is_sale == True)
         return query
 
@@ -287,8 +288,8 @@ class GetProductSerializer(serializers.Serializer):
         Returns:
             Query: Filtered SQLAlchemy query object.
         """
-        category = validated_queries.get('category')
-        if category and category != 'all':
+        category = validated_queries.get("category")
+        if category and category != "all":
             category_ids = cls.parse_category_ids(category)
             valid_category_ids = cls.validate_category_ids(category_ids)
             if valid_category_ids:
@@ -308,7 +309,7 @@ class GetProductSerializer(serializers.Serializer):
         """
         if isinstance(category, int):
             return [category]
-        return [int(cat_id) for cat_id in category.split('-')]
+        return [int(cat_id) for cat_id in category.split("-")]
 
     @staticmethod
     def validate_category_ids(category_ids: list[int]) -> list[int]:
@@ -340,11 +341,11 @@ class GetProductSerializer(serializers.Serializer):
         Returns:
             Query: Filtered SQLAlchemy query object.
         """
-        low_price = validated_queries.get('low_price')
+        low_price = validated_queries.get("low_price")
         if low_price is not None:
             query = query.filter(Product.price >= low_price)
 
-        high_price = validated_queries.get('high_price')
+        high_price = validated_queries.get("high_price")
         if high_price is not None:
             query = query.filter(Product.price <= high_price)
         return query
@@ -361,10 +362,14 @@ class GetProductSerializer(serializers.Serializer):
         Returns:
             Query: Filtered SQLAlchemy query object.
         """
-        search = validated_queries.get('search')
+        search = validated_queries.get("search")
         if search:
-            query = query.filter(or_(Product.name.ilike(f'%{search}%'),
-                                     Product.description.ilike(f'%{search}%')))
+            query = query.filter(
+                or_(
+                    Product.name.ilike(f"%{search}%"),
+                    Product.description.ilike(f"%{search}%"),
+                )
+            )
         return query
 
     @classmethod
@@ -379,7 +384,7 @@ class GetProductSerializer(serializers.Serializer):
         Returns:
             Query: Sorted SQLAlchemy query object.
         """
-        sort_by = validated_queries.get('sort_by')
+        sort_by = validated_queries.get("sort_by")
         if sort_by:
             if sort_by == SortByChoices.price:
                 query = query.order_by(Product.price)
@@ -407,8 +412,8 @@ class GetProductSerializer(serializers.Serializer):
         Returns:
             Query: Paginated SQLAlchemy query object.
         """
-        start = validated_queries.get('start', 0)
-        products = validated_queries.get('products', 10)
+        start = validated_queries.get("start", 0)
+        products = validated_queries.get("products", 10)
         query = query.offset(start).limit(products)
         return query
 
