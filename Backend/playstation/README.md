@@ -1,12 +1,16 @@
 # Playstation Packages for backend project
 
-This package contains the packages & Applications required for Play Station Store application.
+This package contains the packages/Models & Applications required for Play Station Store application.
 
 1. admin
 2. applications
 3. models
 4. serializers
 5. file_manager
+6. settings.py
+7. logger.py
+8. database.py
+9. routes.py
 
 
 # File/Folder Structure

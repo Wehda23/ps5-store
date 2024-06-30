@@ -1,23 +1,10 @@
-# PlayStation Store Backend
+# 🎮 PlayStation Store Backend
 
-This project is about creating a playstation store which represents a simple E-commerce website using Flask as the backend technology.
+This project creates a PlayStation store representing a simple e-commerce website using Flask as the backend technology.
 
-- Later updates to this README.md where it will include installation of the project and setup and Cloud hosting of the project only.
+- Future updates will include detailed installation, setup, and cloud hosting instructions.
 
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Main Flask Application](#main-flask-application)
-3. [Create Virtual Environment](#create-virtual-environment)
-4. [Run Application](#run-application)
-5. [Database Schema](#database-schema)
-6. [Swagger Application](#swagger-application)
-7. [Users Application](#users-application)
-8. [Register Flask Blueprints to Flask](#register-flask-blueprints-to-flask)
-9. [File Handler Package](#file-handler-package)
-10. [Initializing Loggers in Flask](#initializing-loggers-in-flask)
-11. [Support my work](#support-my-Work)
-
-## Introduction
+## 🌟 Introduction
 
 The project includes the following features:
 
@@ -29,8 +16,16 @@ The project includes the following features:
 ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 [![Pydantic v2](https://img.shields.io/badge/Pydantic-v2-blue)](https://pydantic-docs.helpmanual.io/)
 
+## 📜 Table of Contents
+1. [Introduction](#🌟-introduction)
+2. [Main Flask Application](#🚀-main-flask-application)
+3. [Create Virtual Environment](#🐍-create-virtual-environment)
+4. [Run Application](#🏃-run-application)
+5. [Database Schema](#🗄️-database-schema)
+6. [Hosting with Nginx and Gunicorn](#🌐-hosting-with-nginx-and-gunicorn)
+7. [Support My Work](#💖-support-my-work)
 
-## Main Flask Application
+## 🚀 Main Flask Application
 
 In this folder, you will find the Flask application assembled and ready to run. The application is divided into several folders and files for better organization and maintainability. Below is a breakdown of the directory structure and the purpose of each component.
 
@@ -41,7 +36,7 @@ project_root/
     app.py
     app.logs
     requirements.txt
-    README.md // Overview about backend, Installation, Setup and hosting steps.
+    README.md // Provides an overview of the project, backend architecture, detailed installation instructions, setup guide, and hosting steps.
     templates/
         home_page/
             index.html
@@ -55,7 +50,7 @@ project_root/
     playstation/
         __init__.py
         app.py
-        README.md // Explains the Playstation Package
+        README.md // Describes the purpose and functionality of the Playstation package, including key components and how they interact.
         routes.py
         database.py
         logger.py
@@ -74,7 +69,7 @@ project_root/
                 storage.py
                 exceptions.py
         applications/
-            README.md // Explains how to interact with APIs and API end points
+            README.md // Provides detailed documentation on API interactions, available endpoints, request and response formats, and usage examples.
             __init__.py
             pages/
                 __init__.py
@@ -111,39 +106,39 @@ project_root/
             serializer.py
 ```
 
-## Create Virtual Enviroment
+## 🐍 Create Virtual Environment
 
-If you are running this project in a development stage it is adviced to use python virtual inveiroment
+If you are running this project in a development stage, it is advised to use a Python virtual environment.
 
-- To create virtual enviroment
+- To create a virtual environment:
 
-```bash
-python -m venv venv
-```
+    ```bash
+    python -m venv venv
+    ```
 
-- To Run virtual enviroment
+- To activate the virtual environment:
 
-```bash
-venv\Scripts\activate
-```
+    ```bash
+    venv\Scripts\activate
+    ```
 
-## Run Application
+## 🏃 Run Application
 
 To run the application, you need to have Python installed on your machine.
 
-- Make sure to install dependencies from the file `requirements.txts`
+- Install dependencies from the `requirements.txt` file:
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-- You can run the application by executing the following command in your terminal:
+- Run the application by executing the following command in your terminal:
 
-```bash
-python app.py
-```
+    ```bash
+    python app.py
+    ```
 
-## Database Schema
+## 🗄️ Database Schema
 
 This project utilizes the following database schema to manage and organize data efficiently. The schema defines the structure, relationships, and constraints for the database tables.
 
@@ -152,12 +147,91 @@ This project utilizes the following database schema to manage and organize data 
 The diagram provides a visual representation of the tables, columns, and their relationships, ensuring a clear understanding of the data flow and organization within the system.
 
 
+## 🌐 Hosting with Nginx and Gunicorn
 
-# Support My Work
+To host the application using Nginx and Gunicorn, follow these instructions.
+
+### Prerequisites
+
+- Ensure you have a server running on DigitalOcean or a similar service.
+- Install necessary software packages.
+
+### Step 1: Install Gunicorn
+
+```bash
+pip install gunicorn
+```
+
+### Step 2: Create a Gunicorn Systemd Service
+
+Create a file at `/etc/systemd/system/myproject.service` with the following content:
+
+```ini
+[Unit]
+Description=Gunicorn instance to serve myproject
+After=network.target
+
+[Service]
+User=yourusername
+Group=www-data
+WorkingDirectory=/home/yourusername/myproject
+Environment="PATH=/home/yourusername/myproject/venv/bin"
+ExecStart=/home/yourusername/myproject/venv/bin/gunicorn --workers 3 --bind unix:myproject.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Step 3: Start and Enable the Gunicorn Service
+
+```bash
+sudo systemctl start myproject
+sudo systemctl enable myproject
+```
+
+### Step 4: Install Nginx
+
+```bash
+sudo apt update
+sudo apt install nginx
+```
+
+### Step 5: Configure Nginx
+
+Create a file at `/etc/nginx/sites-available/myproject` with the following content:
+
+```nginx
+server {
+    listen 80;
+    server_name your_domain_or_IP;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/yourusername/myproject/myproject.sock;
+    }
+}
+```
+
+Enable the file by creating a symlink:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+```
+
+### Step 6: Test Nginx Configuration and Restart
+
+```bash
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+For a detailed guide, refer to this [DigitalOcean tutorial](https://dev.to/stefanie-a/how-to-deploy-a-flask-app-on-digitalocean-3ib7).
+
+## 💖 Support My Work
 
 If you find my free content and projects helpful, consider supporting me to enable more learning resources for the community. Your contributions will go towards creating new content and maintaining existing projects.
 
-## How to Contribute
+### How to Contribute
 
 You can contribute by making a donation through PayPal:
 
