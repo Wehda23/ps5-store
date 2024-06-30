@@ -27,16 +27,12 @@ This module handles the rendering of templates for various pages and serves stat
 
 """
 
-from flask import Blueprint, abort, render_template, send_from_directory, Response
-from playstation.settings import TEMPLATES_DIR, STATIC_DIR, MEDIA_DIR
+from flask import current_app, abort, render_template, send_from_directory, Response
+from playstation.settings import STATIC_DIR, MEDIA_DIR
 from .serializer import CheckImageSerializer
-from . import logger
 import os
+from . import pages
 
-# Blueprint
-pages: Blueprint = Blueprint(
-    "pages", __name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR
-)
 
 
 @pages.route("/")
@@ -96,7 +92,7 @@ def get_static_image(file_path: str) -> Response:
             return send_from_directory(directory_path, image, as_attachment=False)
         return send_from_directory(MEDIA_DIR, "default.png", as_attachment=False)
     except Exception as e:
-        logger.error(f"Error getting image {e}, path={relative_path}")
+        current_app.logger.error(f"Error getting image {e}, path={relative_path}")
         return send_from_directory(MEDIA_DIR, "default.png", as_attachment=False)
 
 

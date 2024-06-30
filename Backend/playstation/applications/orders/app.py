@@ -15,15 +15,8 @@
 - /Orders/login: Login a user
 """
 
-from flask import Blueprint
-
-
-# Declare route prefix
-url_prefix: str = "/api/orders"
-
-# Blueprint
-orders_api: Blueprint = Blueprint("orders_api", __name__, url_prefix=url_prefix)
-
+from flask import current_app
+from . import orders_api
 
 # Test API
 @orders_api.route("", methods=["GET"])

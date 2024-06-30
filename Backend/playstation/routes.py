@@ -17,12 +17,12 @@ routes(app)
 """
 
 from flask import Flask
-from playstation.applications.pages.app import pages
+from playstation.applications.pages import pages
 from playstation.applications.users import users_api
-from playstation.applications.orders.app import orders_api
+from playstation.applications.orders import orders_api
 from playstation.applications.products import products_api
-from playstation.applications.shipping_addresses.app import shipping_addresses_api
-from playstation.applications.payments.app import payments_api
+from playstation.applications.shipping_addresses import shipping_addresses_api
+from playstation.applications.payments import payments_api
 from playstation.applications.swagger import swaggerui_blueprint
 from playstation.settings import DEBUG
 

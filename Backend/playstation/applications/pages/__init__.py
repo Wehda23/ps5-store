@@ -1,17 +1,12 @@
 """
-Initiate logger for Flask Blueprint application
-
-```py
-from . import logger
-
-logger.error("Error has occured")
-```
+Initiate Pages Application
 """
+from flask import Blueprint
+from playstation.settings import TEMPLATES_DIR, STATIC_DIR
 
-import logging
-from logging import Logger
-from playstation.settings import LOGGING_COFIGURATION
+# Blueprint
+pages: Blueprint = Blueprint(
+    "pages", __name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR
+)
 
-
-# Get the loggger
-logger: Logger = logging.getLogger(LOGGING_COFIGURATION["NAME"])
+from . import app
