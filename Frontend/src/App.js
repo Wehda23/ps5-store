@@ -13,6 +13,9 @@ import FooterBottom from "./components/home/Footer/FooterBottom";
 import Header from "./components/home/Header/Header";
 import HeaderBottom from "./components/home/Header/HeaderBottom";
 import SpecialCase from "./components/SpecialCase/SpecialCase";
+import CommunityForums from "./pages/Privacy/CommunityForums";
+import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
+import Service from "./pages/Privacy/Service";
 import About from "./pages/About/About";
 import SignIn from "./pages/Account/SignIn";
 import SignUp from "./pages/Account/SignUp";
@@ -27,9 +30,6 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// Import API service functions
-import { getUsers, createUser, getOrders, createOrder } from './components/designLayouts/buttons/integrationservice';
 
 const Layout = () => {
   return (
@@ -57,15 +57,15 @@ const Layout = () => {
   );
 };
 
-// Create a new Home component that fetches data from Flask API
+// Create a new Home component that fetches data from Flask API using axios
 const HomeWithAPI = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    // Using the getUsers function from integrationservice.js instead of Axios
-    getUsers()
+    // Using axios to fetch data from the Flask API
+    axios.get('https://your-api-endpoint.com/api/data') 
       .then(response => {
-        setData(response);
+        setData(response.data);
       })
       .catch(error => {
         console.error('There was an error fetching the data!', error);
@@ -91,11 +91,14 @@ const router = createBrowserRouter(
         <Route path="/Info" element={<Info />}></Route>
         <Route path="/Help" element={<Help />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/services" element={<Service />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
+        <Route path="/community-forums" element={<CommunityForums />}></Route>
+        <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
