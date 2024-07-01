@@ -175,7 +175,7 @@ Use `current_app.logger` to log messages within your Blueprint modules.
 
 ```python
 """
-Initiate logger for Flask Blueprint application
+Initiate User Blueprint application
 """
 from flask import Blueprint
 

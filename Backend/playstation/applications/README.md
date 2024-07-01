@@ -1359,3 +1359,105 @@ Ensure proper error handling to manage responses for different scenarios like in
 - `404`: Not Found - Product not found.
 
 <hr/>
+
+Certainly! Here's the adjusted markdown documentation with the provided response body example:
+
+---
+
+### Get All Products Endpoint
+
+- **URL**: `/products`
+- **Method**: `GET`
+- **Authentication**: None required
+- **Permissions**: Public
+
+#### Query Parameters
+
+- `category` (string, optional): Filter products by category.
+- `search` (string, optional): Search products by name or description.
+- `sort_by` (string, optional): Sort products by specified field (e.g., price, name).
+- `start` (integer, optional): Specify the page number for pagination.
+- `products` (integer, optional): Specify the number of products per page for pagination.
+- `low_price` (integer, optional): Specify the lowest price for a product.
+- `high_price` (integer, optional): Specify the highest price for a product.
+- `sale` (boolean, optional): Specify if the product is on sale.
+
+#### Responses
+
+- **Success (200)**: A list of all products.
+  - **Body**: JSON array of products
+  ```json
+  [
+      {
+          "category": {
+              "id": 1,
+              "name": "Play Station"
+          },
+          "description": "Powered by an eight-core AMD Zen 2 CPU and custom AMD Radeon GPU, the PS5 is offered in two models: with and without a 4K Blu-ray drive. Supporting a 120Hz video refresh, the PS5 is considerably more powerful than the PS4 and PS4 Pro.",
+          "discount": 0.0,
+          "id": 1,
+          "image_url": "\\images\\Play Station 5\\cd56722db7b991b3d7a33f1bafd55f80d0ac553d.png",
+          "is_sale": false,
+          "name": "Play Station 5",
+          "price": 499.99,
+          "stock": 99
+      }
+  ]
+  ```
+
+- **Error (404)**: Not Found - If no products are found.
+  - **Body**: `"No products found"`
+
+- **Error (403)**: Forbidden - If the request contains invalid categories options or delimiters.
+  - **Body**: `"Forbidden Request"`
+
+- **Error (500)**: Internal Server Error - If there is an issue retrieving products.
+  - **Body**: `"Failed to retrieve products"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/products?category=electronics&sort_by=price&start=1&products=10';
+
+fetch(url, {
+    method: 'GET'
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/products?category=electronics&sort_by=price&start=1&products=10';
+
+axios.get(url)
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, and permission denials.
+
+### Status Codes
+
+- `200`: OK - Successfully retrieved the products.
+- `404`: Not Found - No products found.
+- `403`: Forbidden - Invalid categories options or delimiters.
+- `500`: Internal Server Error - Failed to retrieve products.
+
+<hr/>

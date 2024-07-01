@@ -85,7 +85,6 @@ def register(*args, **kwargs) -> Response:
         error: list[str] = serializer.errors
         return make_response(error, 403)
     except ExistingEmail as e:
-        current_app.logger.error(str(e))
         return make_response("Email is already registered", 409)
     except Exception as e:
         # Write Logic to check registeration failed through logs functionality
