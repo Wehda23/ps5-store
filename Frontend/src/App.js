@@ -63,7 +63,7 @@ const HomeWithAPI = () => {
 
   useEffect(() => {
     // Using axios to fetch data from the Flask API
-    axios.get('https://your-api-endpoint.com/api/data') 
+    axios.get('http://127.0.0.1:5000/api/data')
       .then(response => {
         setData(response.data);
       })
