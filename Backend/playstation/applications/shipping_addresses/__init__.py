@@ -11,4 +11,4 @@ shipping_addresses_api: Blueprint = Blueprint(
     "shipping_addresses", __name__, url_prefix=url_prefix
 )
 
-from . import app
+from . import views

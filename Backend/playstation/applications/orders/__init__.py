@@ -9,4 +9,4 @@ url_prefix: str = "/api/orders"
 # Blueprint
 orders_api: Blueprint = Blueprint("orders_api", __name__, url_prefix=url_prefix)
 
-from . import app
+from . import views

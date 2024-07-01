@@ -10,4 +10,4 @@ url_prefix: str = "/api/users"
 # Blueprint
 users_api: Blueprint = Blueprint("users", __name__, url_prefix=url_prefix)
 
-from . import app
+from . import views

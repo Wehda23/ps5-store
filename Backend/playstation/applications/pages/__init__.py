@@ -9,4 +9,4 @@ pages: Blueprint = Blueprint(
     "pages", __name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR
 )
 
-from . import app
+from . import views

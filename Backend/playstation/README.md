@@ -41,22 +41,25 @@ playstation/
         __init__.py
         pages/
             __init__.py
-            app.py
+            views.py
         users/
             __init__.py
-            app.py
+            views.py
         products/
             __init__.py
-            app.py
+            views.py
         orders/
             __init__.py
-            app.py
+            views.py
         shipping_addresses/
             __init__.py
-            app.py
+            views.py
         payments/
             __init__.py
-            app.py
+            views.py
+        employees/
+            __init__.py
+            views.py
         swagger/
             __init__.py
     models/
