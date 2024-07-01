@@ -502,7 +502,139 @@
                 }
                 },
                 "security": [{ "Bearer": [] }]
+            },
+        "get": {
+            "tags": ["Products"],
+        "summary": "Get All Products",
+        "operationId": "getAllProducts",
+        "parameters": [
+            {
+            "name": "category",
+            "in": "query",
+            "description": "Filter products by category",
+            "schema": {
+                "type": "string"
             }
+            },
+            {
+            "name": "search",
+            "in": "query",
+            "description": "Search products by name or description",
+            "schema": {
+                "type": "string"
+            }
+            },
+            {
+            "name": "sort_by",
+            "in": "query",
+            "description": "Sort products by specified field (e.g., price, name)",
+            "schema": {
+                "type": "string"
+            }
+            },
+            {
+            "name": "start",
+            "in": "query",
+            "description": "Specify the page number for pagination",
+            "schema": {
+                "type": "integer"
+            }
+            },
+            {
+            "name": "products",
+            "in": "query",
+            "description": "Specify the number of products per page for pagination",
+            "schema": {
+                "type": "integer"
+            }
+            },
+            {
+            "name": "low_price",
+            "in": "query",
+            "description": "Specify the lowest price for a product",
+            "schema": {
+                "type": "integer"
+            }
+            },
+            {
+            "name": "high_price",
+            "in": "query",
+            "description": "Specify the highest price for a product",
+            "schema": {
+                "type": "integer"
+            }
+            },
+            {
+            "name": "sale",
+            "in": "query",
+            "description": "Specify if the product is on sale",
+            "schema": {
+                "type": "boolean"
+            }
+            }
+        ],
+        "responses": {
+            "200": {
+            "description": "A list of all products",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "type": "array",
+                    "items": {
+                    "type": "object",
+                    "properties": {
+                        "category": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                            "type": "integer"
+                            },
+                            "name": {
+                            "type": "string"
+                            }
+                        }
+                        },
+                        "description": {
+                        "type": "string"
+                        },
+                        "discount": {
+                        "type": "number"
+                        },
+                        "id": {
+                        "type": "integer"
+                        },
+                        "image_url": {
+                        "type": "string"
+                        },
+                        "is_sale": {
+                        "type": "boolean"
+                        },
+                        "name": {
+                        "type": "string"
+                        },
+                        "price": {
+                        "type": "number"
+                        },
+                        "stock": {
+                        "type": "integer"
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            },
+            "404": {
+            "description": "No products found"
+            },
+            "403": {
+            "description": "Forbidden Request"
+            },
+            "500": {
+            "description": "Failed to retrieve products"
+            }
+        }
+        }
         },
     "/products/{product_id}": {
         "get": {
