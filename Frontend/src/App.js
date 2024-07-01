@@ -15,6 +15,7 @@ import HeaderBottom from "./components/home/Header/HeaderBottom";
 import SpecialCase from "./components/SpecialCase/SpecialCase";
 import CommunityForums from "./pages/Privacy/CommunityForums";
 import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
+import SecurityTermsComponent from "./pages/Privacy/SecurityTermsComponent";
 import Service from "./pages/Privacy/Service";
 import About from "./pages/About/About";
 import SignIn from "./pages/Account/SignIn";
@@ -92,6 +93,7 @@ const router = createBrowserRouter(
         <Route path="/Help" element={<Help />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/services" element={<Service />}></Route>
+        <Route path="/Security" element={<SecurityTermsComponent />} />
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
