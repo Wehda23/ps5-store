@@ -105,6 +105,13 @@ def create_address(*args, **kwargs) -> Response:
     try:
         # Get the request data
         data = request.get_json()
+        # Grab user
+        user: User = getattr(request, "user", None)
+        # Check if user is assigned
+        if user is None:
+            raise UserNotAssignedError("User not assigned")
+        if 'user_id' not in data:
+            data['user_id'] = user.id
         # Create serializer
         serializer = ShippingAddressCreateSerializer(data=data)
         # Validate the serializer

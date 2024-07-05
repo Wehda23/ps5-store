@@ -175,7 +175,7 @@ class Serializer(SerializerInterface):
                     )
         # Validate using pydantic
         if self.pydantic_model is not None:
-            getattr(self, "validate_pydantic")(self.validated_data)
+            self._validated_data = getattr(self, "validate_pydantic")(self.validated_data)
 
         return not bool(self.errors)
 
@@ -214,7 +214,7 @@ class Serializer(SerializerInterface):
             model: BaseModel = getattr(self, "pydantic_model")
             if not model:
                 raise AttributeError("No Pydantic model defined")
-            return model(**validated_data)
+            return model(**validated_data).model_dump()
         except ValidationError as e:
             self.errors.extend(e.errors())
         except SerializerError as e:
