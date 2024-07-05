@@ -40,8 +40,7 @@ These routes are accessible without authentication:
   - Response: JWT tokens or error message
 """
 
-from logging import Logger
-from flask import current_app, Blueprint, make_response, request, Response
+from flask import current_app, make_response, request, Response
 from playstation.models.exceptions import ExistingEmail
 from playstation.admin.permissions import permission_required
 from playstation.admin.authentications.jwt_authentication import (

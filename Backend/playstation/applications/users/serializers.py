@@ -130,7 +130,7 @@ class UserSerializer(serializers.ModelSerializer):
         model: User model to be serialized.
         fields: List of fields to be serialized.
     """
-    shipping_addresses: ShippingAddressSerializer = ShippingAddressSerializer(many=True)
+    #shipping_addresses: ShippingAddressSerializer = ShippingAddressSerializer(many=True) # Nested Serializer Example to get user's all addresses
     class Meta:
         model: User = User
         fields: list[str] = [

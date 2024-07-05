@@ -36,6 +36,7 @@ from playstation.admin.permissions import permission_required
 from playstation.admin.authentications import authentication_classess
 from playstation.admin.authentications.jwt_authentication import JWTAuthentication
 from playstation.admin.authentications.exceptions import UserNotAssignedError
+from playstation.applications.users.utils import get_request_user
 from playstation.models.users import User
 from playstation.models.exceptions import UserShippingAddressRelation
 from sqlalchemy.exc import SQLAlchemyError
@@ -67,10 +68,8 @@ def get_addresses(*args, **kwargs) -> Response:
     """
     try:
         # Grab user
-        user: User = getattr(request, "user", None)
-        # Check if user is assigned
-        if user is None:
-            raise UserNotAssignedError("User not assigned")
+        user: User = get_request_user(request)
+
         # Get shipping addresses
         shipping_addresses: list[dict] = (
             ShippingAddressSerializer.get_shipping_addresses(user)
@@ -108,10 +107,7 @@ def create_address(*args, **kwargs) -> Response:
 
         if "user_id" not in data:
             # Grab user
-            user: User = getattr(request, "user", None)
-            # Check if user is assigned
-            if user is None:
-                raise UserNotAssignedError("User not assigned")
+            user: User = get_request_user(request)
             data["user_id"] = user.id
         # Create serializer
         serializer = ShippingAddressCreateSerializer(data=data)
@@ -168,10 +164,7 @@ def update_address(address_id: int, *args, **kwargs) -> Response:
         # Check for user_id field
         if "user_id" not in data:
             # Grab user
-            user: User = getattr(request, "user", None)
-            # Check if user is assigned
-            if user is None:
-                raise UserNotAssignedError("User not assigned")
+            user: User = get_request_user(request)
             data["user_id"] = user.id
         # Create serializer
         serializer = ShippingAddressUpdateSerializer(data=data)
@@ -220,7 +213,7 @@ def delete_address(address_id: int, *args, **kwargs) -> Response:
         # Create data dictionary
         data = {
             "id": address_id,
-            "user_id": request.user.id
+            "user_id": get_request_user(request).id
         }
         # Create serializer
         serializer = DeleteShippingAddressSerializer(data=data)

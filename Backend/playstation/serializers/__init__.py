@@ -356,15 +356,15 @@ class Serializer(SerializerInterface):
             relationship = getattr(instance, field)
             if relationship:
                 nested_serialization = getattr(self, field, None)
-                if self.__check_model(relationship):
-                    return self.__serialize_relationship(
-                        nested_serialization, relationship
-                    )
                 if isinstance(relationship, list):
                     return self.__serialize_relationship_list(
                         nested_serialization, relationship
                     )
-
+                if self.__check_model(relationship):
+                    return self.__serialize_relationship(
+                        nested_serialization, relationship
+                    )
+        # Return Value
         return value
 
     def __check_model(self, instance: object) -> bool:
