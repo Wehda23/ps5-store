@@ -51,7 +51,13 @@ class RefreshToken:
 
     # Create method to generate access token
     @staticmethod
-    def create_access_token(model: object, id: str = "id") -> str:
+    def create_access_token(
+        model: object,
+        id: str = "id",
+        key: str = JWT_AUTHENTICATIONS["SECRET_KEY"],
+        algorithm: str = JWT_AUTHENTICATIONS["ALGORITHM"],
+        time = JWT_AUTHENTICATIONS["ACCESS_TOKEN_LIFETIME"]
+    ) -> str:
         """
         Generate an access token.
 
@@ -70,20 +76,26 @@ class RefreshToken:
             f"{model.__class__.__name__}": getattr(model, id),
             "type": "access",
             "exp": datetime.now(timezone.utc)
-            + JWT_AUTHENTICATIONS["ACCESS_TOKEN_LIFETIME"],
+            + time,
         }
         # Generate token
         access_token: str = jwt.encode(
             payload,
-            key=JWT_AUTHENTICATIONS["SECRET_KEY"],
-            algorithm=JWT_AUTHENTICATIONS["ALGORITHM"],
+            key=key,
+            algorithm=algorithm,
         )
         # Return access_token
         return access_token
 
     # Create method to generate refresh token.
     @staticmethod
-    def create_refresh_token(model: object, id: str = "id") -> str:
+    def create_refresh_token(
+        model: object,
+        id: str = "id",
+        key: str = JWT_AUTHENTICATIONS["SECRET_KEY"],
+        algorithm: str = JWT_AUTHENTICATIONS["ALGORITHM"],
+        time = JWT_AUTHENTICATIONS["REFRESH_TOKEN_LIFETIME"]
+    ) -> str:
         """
         Generate a refresh token.
 
@@ -102,13 +114,13 @@ class RefreshToken:
             f"{model.__class__.__name__}": getattr(model, id),
             "type": "refresh",
             "exp": datetime.now(timezone.utc)
-            + JWT_AUTHENTICATIONS["REFRESH_TOKEN_LIFETIME"],
+            + time,
         }
         # Generate token
         refresh_token: str = jwt.encode(
             payload,
-            key=JWT_AUTHENTICATIONS["SECRET_KEY"],
-            algorithm=JWT_AUTHENTICATIONS["ALGORITHM"],
+            key=key,
+            algorithm=algorithm,
         )
         # Return refresh_token
         return refresh_token
@@ -140,7 +152,11 @@ class RefreshToken:
 
     # Create method to decode the token
     @staticmethod
-    def decode_token(token: str) -> Optional[dict[str, Union[str, int]]]:
+    def decode_token(
+        token: str,
+        key: str = JWT_AUTHENTICATIONS["SECRET_KEY"],
+        algorithm: str = JWT_AUTHENTICATIONS["ALGORITHM"],
+    ) -> Optional[dict[str, Union[str, int]]]:
         """
         Decode a JWT token.
 
@@ -153,8 +169,8 @@ class RefreshToken:
         try:
             return jwt.decode(
                 token,
-                key=JWT_AUTHENTICATIONS["SECRET_KEY"],
-                algorithms=[JWT_AUTHENTICATIONS["ALGORITHM"]],
+                key=key,
+                algorithms=[algorithm],
             )
         except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
             return None

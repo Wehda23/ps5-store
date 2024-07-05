@@ -12,9 +12,9 @@ from playstation.models.coupons import Coupons
 class Orders(db.Model, SQLMixin):
     # Basic
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
     shipping_address = db.Column(
-        db.Integer, db.ForeignKey("shipping_address.id"), nullable=False
+        db.Integer, db.ForeignKey("shipping_address.id"), nullable=True
     )
     coupon = db.Column(db.Integer, db.ForeignKey("coupons.id"))
     order_date = db.Column(db.DateTime, default=db.func.current_timestamp())
@@ -24,6 +24,7 @@ class Orders(db.Model, SQLMixin):
     # Relationships
     user_obj = db.relationship("User", backref=db.backref("orders", lazy=True))
     # user = db.relationship("User", back_populates="user")
+    # Orders backref products
 
     def __repr__(self) -> str:
         """
