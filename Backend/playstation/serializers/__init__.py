@@ -14,7 +14,7 @@ from .serializer import (
     ToInstance,
     ExtendsPydantic,
 )
-from typing import Self, NoReturn, Optional, Any
+from typing import Self, NoReturn, Optional, Any, Union
 from pydantic import BaseModel, ValidationError
 
 
@@ -357,20 +357,50 @@ class Serializer(SerializerInterface):
             if hasattr(instance, field):
                 # Get relationship
                 relationship = getattr(instance, field)
-            if relationship and self.__check_model(relationship):
+            if relationship:
                 nested_serialization: Optional[Serializer] = getattr(self, field, None)
-                if nested_serialization and isinstance(nested_serialization, Serializer):
+                if self.__check_model(relationship):
+                    if nested_serialization and isinstance(
+                        nested_serialization, Serializer
+                    ):
+                        # Serialize relationship
+                        return self.__nested_serializer(
+                            nested_serialization, relationship, field
+                        )
+                    # Get relationship value
+                    return self.__grab_field(relationship.__dict__, relationship, "id")
+                if isinstance(relationship, list):
+                    if nested_serialization and isinstance(
+                        nested_serialization, Serializer
+                    ):
+                        # Serialize relationship
+                        return self.__nested_serializer(
+                            nested_serialization, relationship, field
+                        )
                     # Serialize relationship
-                    nested_serialization.instance = relationship
-                    return nested_serialization.data
-                # Get relationship value
-                return self.__grab_field(relationship.__dict__, relationship, "id")
+                    return [
+                        self.__grab_field(model.__dict__, model, "id")
+                        for model in relationship
+                        if self.__check_model(model)
+                    ]
         return value
 
     def __check_model(self, instance, *args, **kwargs) -> bool:
         """Helper function to check if the model exists."""
         # Check if the model exists
         return isinstance(instance.__table__, Table)
+
+    def __nested_serializer(
+        self,
+        nested_serializer: "Serializer",
+        relationship: Union[list | Any],
+        field: str,
+    ) -> Union[list | dict]:
+        """Helper function to serialize nested relationships."""
+        # Check if the relationship is a list
+        # Serialize relationship
+        nested_serializer.instance = relationship
+        return nested_serializer.data
 
     def to_instance(self, find_by: str = "id") -> Optional[object]:
         """

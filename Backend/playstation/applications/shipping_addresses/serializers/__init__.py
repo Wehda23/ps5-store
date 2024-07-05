@@ -14,8 +14,6 @@ from typing import Self, Optional
 
 # Create Serializer to grab all shipping_addresses
 class ShippingAddressSerializer(serializers.ModelSerializer):
-    user: UserSerializer = UserSerializer() # Must initiate serializer
-
     class Meta:
         model: ShippingAddress = ShippingAddress
         fields: str = "__all__"  # Grab all fields
