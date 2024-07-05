@@ -71,6 +71,12 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
   - [Update Product Endpoint](#update-product-endpoint)
   - [Delete Product Endpoint](#delete-product-endpoint)
   - [Query Products Endpoint](#get-all-products-endpoint)
+- [Shipping Address Application](#shipping-address-application)
+  - [Retrieve All User's Addresses](#retrieve-user's-shipping-addresses-endpoint)
+  - [Create User Shipping Address](#create-shipping-address-endpoint)
+  - [Update User Shipping Address](#update-shipping-address-endpoint)
+  - [Delete User Shipping Address](#delete-shipping-address-endpoint)
+
 
 
 ## Users Application
@@ -1458,3 +1464,407 @@ Ensure proper error handling to manage responses for different scenarios like va
 - `500`: Internal Server Error - Failed to retrieve products.
 
 <hr/>
+
+## Shipping Address Application
+
+### Retrieve User's Shipping Addresses Endpoint
+
+- **URL**: `/api/shipping-addresses/`
+- **Method**: `GET`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Authenticated User
+
+#### Parameters
+
+- **No parameters are required.** The user ID is retrieved from the JWT token.
+
+#### Responses
+
+- **Success (200)**: User's shipping addresses retrieved successfully.
+  - **Body**:
+    ```json
+    [
+      {
+        "address": "Maadi, Street 9",
+        "city": "Cairo",
+        "country": "Egypt",
+        "default": true,
+        "id": 1,
+        "state": "N/A",
+        "user": 1,
+        "user_id": 1
+      }
+    ]
+    ```
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"User not assigned"`
+
+- **Error (500)**: Internal Server Error - An error occurred while retrieving addresses.
+  - **Body**: `"Something went wrong"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/shipping-addresses/';
+fetch(url, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/shipping-addresses/';
+axios.get(url, {
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like authentication failures and server errors.
+
+### Status Codes
+
+- `200`: OK - Shipping addresses retrieved successfully.
+- `401`: Unauthorized - Authentication credentials missing or invalid.
+- `500`: Internal Server Error - An error occurred while retrieving addresses.
+
+<hr/>
+
+### Create Shipping Address Endpoint
+
+- **URL**: `/api/shipping-addresses/`
+- **Method**: `POST`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Authenticated User
+
+#### Request Body
+
+The request body should include the following JSON object:
+
+```json
+{
+    "city": "Madinate Nasr",
+    "address": "17 Omar Ahmed Street",
+    "country": "Egypt",
+    "default": true, // Optional Field
+    "state": "N/A" // Optional Field
+}
+```
+
+#### Responses
+
+- **Success (201)**: Shipping address created successfully.
+  - **Body**: `"Shipping address created successfully"`
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"User not assigned"`
+
+- **Error (500)**: Internal Server Error - An error occurred while creating the address.
+  - **Body**: `"Something went wrong"` or `"Failed to create shipping address"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/shipping-addresses/';
+const data = {
+    city: 'Madinate Nasr',
+    address: '17 Omar Ahmed Street',
+    country: 'Egypt',
+    default: true, // Optional
+    state: 'N/A' // Optional
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/shipping-addresses/';
+const data = {
+    city: 'Madinate Nasr',
+    address: '17 Omar Ahmed Street',
+    country: 'Egypt',
+    default: true, // Optional
+    state: 'N/A' // Optional
+};
+
+axios.post(url, data, {
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, and server errors.
+
+### Status Codes
+
+- `201`: Created - Shipping address created successfully.
+- `400`: Bad Request - Invalid input data format.
+- `401`: Unauthorized - Authentication credentials missing or invalid.
+- `500`: Internal Server Error - An error occurred while creating the address.
+
+<hr/>
+
+### Update Shipping Address Endpoint
+
+- **URL**: `/api/shipping-addresses/{address_id}`
+- **Method**: `PUT`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Authenticated User, Address Owner
+
+#### Parameters
+
+- **Path Parameter**:
+  - `address_id` (integer, required): The ID of the address to update.
+
+#### Request Body
+
+The request body should include the following JSON object:
+
+```json
+{
+    "address": "Maadi, Streetddddd 9",
+    "country": "Egypt",
+    "state": "N/A",
+    "default": true,
+    "city": "Cairo"
+}
+```
+
+#### Responses
+
+- **Success (200)**: Shipping address updated successfully.
+  - **Body**: Updated address details in JSON format.
+
+- **Error (400)**: Bad Request - Invalid input data.
+  - **Body**: List of validation errors
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"User not assigned"`
+
+- **Error (403)**: Forbidden - User does not have the required permissions.
+  - **Body**: `"Forbidden"`
+
+- **Error (404)**: Not Found - Address not found.
+  - **Body**: `"Address not found"`
+
+- **Error (500)**: Internal Server Error - An error occurred while updating the address.
+  - **Body**: `"Something went wrong"` or `"Failed to update shipping address"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/api/shipping-addresses/1';
+const data = {
+    address: 'Maadi, Streetddddd 9',
+    country: 'Egypt',
+    state: 'N/A',
+    default: true,
+    city: 'Cairo'
+};
+
+fetch(url, {
+    method: 'PUT',
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/api/shipping-addresses/1';
+const data = {
+    address: 'Maadi, Streetddddd 9',
+    country: 'Egypt',
+    state: 'N/A',
+    default: true,
+    city: 'Cairo'
+};
+
+axios.put(url, data, {
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE',
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like validation errors, authentication failures, permission denials, and server errors.
+
+### Status Codes
+
+- `200`: OK - Shipping address updated successfully.
+- `400`: Bad Request - Invalid input data format.
+- `401`: Unauthorized - Authentication credentials missing or invalid.
+- `403`: Forbidden - Insufficient permissions to perform the operation.
+- `404`: Not Found - Address not found.
+- `500`: Internal Server Error - An error occurred while updating the address.
+
+<hr/>
+
+### Delete Shipping Address Endpoint
+
+- **URL**: `/shipping-addresses/{address_id}`
+- **Method**: `DELETE`
+- **Authentication**: JWT Token (Bearer Token)
+- **Permissions**: Authenticated User, Address Owner
+
+#### Parameters
+
+- **Path Parameter**:
+  - `address_id` (integer, required): The ID of the address to delete.
+
+#### Request Body
+
+The request body is not required.
+
+#### Responses
+
+- **Success (200)**: Shipping address deleted successfully.
+  - **Body**: `"Shipping address deleted successfully"`
+
+- **Error (401)**: Unauthorized - User is not authenticated.
+  - **Body**: `"User not assigned"`
+
+- **Error (403)**: Forbidden - User does not have the required permissions.
+  - **Body**: `"Forbidden"`
+
+- **Error (404)**: Not Found - Address not found.
+  - **Body**: `"Address not found"`
+
+- **Error (500)**: Internal Server Error - An error occurred while deleting the address.
+  - **Body**: `"Something went wrong"` or `"Failed to delete shipping address"`
+
+### Example Usage
+
+#### Using JavaScript Fetch
+
+```javascript
+const url = '/shipping-addresses/1';
+
+fetch(url, {
+    method: 'DELETE',
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Success:', data);
+})
+.catch((error) => {
+    console.error('Error:', error);
+});
+```
+
+#### Using JavaScript axios
+
+```javascript
+const axios = require('axios');
+
+const url = '/shipping-addresses/1';
+
+axios.delete(url, {
+    headers: {
+        'Authorization': 'Bearer YOUR_JWT_TOKEN_HERE'
+    }
+})
+.then(response => {
+    console.log('Success:', response.data);
+})
+.catch(error => {
+    console.error('Error:', error.response.data);
+});
+```
+
+### Error Handling
+
+Ensure proper error handling to manage responses for different scenarios like authentication failures, permission denials, not found errors, and server errors.
+
+### Status Codes
+
+- `200`: OK - Shipping address deleted successfully.
+- `401`: Unauthorized - Authentication credentials missing or invalid.
+- `403`: Forbidden - Insufficient permissions to perform the operation.
+- `404`: Not Found - Address not found.
+- `500`: Internal Server Error - An error occurred while deleting the address.

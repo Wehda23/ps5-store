@@ -15,6 +15,10 @@
         {
             "name": "Products",
             "description": "Operations related to product management"
+        },
+        {
+            "name": "Shipping Addresses",
+            "description": "Endpoints related to shipping addresses"
         }
     ],
     "securityDefinitions": {
@@ -636,201 +640,609 @@
         }
         }
         },
-    "/products/{product_id}": {
-        "get": {
-            "tags": ["Products"],
-            "summary": "Get a product by ID",
-            "description": "Endpoint to retrieve a product by its ID.",
-            "parameters": [
-            {
-                "in": "path",
-                "name": "product_id",
-                "type": "integer",
-                "required": true,
-                "description": "Product ID"
-            }
-            ],
-            "responses": {
-            "200": {
-                "description": "Product retrieved successfully",
-                "schema": {
-                "type": "object",
-                "properties": {
-                    "category": {
+        "/products/{product_id}": {
+            "get": {
+                "tags": ["Products"],
+                "summary": "Get a product by ID",
+                "description": "Endpoint to retrieve a product by its ID.",
+                "parameters": [
+                {
+                    "in": "path",
+                    "name": "product_id",
+                    "type": "integer",
+                    "required": true,
+                    "description": "Product ID"
+                }
+                ],
+                "responses": {
+                "200": {
+                    "description": "Product retrieved successfully",
+                    "schema": {
                     "type": "object",
                     "properties": {
+                        "category": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "integer" },
+                            "name": { "type": "string" }
+                        }
+                        },
+                        "description": { "type": "string" },
                         "id": { "type": "integer" },
-                        "name": { "type": "string" }
-                    }
-                    },
-                    "description": { "type": "string" },
-                    "id": { "type": "integer" },
-                    "image_url": { "type": "string" },
-                    "name": { "type": "string" },
-                    "price": { "type": "number", "format": "float" },
-                    "stock": { "type": "integer" }
-                },
-                "example": {
-                    "category": {
-                    "id": 1,
-                    "name": "Play Station"
-                    },
-                    "description": "Gaming Console",
-                    "id": 1,
-                    "image_url": "static\\images\\Waheed Khaled\\82209737.jpg",
-                    "name": "Play Station 5",
-                    "price": 499.99,
-                    "stock": 99
-                }
-                }
-            },
-            "400": {
-                "description": "Bad Request - Invalid input data",
-                "schema": {
-                "type": "array",
-                "items": { "type": "string" }
-                }
-            },
-            "404": {
-                "description": "Not Found - Product not found",
-                "schema": { "type": "string" }
-            }
-            }
-        },
-        "put": {
-            "tags": ["Products"],
-            "summary": "Update a product",
-            "description": "Endpoint to update a product with authentication and permission checks.",
-            "parameters": [
-                {
-                "in": "path",
-                "name": "product_id",
-                "type": "integer",
-                "required": true,
-                "description": "Product ID"
-                },
-                {
-                "in": "body",
-                "name": "body",
-                "description": "Product object that needs to be updated",
-                "required": true,
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                    "image": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Image file"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Product name"
-                    },
-                    "price": {
-                        "type": "number",
-                        "format": "float",
-                        "description": "Price of the product"
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Product description"
-                    },
-                    "stock": {
-                        "type": "integer",
-                        "description": "Quantity of the product available"
-                    },
-                    "category_id": {
-                        "type": "integer",
-                        "description": "Category ID"
-                    }
+                        "image_url": { "type": "string" },
+                        "name": { "type": "string" },
+                        "price": { "type": "number", "format": "float" },
+                        "stock": { "type": "integer" }
                     },
                     "example": {
-                    "name": "Updated Product Name",
-                    "price": 150.0,
-                    "description": "Updated product description",
-                    "stock": 30,
-                    "category_id": 2
+                        "category": {
+                        "id": 1,
+                        "name": "Play Station"
+                        },
+                        "description": "Gaming Console",
+                        "id": 1,
+                        "image_url": "static\\images\\Waheed Khaled\\82209737.jpg",
+                        "name": "Play Station 5",
+                        "price": 499.99,
+                        "stock": 99
+                    }
+                    }
+                },
+                "400": {
+                    "description": "Bad Request - Invalid input data",
+                    "schema": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                    }
+                },
+                "404": {
+                    "description": "Not Found - Product not found",
+                    "schema": { "type": "string" }
+                }
+                }
+            },
+            "put": {
+                "tags": ["Products"],
+                "summary": "Update a product",
+                "description": "Endpoint to update a product with authentication and permission checks.",
+                "parameters": [
+                    {
+                    "in": "path",
+                    "name": "product_id",
+                    "type": "integer",
+                    "required": true,
+                    "description": "Product ID"
+                    },
+                    {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Product object that needs to be updated",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "image": {
+                            "type": "string",
+                            "format": "binary",
+                            "description": "Image file"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Product name"
+                        },
+                        "price": {
+                            "type": "number",
+                            "format": "float",
+                            "description": "Price of the product"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Product description"
+                        },
+                        "stock": {
+                            "type": "integer",
+                            "description": "Quantity of the product available"
+                        },
+                        "category_id": {
+                            "type": "integer",
+                            "description": "Category ID"
+                        }
+                        },
+                        "example": {
+                        "name": "Updated Product Name",
+                        "price": 150.0,
+                        "description": "Updated product description",
+                        "stock": 30,
+                        "category_id": 2
+                        }
+                    }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "Product updated successfully",
+                    "schema": {
+                        "type": "string",
+                        "example": "Product updated successfully"
+                    }
+                    },
+                    "400": {
+                    "description": "Bad Request - Invalid input data",
+                    "schema": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                    }
+                    },
+                    "401": {
+                    "description": "Unauthorized - Authentication credentials missing or invalid",
+                    "schema": { "type": "string" }
+                    },
+                    "403": {
+                    "description": "Forbidden - Insufficient permissions",
+                    "schema": { "type": "string" }
+                    },
+                    "404": {
+                    "description": "Not Found - Product not found",
+                    "schema": { "type": "string" }
+                    },
+                    "415": {
+                    "description": "Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'",
+                    "schema": { "type": "string" }
+                    }
+                },
+                "security": [{ "Bearer": [] }]
+            },
+            "delete": {
+                "tags": ["Products"],
+                "summary": "Delete a product",
+                "description": "Endpoint to delete a product with authentication and permission checks.",
+                "parameters": [
+                    {
+                    "in": "path",
+                    "name": "product_id",
+                    "type": "integer",
+                    "required": true,
+                    "description": "Product ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "Product deleted successfully",
+                    "schema": {
+                        "type": "string",
+                        "example": "Product Deleted"
+                    }
+                    },
+                    "400": {
+                    "description": "Bad Request - Invalid input data",
+                    "schema": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                    }
+                    },
+                    "401": {
+                    "description": "Unauthorized - Authentication credentials missing or invalid",
+                    "schema": { "type": "string" }
+                    },
+                    "403": {
+                    "description": "Forbidden - Insufficient permissions",
+                    "schema": { "type": "string" }
+                    },
+                    "404": {
+                    "description": "Not Found - Product not found",
+                    "schema": { "type": "string" }
+                    }
+                },
+                "security": [{ "Bearer": [] }]
+            }
+        },
+        "/shipping-addresses/": {
+            "get": {
+                "tags": ["Shipping Addresses"],
+                "summary": "Retrieve User's Shipping Addresses",
+                "description": "Retrieve a user's shipping addresses.",
+                "operationId": "getShippingAddresses",
+                "security": [
+                {
+                    "bearerAuth": []
+                }
+                ],
+                "responses": {
+                "200": {
+                    "description": "User's shipping addresses retrieved successfully",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                            "address": {
+                                "type": "string",
+                                "example": "Maadi, Street 9"
+                            },
+                            "city": {
+                                "type": "string",
+                                "example": "Cairo"
+                            },
+                            "country": {
+                                "type": "string",
+                                "example": "Egypt"
+                            },
+                            "default": {
+                                "type": "boolean",
+                                "example": true
+                            },
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "state": {
+                                "type": "string",
+                                "example": "N/A"
+                            },
+                            "user": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "user_id": {
+                                "type": "integer",
+                                "example": 1
+                            }
+                            }
+                        }
+                        }
+                    }
+                    }
+                },
+                "401": {
+                    "description": "Unauthorized - User is not authenticated",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "string",
+                        "example": "User not assigned"
+                        }
+                    }
+                    }
+                },
+                "500": {
+                    "description": "Internal Server Error - An error occurred while retrieving addresses",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "string",
+                        "example": "Something went wrong"
+                        }
+                    }
                     }
                 }
                 }
-            ],
-            "responses": {
-                "200": {
-                "description": "Product updated successfully",
-                "schema": {
-                    "type": "string",
-                    "example": "Product updated successfully"
+            },
+            "post": {
+                "tags": ["Shipping Addresses"],
+                "summary": "Create Shipping Address",
+                "description": "Create a new shipping address.",
+                "operationId": "createShippingAddress",
+                "security": [
+                {
+                    "bearerAuth": []
                 }
+                ],
+                "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "city": {
+                            "type": "string",
+                            "example": "Madinate Nasr"
+                        },
+                        "address": {
+                            "type": "string",
+                            "example": "17 Omar Ahmed Street"
+                        },
+                        "country": {
+                            "type": "string",
+                            "example": "Egypt"
+                        },
+                        "default": {
+                            "type": "boolean",
+                            "example": true,
+                            "description": "Optional Field"
+                        },
+                        "state": {
+                            "type": "string",
+                            "example": "N/A",
+                            "description": "Optional Field"
+                        }
+                        },
+                        "required": ["city", "address", "country"]
+                    }
+                    }
+                }
+                },
+                "responses": {
+                "201": {
+                    "description": "Shipping address created successfully",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "string",
+                        "example": "Shipping address created successfully"
+                        }
+                    }
+                    }
                 },
                 "400": {
-                "description": "Bad Request - Invalid input data",
-                "schema": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                }
+                    "description": "Bad Request - Invalid input data",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "example": [{"field": "error message"}]
+                        }
+                        }
+                    }
+                    }
                 },
                 "401": {
-                "description": "Unauthorized - Authentication credentials missing or invalid",
-                "schema": { "type": "string" }
+                    "description": "Unauthorized - User is not authenticated",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "string",
+                        "example": "User not assigned"
+                        }
+                    }
+                    }
                 },
-                "403": {
-                "description": "Forbidden - Insufficient permissions",
-                "schema": { "type": "string" }
-                },
-                "404": {
-                "description": "Not Found - Product not found",
-                "schema": { "type": "string" }
-                },
-                "415": {
-                "description": "Unsupported Media Type - Allowed media types are 'application/json' or 'multipart/form-data'",
-                "schema": { "type": "string" }
+                "500": {
+                    "description": "Internal Server Error - An error occurred while creating the address",
+                    "content": {
+                    "application/json": {
+                        "schema": {
+                        "type": "string",
+                        "example": "Something went wrong"
+                        }
+                    }
+                    }
                 }
-            },
-            "security": [{ "Bearer": [] }]
+                }
+            }
         },
-        "delete": {
-            "tags": ["Products"],
-            "summary": "Delete a product",
-            "description": "Endpoint to delete a product with authentication and permission checks.",
+        "/shipping-addresses/{address_id}": {
+            "put": {
+            "tags": ["Shipping Addresses"],
+            "summary": "Update Shipping Address",
+            "description": "Update a shipping address.",
+            "operationId": "updateShippingAddress",
+            "security": [
+                {
+                "bearerAuth": []
+                }
+            ],
             "parameters": [
                 {
+                "name": "address_id",
                 "in": "path",
-                "name": "product_id",
-                "type": "integer",
                 "required": true,
-                "description": "Product ID"
+                "schema": {
+                    "type": "integer"
+                },
+                "description": "The ID of the address to update."
                 }
             ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "object",
+                    "properties": {
+                        "address": {
+                        "type": "string",
+                        "example": "Maadi, Streetddddd 9"
+                        },
+                        "country": {
+                        "type": "string",
+                        "example": "Egypt"
+                        },
+                        "state": {
+                        "type": "string",
+                        "example": "N/A"
+                        },
+                        "default": {
+                        "type": "boolean",
+                        "example": true
+                        },
+                        "city": {
+                        "type": "string",
+                        "example": "Cairo"
+                        }
+                    },
+                    "required": ["address", "country", "state", "default", "city"]
+                    }
+                }
+                }
+            },
             "responses": {
                 "200": {
-                "description": "Product deleted successfully",
-                "schema": {
-                    "type": "string",
-                    "example": "Product Deleted"
+                "description": "Shipping address updated successfully",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "address": {
+                            "type": "string",
+                            "example": "Maadi, Streetddddd 9"
+                        },
+                        "country": {
+                            "type": "string",
+                            "example": "Egypt"
+                        },
+                        "state": {
+                            "type": "string",
+                            "example": "N/A"
+                        },
+                        "default": {
+                            "type": "boolean",
+                            "example": true
+                        },
+                        "city": {
+                            "type": "string",
+                            "example": "Cairo"
+                        }
+                        }
+                    }
+                    }
                 }
                 },
                 "400": {
                 "description": "Bad Request - Invalid input data",
-                "schema": {
-                    "type": "array",
-                    "items": { "type": "string" }
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                        "type": "object",
+                        "example": [{"field": "error message"}]
+                        }
+                    }
+                    }
                 }
                 },
                 "401": {
-                "description": "Unauthorized - Authentication credentials missing or invalid",
-                "schema": { "type": "string" }
+                "description": "Unauthorized - User is not authenticated",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "string",
+                        "example": "User not assigned"
+                    }
+                    }
+                }
                 },
                 "403": {
-                "description": "Forbidden - Insufficient permissions",
-                "schema": { "type": "string" }
+                "description": "Forbidden - User does not have the required permissions",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "string",
+                        "example": "Forbidden"
+                    }
+                    }
+                }
                 },
                 "404": {
-                "description": "Not Found - Product not found",
-                "schema": { "type": "string" }
+                "description": "Not Found - Address not found",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "string",
+                        "example": "Address not found"
+                    }
+                    }
                 }
+                },
+                "500": {
+                "description": "Internal Server Error - An error occurred while updating the address",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "string",
+                        "example": "Something went wrong"
+                    }
+                    }
+                }
+                }
+            }
             },
-            "security": [{ "Bearer": [] }]
+            "delete": {
+                "tags": ["Shipping Addresses"],
+                "summary": "Delete Shipping Address",
+                "description": "Delete a shipping address.",
+                "operationId": "deleteShippingAddress",
+                "security": [
+                    {
+                    "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                    "name": "address_id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    },
+                    "description": "The ID of the address to delete."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "Shipping address deleted successfully",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "string",
+                            "example": "Shipping address deleted successfully"
+                        }
+                        }
+                    }
+                    },
+                    "401": {
+                    "description": "Unauthorized - User is not authenticated",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "string",
+                            "example": "User not assigned"
+                        }
+                        }
+                    }
+                    },
+                    "403": {
+                    "description": "Forbidden - User does not have the required permissions",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "string",
+                            "example": "Forbidden"
+                        }
+                        }
+                    }
+                    },
+                    "404": {
+                    "description": "Not Found - Address not found",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "string",
+                            "example": "Address not found"
+                        }
+                        }
+                    }
+                    },
+                    "500": {
+                    "description": "Internal Server Error - An error occurred while deleting the address",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "string",
+                            "example": "Something went wrong"
+                        }
+                        }
+                    }
+                    }
+                }
+            }
         }
+
     }
-}
 }

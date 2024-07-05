@@ -24,7 +24,9 @@ from playstation.models.blacklisted_tokens import BlackListedTokens
 from .validators import EmailValidator, NameValidator, PasswordValidator, IDValidator
 from typing import Self
 from playstation.admin.authentications.token import get_tokens_for_user
-from playstation.applications.shipping_addresses.serializers import ShippingAddressSerializer
+from playstation.applications.shipping_addresses.serializers import (
+    ShippingAddressSerializer,
+)
 
 
 # User Registeration serializer
@@ -130,7 +132,8 @@ class UserSerializer(serializers.ModelSerializer):
         model: User model to be serialized.
         fields: List of fields to be serialized.
     """
-    #shipping_addresses: ShippingAddressSerializer = ShippingAddressSerializer(many=True) # Nested Serializer Example to get user's all addresses
+
+    # shipping_addresses: ShippingAddressSerializer = ShippingAddressSerializer(many=True) # Nested Serializer Example to get user's all addresses
     class Meta:
         model: User = User
         fields: list[str] = [
@@ -138,7 +141,7 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
-            "shipping_addresses"
+            "shipping_addresses",
         ]
 
 

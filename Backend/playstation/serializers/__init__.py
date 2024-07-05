@@ -342,24 +342,18 @@ class Serializer(SerializerInterface):
         # Return Serialized data
         return serialized_data
 
-    def __grab_field(
-        self, instance: object, field: str
-    ) -> Any:
+    def __grab_field(self, instance: object, field: str) -> Any:
         """Helper function to grab field for serialization process."""
         # Grab field value from instance_dict
         value: Any = getattr(instance, field)
         # Grab nested serializer
         # If value is None, check if the field is a relationship
-        if self.__check_model(value) :
+        if self.__check_model(value):
             nested_serialization = getattr(self, field, None)
-            return self.__serialize_relationship(
-                nested_serialization, value
-            )
+            return self.__serialize_relationship(nested_serialization, value)
         if isinstance(value, list):
             nested_serialization = getattr(self, field, None)
-            return self.__serialize_relationship_list(
-                nested_serialization, value
-            )
+            return self.__serialize_relationship_list(nested_serialization, value)
         # Return Value
         return value
 

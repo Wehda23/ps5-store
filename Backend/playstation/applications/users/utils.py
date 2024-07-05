@@ -1,6 +1,7 @@
 """
 # Module contains function for extra utilies concerning User
 """
+
 from playstation.admin.authentications.exceptions import UserNotAssignedError
 from playstation.models.users import User
 from flask import Request

@@ -356,7 +356,7 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
         if serializer.is_valid():
             # Update product
             serializer.save()
-            return make_response("Product updated successfully", 200)
+            return make_response(serializer.data, 200)
         # Logic to update product
         error: list[str] = serializer.errors
         return make_response(error, 400)

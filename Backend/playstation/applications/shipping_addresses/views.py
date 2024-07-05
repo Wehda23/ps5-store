@@ -211,10 +211,7 @@ def delete_address(address_id: int, *args, **kwargs) -> Response:
     """
     try:
         # Create data dictionary
-        data = {
-            "id": address_id,
-            "user_id": get_request_user(request).id
-        }
+        data = {"id": address_id, "user_id": get_request_user(request).id}
         # Create serializer
         serializer = DeleteShippingAddressSerializer(data=data)
         # Validate the serializer
