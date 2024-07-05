@@ -1,6 +1,7 @@
 """
 Initiate logger for Flask Blueprint application
 """
+
 from flask import Blueprint
 from playstation.settings import LOGGING_COFIGURATION
 

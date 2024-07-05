@@ -143,8 +143,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "stock",
             "category_id",
             "image_url",
-            'is_sale',
-            'discount'
+            "is_sale",
+            "discount",
         ]
 
     def to_representation(self, instance: Product) -> dict:

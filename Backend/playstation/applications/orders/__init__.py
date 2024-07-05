@@ -1,6 +1,7 @@
 """
 # Initiate Orders Application
 """
+
 from flask import Blueprint
 
 # Declare route prefix

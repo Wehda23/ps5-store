@@ -1,6 +1,7 @@
 """
 Initiate Pages Application
 """
+
 from flask import Blueprint
 from playstation.settings import TEMPLATES_DIR, STATIC_DIR
 

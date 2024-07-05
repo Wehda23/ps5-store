@@ -18,6 +18,7 @@
 from flask import current_app
 from . import orders_api
 
+
 # Test API
 @orders_api.route("", methods=["GET"])
 def orders_test() -> str:

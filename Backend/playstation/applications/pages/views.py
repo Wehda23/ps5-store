@@ -34,7 +34,6 @@ import os
 from . import pages
 
 
-
 @pages.route("/")
 def home_page() -> str:
     """

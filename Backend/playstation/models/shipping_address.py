@@ -11,7 +11,7 @@ from typing import Self
 class ShippingAddress(db.Model, SQLMixin):
     # Basic
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     address = db.Column(db.String(256), nullable=False)
     city = db.Column(db.String(128), nullable=False)
     state = db.Column(db.String(128), nullable=False)
@@ -19,9 +19,7 @@ class ShippingAddress(db.Model, SQLMixin):
     default = db.Column(db.Boolean, default=False, nullable=False)
 
     # Relationships
-    user_obj = db.relationship(
-        "User", backref=db.backref("shipping_addresses", lazy=True)
-    )
+    user = db.relationship("User", back_populates="shipping_addresses")
 
     def __repr__(self: Self):
         """

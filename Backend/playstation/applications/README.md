@@ -70,6 +70,7 @@ The Swagger UI is configured using the `flask_swagger_ui` package. Below is a su
   - [Get Product By ID Endpoint](#get-product-by-id-endpoint)
   - [Update Product Endpoint](#update-product-endpoint)
   - [Delete Product Endpoint](#delete-product-endpoint)
+  - [Query Products Endpoint](#get-all-products-endpoint)
 
 
 ## Users Application
@@ -1359,10 +1360,6 @@ Ensure proper error handling to manage responses for different scenarios like in
 - `404`: Not Found - Product not found.
 
 <hr/>
-
-Certainly! Here's the adjusted markdown documentation with the provided response body example:
-
----
 
 ### Get All Products Endpoint
 

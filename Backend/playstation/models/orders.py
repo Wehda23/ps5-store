@@ -23,6 +23,7 @@ class Orders(db.Model, SQLMixin):
 
     # Relationships
     user_obj = db.relationship("User", backref=db.backref("orders", lazy=True))
+    # user = db.relationship("User", back_populates="user")
 
     def __repr__(self) -> str:
         """

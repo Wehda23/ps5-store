@@ -1,6 +1,7 @@
 """
 # Initiate Shipping Address Application
 """
+
 from flask import Blueprint
 
 # Declare route prefix

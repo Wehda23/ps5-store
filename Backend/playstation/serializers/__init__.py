@@ -216,7 +216,7 @@ class Serializer(SerializerInterface):
                 raise AttributeError("No Pydantic model defined")
             return model(**validated_data)
         except ValidationError as e:
-            self.errors.extends(**e.errors())
+            self.errors.extend(e.errors())
         except SerializerError as e:
             # add to error
             self.errors.append(

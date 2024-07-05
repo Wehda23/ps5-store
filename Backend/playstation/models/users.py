@@ -109,6 +109,14 @@ class User(db.Model, UserMixin):
         "BlackListedTokens", back_populates="user", cascade="all, delete-orphan"
     )
 
+    shipping_addresses = db.relationship(
+        "ShippingAddress", back_populates="user", cascade="all, delete-orphan"
+    )
+
+    # orders = db.relationship(
+    # "Orders", back_populates="user"
+    # )
+
     def __repr__(self: Self):
         """
         Method for representation

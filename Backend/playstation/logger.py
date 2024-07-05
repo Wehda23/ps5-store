@@ -23,6 +23,7 @@ from flask import Flask
 from .settings import LOGGING_COFIGURATION
 import os
 
+
 def setup_logging(app: Flask, name: str = LOGGING_COFIGURATION["NAME"]) -> None:
     """
     Set up logging for the Flask application.
@@ -44,17 +45,22 @@ def setup_logging(app: Flask, name: str = LOGGING_COFIGURATION["NAME"]) -> None:
     # Create a logger
     logger: Logger = logging.getLogger(name)
 
-
-    logger.setLevel(logging.DEBUG)  # Set the logger to capture all levels of log messages
+    logger.setLevel(
+        logging.DEBUG
+    )  # Set the logger to capture all levels of log messages
 
     # Create a console handler to output logs to the console
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.DEBUG)  # Console handler captures DEBUG level logs and above
+    console_handler.setLevel(
+        logging.DEBUG
+    )  # Console handler captures DEBUG level logs and above
 
     # Create a rotating file handler to output logs to a file with rotation
     log_file_path = os.path.abspath(LOGGING_COFIGURATION["FILE"])
     file_handler = RotatingFileHandler(log_file_path, maxBytes=10000, backupCount=3)
-    file_handler.setLevel(logging.INFO)  # File handler captures INFO level logs and above
+    file_handler.setLevel(
+        logging.INFO
+    )  # File handler captures INFO level logs and above
 
     # Define the format for log messages
     formatter = logging.Formatter(LOGGING_COFIGURATION["FORMAT"])
