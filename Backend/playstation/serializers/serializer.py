@@ -63,14 +63,10 @@ class AbstractSerializer(ABC):
         """
         if serializer_fields is None:
             raise ValueError("Fields cannot be None.")
-        fields = [
-            key for key in self.model.__dict__.keys()
-            if not key.startswith("_")
-        ]
+        fields = [key for key in self.model.__dict__.keys() if not key.startswith("_")]
         if not self.__check_fields(serializer_fields):
             fields = [
-                key for key in serializer_fields
-                if self.__existing_field(key, fields)
+                key for key in serializer_fields if self.__existing_field(key, fields)
             ]
         self._fields = fields
 

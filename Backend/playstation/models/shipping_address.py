@@ -9,6 +9,19 @@ from typing import Self
 
 # Shipping Address
 class ShippingAddress(db.Model, SQLMixin):
+    """
+    Represents a shipping address in the database.
+
+    Attributes:
+        id (int): Primary key.
+        user_id (int): Foreign key referencing User.
+        address (str): Street address.
+        city (str): City of the address.
+        state (str): State of the address.
+        country (str): Country of the address.
+        default (bool): Whether this is the default shipping address for the user.
+    """
+
     # Basic
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -23,6 +36,9 @@ class ShippingAddress(db.Model, SQLMixin):
 
     def __repr__(self: Self):
         """
-        Method for representation
+        Method for representation.
+
+        Returns:
+            str: String representation of the ShippingAddress instance.
         """
         return f"<{self.__class__.__name__} {self.id}>"

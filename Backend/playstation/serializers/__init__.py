@@ -2,6 +2,7 @@
 # Serializer Models
 """
 
+from sqlalchemy import Table
 from .serializer import (
     AbstractSerializer,
     Validatable,
@@ -13,7 +14,7 @@ from .serializer import (
     ToInstance,
     ExtendsPydantic,
 )
-from typing import Self, NoReturn, Optional
+from typing import Self, NoReturn, Optional, Any
 from pydantic import BaseModel, ValidationError
 
 
@@ -175,7 +176,9 @@ class Serializer(SerializerInterface):
                     )
         # Validate using pydantic
         if self.pydantic_model is not None:
-            self._validated_data = getattr(self, "validate_pydantic")(self.validated_data)
+            self._validated_data = getattr(self, "validate_pydantic")(
+                self.validated_data
+            )
 
         return not bool(self.errors)
 
@@ -334,12 +337,40 @@ class Serializer(SerializerInterface):
         instance_dict = instance.__dict__
         # Serialize
         serialized_data: dict = {
-            field: instance_dict.get(field)
+            field: self.__grab_field(instance_dict, instance, field)
             for field in fields
             if field not in self.write_only
         }
         # Return Serialized data
         return serialized_data
+
+    def __grab_field(
+        self, instance_dict: dict[str, Any], instance: object, field: str
+    ) -> Any:
+        """Helper function to grab field for serialization process."""
+        # Grab field
+        value: Any = instance_dict.get(field)
+        # Check instance value
+        if value is None:
+            # Check if field is a relationship
+            relationship: Optional[object] = None
+            if hasattr(instance, field):
+                # Get relationship
+                relationship = getattr(instance, field)
+            if relationship and self.__check_model(relationship):
+                nested_serialization: Optional[Serializer] = getattr(self, field, None)
+                if nested_serialization and isinstance(nested_serialization, Serializer):
+                    # Serialize relationship
+                    nested_serialization.instance = relationship
+                    return nested_serialization.data
+                # Get relationship value
+                return self.__grab_field(relationship.__dict__, relationship, "id")
+        return value
+
+    def __check_model(self, instance, *args, **kwargs) -> bool:
+        """Helper function to check if the model exists."""
+        # Check if the model exists
+        return isinstance(instance.__table__, Table)
 
     def to_instance(self, find_by: str = "id") -> Optional[object]:
         """
@@ -371,5 +402,9 @@ class ModelSerializer(Serializer):
             if not isinstance(self.instance, list):
                 raise TypeError("Expected a list of instances with many set to True")
             return [self.to_representation(instance) for instance in self.instance]
+
+        if isinstance(model, list):
+            model = model[0]
+
         # Call to_representation method
         return self.to_representation(model)

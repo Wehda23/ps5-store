@@ -45,7 +45,7 @@ from .serializers import (
     ShippingAddressSerializer,
     ShippingAddressCreateSerializer,
     ShippingAddressUpdateSerializer,
-    DeleteShippingAddressSerializer
+    DeleteShippingAddressSerializer,
 )
 from . import shipping_addresses_api
 
@@ -110,8 +110,8 @@ def create_address(*args, **kwargs) -> Response:
         # Check if user is assigned
         if user is None:
             raise UserNotAssignedError("User not assigned")
-        if 'user_id' not in data:
-            data['user_id'] = user.id
+        if "user_id" not in data:
+            data["user_id"] = user.id
         # Create serializer
         serializer = ShippingAddressCreateSerializer(data=data)
         # Validate the serializer
