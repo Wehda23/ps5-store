@@ -138,7 +138,7 @@ class UserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "email",
-            "shipping_addresses",
+            "shipping_addresses"
         ]
 
 

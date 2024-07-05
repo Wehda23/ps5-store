@@ -73,7 +73,7 @@ class ShippingAddressCreateSerializer(serializers.Serializer):
     def _existing_default(self, user_id: int) -> None:
         """Check if user has a shipping_addresses with default == True"""
         # Grab default address
-        existing_default: Optional[ShippingAddress] = DefaultAddressExists.validate(
+        existing_default: Optional[ShippingAddress] = DefaultAddressExists().validate(
             user_id
         )
         # Check if it exists update it's default field
@@ -114,7 +114,7 @@ class ShippingAddressUpdateSerializer(serializers.Serializer):
         ShippingAddressExists(serializers.SerializerError).validate(data)
         return value
 
-    def update(self, validated_data: dict) -> ShippingAddress:
+    def update(self, validated_data: dict, instance: object) -> ShippingAddress:
         """Update a shipping address for a user"""
         # Grab the default field
         default: bool = validated_data.get("default", False)
@@ -125,12 +125,12 @@ class ShippingAddressUpdateSerializer(serializers.Serializer):
             # Call existing default to check if default address exists and set it to false
             self._existing_default(user_id)
         # Update the object
-        return super().update(validated_data)
+        return super().update(validated_data, instance)
 
     def _existing_default(self, user_id: int) -> None:
         """Check if user has a shipping_addresses with default == True"""
         # Grab default address
-        existing_default: Optional[ShippingAddress] = DefaultAddressExists.validate(
+        existing_default: Optional[ShippingAddress] = DefaultAddressExists().validate(
             user_id
         )
         # Check if it exists update it's default field

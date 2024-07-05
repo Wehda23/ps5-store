@@ -333,11 +333,9 @@ class Serializer(SerializerInterface):
         """
         # Implement representation logic here
         fields: list[str] = self.fields
-        # Get all attributes as a dictionary
-        instance_dict = instance.__dict__
         # Serialize
         serialized_data: dict = {
-            field: self.__grab_field(instance_dict, instance, field)
+            field: self.__grab_field(instance, field)
             for field in fields
             if field not in self.write_only
         }
@@ -345,34 +343,30 @@ class Serializer(SerializerInterface):
         return serialized_data
 
     def __grab_field(
-        self, instance_dict: dict[str, Any], instance: object, field: str
+        self, instance: object, field: str
     ) -> Any:
         """Helper function to grab field for serialization process."""
         # Grab field value from instance_dict
-        value: Any = instance_dict.get(field)
-
+        value: Any = getattr(instance, field)
+        # Grab nested serializer
         # If value is None, check if the field is a relationship
-        if value is None and hasattr(instance, field):
-            relationship = getattr(instance, field)
-            if relationship:
-                nested_serialization = getattr(self, field, None)
-                if isinstance(relationship, list):
-                    return self.__serialize_relationship_list(
-                        nested_serialization, relationship
-                    )
-                if self.__check_model(relationship):
-                    return self.__serialize_relationship(
-                        nested_serialization, relationship
-                    )
+        if self.__check_model(value) :
+            nested_serialization = getattr(self, field, None)
+            return self.__serialize_relationship(
+                nested_serialization, value
+            )
+        if isinstance(value, list):
+            nested_serialization = getattr(self, field, None)
+            return self.__serialize_relationship_list(
+                nested_serialization, value
+            )
         # Return Value
         return value
 
     def __check_model(self, instance: object) -> bool:
         """Helper function to check if the model exists."""
-        if isinstance(instance, list):
-            return False
         # Check if the model exists
-        return isinstance(instance.__table__, Table)
+        return hasattr(instance, "__table__") and isinstance(instance.__table__, Table)
 
     def __serialize_relationship(
         self,
@@ -383,7 +377,7 @@ class Serializer(SerializerInterface):
         if nested_serializer and isinstance(nested_serializer, Serializer):
             nested_serializer.instance = relationship
             return nested_serializer.data
-        return self.__grab_field(relationship.__dict__, relationship, "id")
+        return self.__grab_field(relationship, "id")
 
     def __serialize_relationship_list(
         self, nested_serializer: Optional["Serializer"], relationship: list
@@ -393,7 +387,7 @@ class Serializer(SerializerInterface):
             nested_serializer.instance = relationship
             return nested_serializer.data
         return [
-            self.__grab_field(model.__dict__, model, "id")
+            self.__grab_field(model, "id")
             for model in relationship
             if self.__check_model(model)
         ]

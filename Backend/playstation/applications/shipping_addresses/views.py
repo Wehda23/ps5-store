@@ -173,7 +173,7 @@ def update_address(address_id: int, *args, **kwargs) -> Response:
             # Update the address
             serializer.save()
             # Return success message
-            return make_response("Shipping address updated successfully", 200)
+            return make_response(serializer.data, 200)
         # Error
         error = serializer.errors
         return make_response(error, 400)
@@ -226,6 +226,9 @@ def delete_address(address_id: int, *args, **kwargs) -> Response:
         # Error
         error = serializer.errors
         return make_response(error, 400)
+    except UserNotAssignedError as e:
+        current_app.logger.error(str(e))
+        return make_response("User not assigned", 401)
     except SQLAlchemyError as e:
         current_app.logger.error(e)
         return make_response("Something went wrong", 500)
