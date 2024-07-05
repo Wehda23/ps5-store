@@ -40,7 +40,7 @@ from playstation.models.users import User
 from playstation.models.exceptions import UserShippingAddressRelation
 from sqlalchemy.exc import SQLAlchemyError
 from pydantic import ValidationError
-from .permissions import IsAccountOwner
+from .permissions import IsAddressOwner
 from .serializers import (
     ShippingAddressSerializer,
     ShippingAddressCreateSerializer,
@@ -105,12 +105,13 @@ def create_address(*args, **kwargs) -> Response:
     try:
         # Get the request data
         data = request.get_json()
-        # Grab user
-        user: User = getattr(request, "user", None)
-        # Check if user is assigned
-        if user is None:
-            raise UserNotAssignedError("User not assigned")
+
         if "user_id" not in data:
+            # Grab user
+            user: User = getattr(request, "user", None)
+            # Check if user is assigned
+            if user is None:
+                raise UserNotAssignedError("User not assigned")
             data["user_id"] = user.id
         # Create serializer
         serializer = ShippingAddressCreateSerializer(data=data)
@@ -126,6 +127,9 @@ def create_address(*args, **kwargs) -> Response:
     except ValidationError as e:
         error: list[dict] = e.errors()
         return make_response(error, 400)
+    except UserNotAssignedError as e:
+        current_app.logger.error(str(e))
+        return make_response("User not assigned", 401)
     except SQLAlchemyError as e:
         current_app.logger.error(e)
         return make_response("Something went wrong", 500)
@@ -137,7 +141,7 @@ def create_address(*args, **kwargs) -> Response:
 
 @shipping_addresses_api.route("/<int:address_id>", methods=["PUT"])
 @authentication_classess(auth_classes=[JWTAuthentication])
-@permission_required(permissions=[IsAccountOwner])
+@permission_required(permissions=[IsAddressOwner])
 def update_address(address_id: int, *args, **kwargs) -> Response:
     """
     Update a shipping address
@@ -161,6 +165,14 @@ def update_address(address_id: int, *args, **kwargs) -> Response:
         # Check if address_id is in the data
         if "id" not in data:
             data["id"] = address_id
+        # Check for user_id field
+        if "user_id" not in data:
+            # Grab user
+            user: User = getattr(request, "user", None)
+            # Check if user is assigned
+            if user is None:
+                raise UserNotAssignedError("User not assigned")
+            data["user_id"] = user.id
         # Create serializer
         serializer = ShippingAddressUpdateSerializer(data=data)
         # Validate the serializer
@@ -175,6 +187,9 @@ def update_address(address_id: int, *args, **kwargs) -> Response:
     except ValidationError as e:
         error: list[dict] = e.errors()
         return make_response(error, 400)
+    except UserNotAssignedError as e:
+        current_app.logger.error(str(e))
+        return make_response("User not assigned", 401)
     except SQLAlchemyError as e:
         current_app.logger.error(e)
         return make_response("Something went wrong", 500)
@@ -185,7 +200,7 @@ def update_address(address_id: int, *args, **kwargs) -> Response:
 
 @shipping_addresses_api.route("/<int:address_id>", methods=["DELETE"])
 @authentication_classess(auth_classes=[JWTAuthentication])
-@permission_required(permissions=[IsAccountOwner])
+@permission_required(permissions=[IsAddressOwner])
 def delete_address(address_id: int, *args, **kwargs) -> Response:
     """
     Delete a shipping address
@@ -203,7 +218,10 @@ def delete_address(address_id: int, *args, **kwargs) -> Response:
     """
     try:
         # Create data dictionary
-        data = {"id": address_id}
+        data = {
+            "id": address_id,
+            "user_id": request.user.id
+        }
         # Create serializer
         serializer = DeleteShippingAddressSerializer(data=data)
         # Validate the serializer

@@ -73,6 +73,7 @@ class ShippingAddressExists(BaseValidator):
         # Check if shipping address exists
         if not shipping_address:
             raise self.raise_exception(ValueError, "Shipping Address not found")
+
         # Check if the user is the owner of the address
         if shipping_address.user_id != user_id:
             raise self.raise_exception(

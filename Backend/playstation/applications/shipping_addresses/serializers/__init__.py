@@ -5,7 +5,6 @@
 from playstation import serializers
 from playstation.models.shipping_address import ShippingAddress
 from playstation.models.users import User
-from playstation.applications.users.serializers import UserSerializer
 from playstation.models.exceptions import UserShippingAddressRelation
 from .pydantic_serializer import CreateShippingAddress, UpdateShippingAddress
 from .validators import UserExists, DefaultAddressExists, ShippingAddressExists

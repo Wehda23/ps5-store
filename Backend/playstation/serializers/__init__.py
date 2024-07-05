@@ -348,59 +348,55 @@ class Serializer(SerializerInterface):
         self, instance_dict: dict[str, Any], instance: object, field: str
     ) -> Any:
         """Helper function to grab field for serialization process."""
-        # Grab field
+        # Grab field value from instance_dict
         value: Any = instance_dict.get(field)
-        # Check instance value
-        if value is None:
-            # Check if field is a relationship
-            relationship: Optional[object] = None
-            if hasattr(instance, field):
-                # Get relationship
-                relationship = getattr(instance, field)
+
+        # If value is None, check if the field is a relationship
+        if value is None and hasattr(instance, field):
+            relationship = getattr(instance, field)
             if relationship:
-                nested_serialization: Optional[Serializer] = getattr(self, field, None)
+                nested_serialization = getattr(self, field, None)
                 if self.__check_model(relationship):
-                    if nested_serialization and isinstance(
-                        nested_serialization, Serializer
-                    ):
-                        # Serialize relationship
-                        return self.__nested_serializer(
-                            nested_serialization, relationship, field
-                        )
-                    # Get relationship value
-                    return self.__grab_field(relationship.__dict__, relationship, "id")
+                    return self.__serialize_relationship(
+                        nested_serialization, relationship
+                    )
                 if isinstance(relationship, list):
-                    if nested_serialization and isinstance(
-                        nested_serialization, Serializer
-                    ):
-                        # Serialize relationship
-                        return self.__nested_serializer(
-                            nested_serialization, relationship, field
-                        )
-                    # Serialize relationship
-                    return [
-                        self.__grab_field(model.__dict__, model, "id")
-                        for model in relationship
-                        if self.__check_model(model)
-                    ]
+                    return self.__serialize_relationship_list(
+                        nested_serialization, relationship
+                    )
+
         return value
 
-    def __check_model(self, instance, *args, **kwargs) -> bool:
+    def __check_model(self, instance: object) -> bool:
         """Helper function to check if the model exists."""
+        if isinstance(instance, list):
+            return False
         # Check if the model exists
         return isinstance(instance.__table__, Table)
 
-    def __nested_serializer(
+    def __serialize_relationship(
         self,
-        nested_serializer: "Serializer",
-        relationship: Union[list | Any],
-        field: str,
-    ) -> Union[list | dict]:
-        """Helper function to serialize nested relationships."""
-        # Check if the relationship is a list
-        # Serialize relationship
-        nested_serializer.instance = relationship
-        return nested_serializer.data
+        nested_serializer: Optional["Serializer"],
+        relationship: object,
+    ) -> Any:
+        """Helper function to serialize a single nested relationship."""
+        if nested_serializer and isinstance(nested_serializer, Serializer):
+            nested_serializer.instance = relationship
+            return nested_serializer.data
+        return self.__grab_field(relationship.__dict__, relationship, "id")
+
+    def __serialize_relationship_list(
+        self, nested_serializer: Optional["Serializer"], relationship: list
+    ) -> list:
+        """Helper function to serialize a list of nested relationships."""
+        if nested_serializer and isinstance(nested_serializer, Serializer):
+            nested_serializer.instance = relationship
+            return nested_serializer.data
+        return [
+            self.__grab_field(model.__dict__, model, "id")
+            for model in relationship
+            if self.__check_model(model)
+        ]
 
     def to_instance(self, find_by: str = "id") -> Optional[object]:
         """

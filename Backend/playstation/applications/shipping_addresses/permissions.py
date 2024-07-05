@@ -4,12 +4,13 @@
 
 from playstation.admin.permissions import BasePermission
 from playstation.models.users import User
+from playstation.models.shipping_address import ShippingAddress
 from typing import Self, Optional
 from flask import Request
 
 
 # Create Permission Class
-class IsAccountOwner(BasePermission):
+class IsAddressOwner(BasePermission):
     """
     Class Created to demonstrated permission classes
     """
@@ -29,5 +30,16 @@ class IsAccountOwner(BasePermission):
         # Check if user exists
         if user is None:
             return False
+        # Grab address_id
+        address_id = kwargs.get("address_id", None)
+        # Check if address_id exists
+        if address_id is None:
+            return False
+
+        shipping_address: ShippingAddress = ShippingAddress.query.get(address_id)
+
+        if shipping_address is None:
+            return False
+
         # Check if user pk id is same as request.user id
-        return kwargs.get("pk", None) == user.id
+        return shipping_address.user_id == user.id
