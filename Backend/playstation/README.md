@@ -83,6 +83,8 @@ playstation/
             test_orders_model.py
             test_product_model.py
             test_shipping_addresses.py
+        applications/
+            __init__.py
     serializers/
         __init__.py
         serializer.py
