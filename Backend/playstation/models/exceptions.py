@@ -11,3 +11,7 @@ class ExistingEmail(Exception):
 # User Relation To Shipping Addresses
 class UserShippingAddressRelation(Exception):
     pass
+
+# Product errors
+class ProductOutOfStock(Exception):
+    pass

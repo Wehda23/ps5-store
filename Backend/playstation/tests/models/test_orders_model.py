@@ -81,8 +81,8 @@ class TestOrdersModel(unittest.TestCase):
 
     def test_relationship_with_user_shipping_address_coupon_product(self):
         order = Orders(**self.order_data)
-        order.products.append(self.product)
         order.save()
+        order.add_product(self.product, 2)
         user = User.query.get(self.user.id)
         address = ShippingAddress.query.get(self.address.id)
         coupon = Coupons.query.get(self.coupon.id)

@@ -41,3 +41,17 @@ class Orders(db.Model, SQLMixin):
             str: String representation of the Orders instance.
         """
         return f"<{self.__class__.__name__} {self.id}>"
+
+    def add_product(self, product: object, amount: int) -> None:
+        """
+        Adds a product to the order.
+        Method must be called right after product has been called.
+        """
+        # Create an instance of the order_product table to specify the amount
+        order_product_instance = order_product.insert().values(order_id=self.id, product_id=product.id, amount=amount)
+
+        # Add the association instance to the session to persist it
+        db.session.execute(order_product_instance)
+
+        # Commit the session to save the changes
+        self.save()

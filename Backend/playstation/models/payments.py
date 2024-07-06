@@ -28,7 +28,7 @@ class Payments(db.Model, SQLMixin):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)
     payment_status = db.Column(db.String(50), nullable=False)
-    currency = db.Column(db.String(10), nullable=False, default="$")
+    currency = db.Column(db.String(10), nullable=False, default="USD")
     order = db.relationship("Orders", back_populates='payment', uselist=False)
     user = db.relationship("User", back_populates='payments')
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())

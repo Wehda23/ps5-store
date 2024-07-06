@@ -4,6 +4,7 @@
 
 from playstation import db, SQLMixin
 from playstation.models.junction_models import order_product
+from .exceptions import ProductOutOfStock
 from typing import Self
 from sqlalchemy import CheckConstraint
 from playstation.settings import MEDIA_DIR
@@ -50,6 +51,36 @@ class Product(db.Model, SQLMixin):
             str: String representation of the Product instance.
         """
         return f"<{self.__class__.__name__} {self.name}>"
+
+    # Create method to calculate the cost of the product after discount
+    def cost(self) -> int:
+        """
+        Returns the cost of the product, including discount and taxes.
+
+        Returns:
+            int: Cost of the product.
+        """
+        # Check if product is on sale
+        if self.is_sale:
+            # Calculate cost with discount
+            return int(self.price * (1 - self.discount / 100))
+
+        # Calculate cost without discount
+        return int(self.price)
+
+    def sell(self, amount: int) -> int:
+        """
+        Decrease the stock of the product by the given amount.
+        :param amount: Amount of products to sell.
+        :return: The new stock of the product.
+        """
+        # Check if stock is enough
+        if self.stock < amount or self.stock <= 0 or (self.stock - amount) < 0:
+            raise ProductOutOfStock("Not enough stock to sell this amount of products.")
+        # Decrease stock
+        self.stock -= amount
+        self.save()
+        return self.cost() * amount
 
 class Category(db.Model, SQLMixin):
     """
