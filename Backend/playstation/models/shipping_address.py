@@ -3,7 +3,6 @@
 """
 
 from playstation import db, SQLMixin
-from playstation.models.users import User
 from typing import Self
 
 
@@ -32,7 +31,12 @@ class ShippingAddress(db.Model, SQLMixin):
     default = db.Column(db.Boolean, default=False, nullable=False)
 
     # Relationships
-    user = db.relationship("User", back_populates="shipping_addresses")
+    user = db.relationship(
+        "User", back_populates="shipping_addresses"
+    )  # One User to Many Addresses
+    orders = db.relationship(
+        "Order", back_populates="shipping_address"
+    )  # One Address to Many Orders
 
     def __repr__(self: Self):
         """

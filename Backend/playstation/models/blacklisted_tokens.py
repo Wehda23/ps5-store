@@ -4,6 +4,7 @@
 
 from playstation import db, SQLMixin
 from playstation.admin.authentications.token import RefreshToken
+from playstation.settings import JWT_AUTHENTICATIONS
 from typing import Self, Optional
 
 
@@ -37,13 +38,17 @@ class BlackListedTokens(db.Model, BlackListedTokensMixin):
         """
         return f"<{self.__class__.__name__} {self.id}>"
 
-    def check_token_life(self: Self) -> None:
+    def check_token_life(
+        self: Self,
+        key: str = JWT_AUTHENTICATIONS["SECRET_KEY"],
+        algorithm: str = JWT_AUTHENTICATIONS["ALGORITHM"],
+    ) -> None:
         """
         Method to check if the token is expired on refresh duration\
             then deletes it otherwise no action is taken
         """
         # Grab token
-        token: Optional[dict] = RefreshToken.decode_token(self.refresh)
+        token: Optional[dict] = RefreshToken.decode_token(self.refresh, key, algorithm)
         # If token is none delete token
         if token is None:
             self.delete()

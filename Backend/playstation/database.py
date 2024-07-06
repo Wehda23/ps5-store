@@ -21,6 +21,7 @@ from playstation import db
 from playstation.models.users import User
 from playstation.models.blacklisted_tokens import BlackListedTokens
 from playstation.models.coupons import Coupons
+from playstation.models.junction_models import order_product
 from playstation.models.orders import Orders
 from playstation.models.payments import Payments
 from playstation.models.products import Product, Category

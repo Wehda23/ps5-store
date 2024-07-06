@@ -3,6 +3,7 @@
 """
 
 from playstation import db, SQLMixin
+from playstation.models.junction_models import order_product
 from typing import Self
 from sqlalchemy import CheckConstraint
 from playstation.settings import MEDIA_DIR
@@ -43,6 +44,9 @@ class Product(db.Model, SQLMixin):
 
     # Relationship
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
+    orders = db.relationship(
+        "Order", secondary=order_product, back_populates="products"
+    )
 
     def __repr__(self: Self):
         """

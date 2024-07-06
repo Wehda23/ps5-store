@@ -113,9 +113,7 @@ class User(db.Model, UserMixin):
         "ShippingAddress", back_populates="user", cascade="all, delete-orphan"
     )
 
-    # orders = db.relationship(
-    # "Orders", back_populates="user"
-    # )
+    orders = db.relationship("Orders", back_populates="user")
 
     def __repr__(self: Self):
         """

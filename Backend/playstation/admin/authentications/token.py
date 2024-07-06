@@ -56,7 +56,7 @@ class RefreshToken:
         id: str = "id",
         key: str = JWT_AUTHENTICATIONS["SECRET_KEY"],
         algorithm: str = JWT_AUTHENTICATIONS["ALGORITHM"],
-        time = JWT_AUTHENTICATIONS["ACCESS_TOKEN_LIFETIME"]
+        time=JWT_AUTHENTICATIONS["ACCESS_TOKEN_LIFETIME"],
     ) -> str:
         """
         Generate an access token.
@@ -75,8 +75,7 @@ class RefreshToken:
         payload: dict[str, str] = {
             f"{model.__class__.__name__}": getattr(model, id),
             "type": "access",
-            "exp": datetime.now(timezone.utc)
-            + time,
+            "exp": datetime.now(timezone.utc) + time,
         }
         # Generate token
         access_token: str = jwt.encode(
@@ -94,7 +93,7 @@ class RefreshToken:
         id: str = "id",
         key: str = JWT_AUTHENTICATIONS["SECRET_KEY"],
         algorithm: str = JWT_AUTHENTICATIONS["ALGORITHM"],
-        time = JWT_AUTHENTICATIONS["REFRESH_TOKEN_LIFETIME"]
+        time=JWT_AUTHENTICATIONS["REFRESH_TOKEN_LIFETIME"],
     ) -> str:
         """
         Generate a refresh token.
@@ -113,8 +112,7 @@ class RefreshToken:
         payload: dict[str, str] = {
             f"{model.__class__.__name__}": getattr(model, id),
             "type": "refresh",
-            "exp": datetime.now(timezone.utc)
-            + time,
+            "exp": datetime.now(timezone.utc) + time,
         }
         # Generate token
         refresh_token: str = jwt.encode(
