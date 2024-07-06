@@ -50,11 +50,12 @@ project_root/
     playstation/
         __init__.py
         app.py
-        README.md // Describes the purpose and functionality of the Playstation package, including key components and how they interact.
+        README.md // Explains the PlayStation Package
         routes.py
         database.py
         logger.py
         settings.py
+        config.py
         admin/
             __init__.py
             permissions.py
@@ -69,7 +70,7 @@ project_root/
                 storage.py
                 exceptions.py
         applications/
-            README.md // Provides detailed documentation on API interactions, available endpoints, request and response formats, and usage examples.
+            README.md // Explains how to interact with APIs and API endpoints
             __init__.py
             pages/
                 __init__.py
@@ -104,6 +105,16 @@ project_root/
             shipping_addresses.py
             blacklisted_tokens.py
             exceptions.py
+        tests/
+            __init__.py
+            models/
+                __init__.py
+                test_user_model.py
+                test_payments_model.py
+                test_coupons_model.py
+                test_orders_model.py
+                test_product_model.py
+                test_shipping_addresses.py
         serializers/
             __init__.py
             serializer.py

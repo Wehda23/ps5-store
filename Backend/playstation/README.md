@@ -23,6 +23,7 @@ playstation/
     database.py
     logger.py
     settings.py
+    config.py
     admin/
         __init__.py
         permissions.py
@@ -76,6 +77,12 @@ playstation/
         __init__.py
         models/
             __init__.py
+            test_user_model.py
+            test_payments_model.py
+            test_coupons_model.py
+            test_orders_model.py
+            test_product_model.py
+            test_shipping_addresses.py
     serializers/
         __init__.py
         serializer.py
@@ -348,3 +355,27 @@ AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
 ```
 
 Using a `.env` file helps keep your configuration secure and allows for easy changes without modifying the codebase directly.
+
+## Running Tests from Specific Directories
+
+### Model Tests
+
+To run only model tests located in `playstation/tests/models`:
+
+```bash
+python -m unittest discover -s playstation/tests/models -p "test_*.py"
+```
+
+This command uses `unittest` to discover and execute all test files (`test_*.py`) within the `playstation/tests/models` directory. Model tests typically cover database models and their interactions.
+
+### API Tests
+
+To run only API tests located in `playstation/tests/api`:
+
+```bash
+python -m unittest discover -s playstation/tests/api -p "test_*.py"
+```
+
+Similarly, this command runs `unittest` on all test files (`test_*.py`) within the `playstation/tests/api` directory. API tests generally focus on testing endpoints, request handling, and API functionalities.
+
+Adjust the paths (`playstation/tests/models` and `playstation/tests/api`) based on your actual project structure. These commands help streamline testing by targeting specific parts of your application.
