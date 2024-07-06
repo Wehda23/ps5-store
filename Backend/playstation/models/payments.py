@@ -4,7 +4,6 @@
 
 from playstation import db, SQLMixin
 from typing import Self
-from playstation.models.orders import Orders
 
 
 # Payments model
@@ -19,8 +18,9 @@ class Payments(db.Model, SQLMixin):
     currency = db.Column(db.String(10), nullable=False, default="$")
 
     # Relationships
-    order = db.relationship("Orders", back_populates="payment")
-    user = db.relationship("User", back_populates="payments")
+    order = db.relationship("Orders", back_populates='payment')
+    user = db.relationship("User", back_populates='payments')
+
     # Dates
     created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()

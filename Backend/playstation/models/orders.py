@@ -19,7 +19,9 @@ class Orders(db.Model, SQLMixin):
     shipping_address_id = db.Column(
         db.Integer, db.ForeignKey("shipping_address.id"), nullable=True
     )
-    payment_id = db.Column(db.Integer, db.ForeignKey("payments.id"), nullable=True)
+    payment_id = db.Column(
+        db.Integer, db.ForeignKey("payments.id"), nullable=True
+    )
     coupon_id = db.Column(db.Integer, db.ForeignKey("coupons.id"), nullable=True)
 
     # Relationships
@@ -30,7 +32,10 @@ class Orders(db.Model, SQLMixin):
     products = db.relationship(
         "Product", secondary=order_product, back_populates="orders"
     )  # Many Products to Many Orders
-    payment = db.relationship("Payments", back_populates="order")
+    payment = db.relationship(
+        "Payments", back_populates="order"
+    )
+    coupon = db.relationship("Coupons", back_populates="orders") # Coupon has One To Many relationship with Order
 
     def __repr__(self) -> str:
         """

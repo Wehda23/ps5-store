@@ -45,7 +45,7 @@ class Product(db.Model, SQLMixin):
     # Relationship
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     orders = db.relationship(
-        "Order", secondary=order_product, back_populates="products"
+        "Orders", secondary=order_product, back_populates="products"
     )
 
     def __repr__(self: Self):
