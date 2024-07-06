@@ -35,7 +35,7 @@ class ShippingAddress(db.Model, SQLMixin):
         "User", back_populates="shipping_addresses"
     )  # One User to Many Addresses
     orders = db.relationship(
-        "Order", back_populates="shipping_address"
+        "Orders", back_populates="shipping_address"
     )  # One Address to Many Orders
 
     def __repr__(self: Self):
