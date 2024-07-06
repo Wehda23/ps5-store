@@ -11,14 +11,14 @@ class Payments(db.Model, SQLMixin):
     # Basics
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     amount = db.Column(db.Integer, nullable=False)
-    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False, unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)
     payment_status = db.Column(db.String(50), nullable=False)
     currency = db.Column(db.String(10), nullable=False, default="$")
 
     # Relationships
-    order = db.relationship("Orders", back_populates='payment')
+    order = db.relationship("Orders", back_populates='payment', uselist=False)
     user = db.relationship("User", back_populates='payments')
 
     # Dates

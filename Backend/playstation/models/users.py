@@ -112,7 +112,7 @@ class User(db.Model, UserMixin):
     shipping_addresses = db.relationship("ShippingAddress", back_populates="user")
     orders = db.relationship("Orders", back_populates="user")
     payments = db.relationship("Payments", back_populates="user")
-    user_coupons = db.relationship(
+    coupons = db.relationship(
         "Coupons", secondary=user_coupons, back_populates="users"
     ) # Many to Many relationships with Coupons Where a user may use many coupons and coupon may be used by many users
 
