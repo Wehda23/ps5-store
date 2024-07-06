@@ -120,7 +120,7 @@ You can also integrate Pydantic models for additional validation. Here's an exam
 
 ```python
 from your_application.serializers import UserSerializer
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ValidationError
 
 class UserPydanticModel(BaseModel):
     first_name: str
@@ -132,7 +132,8 @@ class UserPydanticSerializer(UserSerializer):
 
     def validate_pydantic(self, data):
         try:
-            self.pydantic_model(**data)
+            pydantic_instance = self.pydantic_model(**data)
+            return pydantic_instance.model_dump()  # Dump the validated model to dictionary
         except ValidationError as e:
             raise SerializerError(e, "Invalid data")
 
@@ -145,7 +146,7 @@ data = {
 
 serializer = UserPydanticSerializer(data=data)
 if serializer.is_valid():
-    print("Valid data")
+    print("Valid data:", serializer.validated_data)
 else:
     print("Errors:", serializer.errors)
 ```
