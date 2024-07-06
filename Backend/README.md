@@ -145,7 +145,7 @@ To run the application, you need to have Python installed on your machine.
 
 This project utilizes the following database schema to manage and organize data efficiently. The schema defines the structure, relationships, and constraints for the database tables.
 
-![Database Schema](https://i.imghippo.com/files/GQdfW1717777832.png)
+![Database Schema](https://i.ibb.co/ZhTR285/diagram-export-7-6-2024-5-11-39-AM.png)
 
 The diagram provides a visual representation of the tables, columns, and their relationships, ensuring a clear understanding of the data flow and organization within the system.
 

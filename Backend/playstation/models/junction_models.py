@@ -11,3 +11,9 @@ order_product = db.Table(
     db.Column("order_id", db.Integer, db.ForeignKey("orders.id"), primary_key=True),
     db.Column("product_id", db.Integer, db.ForeignKey("product.id"), primary_key=True),
 )
+
+user_coupons = db.Table(
+    "user_coupons",
+    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True),
+    db.Column("coupon_id", db.Integer, db.ForeignKey("coupons.id"), primary_key=True),
+)

@@ -12,14 +12,15 @@ class Payments(db.Model, SQLMixin):
     # Basics
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     amount = db.Column(db.Integer, nullable=False)
-    order = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)
     payment_status = db.Column(db.String(50), nullable=False)
     currency = db.Column(db.String(10), nullable=False, default="$")
 
     # Relationships
-    order_obj = db.relationship("Orders", backref=db.backref("payment", lazy=True))
-
+    order = db.relationship("Orders", back_populates="payment")
+    user = db.relationship("User", back_populates="payments")
     # Dates
     created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()

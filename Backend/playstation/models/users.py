@@ -5,6 +5,7 @@
 from playstation import db, SQLMixin
 from typing import Self, Optional, NoReturn
 from werkzeug.security import generate_password_hash, check_password_hash
+from .junction_models import user_coupons
 from .exceptions import ExistingEmail
 
 
@@ -108,12 +109,12 @@ class User(db.Model, UserMixin):
     blacklisted_tokens = db.relationship(
         "BlackListedTokens", back_populates="user", cascade="all, delete-orphan"
     )
-
-    shipping_addresses = db.relationship(
-        "ShippingAddress", back_populates="user", cascade="all, delete-orphan"
-    )
-
+    shipping_addresses = db.relationship("ShippingAddress", back_populates="user")
     orders = db.relationship("Orders", back_populates="user")
+    payments = db.relationship("Payments", back_populates="user")
+    user_coupons = db.relationship(
+        "Coupons", secondary=user_coupons, back_populates="users"
+    ) # Many to Many relationships with Coupons Where a user may use many coupons and coupon may be used by many users
 
     def __repr__(self: Self):
         """
