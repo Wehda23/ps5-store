@@ -1,12 +1,11 @@
 """
-# File contains ShippingAddres Model and it's methods
+# This file contains the model and methods related to Shipping Addresses in the database.
 """
 
 from playstation import db, SQLMixin
 from typing import Self
 
 
-# Shipping Address
 class ShippingAddress(db.Model, SQLMixin):
     """
     Represents a shipping address in the database.
@@ -21,7 +20,6 @@ class ShippingAddress(db.Model, SQLMixin):
         default (bool): Whether this is the default shipping address for the user.
     """
 
-    # Basic
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
     address = db.Column(db.String(256), nullable=False)
@@ -30,17 +28,12 @@ class ShippingAddress(db.Model, SQLMixin):
     country = db.Column(db.String(128), nullable=False)
     default = db.Column(db.Boolean, default=False, nullable=False)
 
-    # Relationships
-    user = db.relationship(
-        "User", back_populates="shipping_addresses"
-    )  # One User to Many Addresses
-    orders = db.relationship(
-        "Orders", back_populates="shipping_address"
-    )  # One Address to Many Orders
+    user = db.relationship("User", back_populates="shipping_addresses")
+    orders = db.relationship("Orders", back_populates="shipping_address")
 
-    def __repr__(self: Self):
+    def __repr__(self: Self) -> str:
         """
-        Method for representation.
+        String representation of the ShippingAddress instance.
 
         Returns:
             str: String representation of the ShippingAddress instance.

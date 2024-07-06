@@ -1,5 +1,5 @@
 """
-# Folder that Contains classes/methods for Users Model
+# This file contains the models and methods related to Users in the database.
 """
 
 from playstation import db, SQLMixin
@@ -9,121 +9,128 @@ from .junction_models import user_coupons
 from .exceptions import ExistingEmail
 
 
-# Add SQLUserMixin
 class UserMixin(SQLMixin):
     """
-    Mixin to add modification to user class
+    Mixin class providing user-specific functionalities like password hashing and user creation.
     """
 
     @classmethod
     def hash_password(cls, password: str) -> str:
         """
-        Method used to has password
+        Hashes the given password.
+
+        Args:
+            password (str): The plain text password.
+
+        Returns:
+            str: The hashed password.
         """
         return generate_password_hash(password)
 
     def check_password(self, password: str) -> bool:
         """
-        Method used to check
+        Verifies the given password against the stored hash.
+
+        Args:
+            password (str): The plain text password.
+
+        Returns:
+            bool: True if the password matches, False otherwise.
         """
         return check_password_hash(self.password, password)
 
-    # Function to create new user
     @classmethod
     def create_user(cls, **kwargs) -> Self:
         """
-        Create a new user
+        Creates a new user with the provided details.
+
         Args:
-            - **kwargs: User details
+            **kwargs: User details such as first_name, last_name, email, password.
 
         Returns:
-            - New User
+            Self: The newly created User object.
+        
+        Raises:
+            ValueError: If required fields are missing.
+            ExistingEmail: If a user with the given email already exists.
         """
-        # Check password key existing
         if "password" not in kwargs:
             raise ValueError("Password field is required")
 
-        # Check email field
         if "email" not in kwargs:
             raise ValueError("Email field is required")
 
-        # hash password
         kwargs["password"] = cls.hash_password(kwargs["password"])
 
-        # Check user
         email: str = kwargs.get("email")
-        # Use .__safe() function
         cls.__safe(email)
 
-        # Create new instance and return new user
         new_user: object = cls(**kwargs)
-
-        # Create user
         new_user.save()
         return new_user
 
     @classmethod
     def __safe(cls, value: Optional[str]) -> Optional[NoReturn]:
         """
-        Method used to check if there is no duplicate user
+        Ensures there are no duplicate users by email.
 
         Args:
-            - value (Optional[str]): Value at which to check user existance.
+            value (Optional[str]): The email to check.
 
         Raises:
-            - error in case user exists
+            ExistingEmail: If a user with the given email already exists.
         """
         if value is not None and cls.query.filter_by(email=value).first() is not None:
             raise ExistingEmail("User already exists")
 
 
-# Users model
 class User(db.Model, UserMixin):
-    # Basics
+    """
+    Represents a User in the database.
+
+    Attributes:
+        id (int): Primary key.
+        first_name (str): User's first name.
+        last_name (str): User's last name.
+        email (str): User's email, unique.
+        password (str): User's hashed password.
+        is_staff (bool): Indicates if the user is staff.
+        is_admin (bool): Indicates if the user is an admin.
+        active (bool): Indicates if the user is active.
+        last_login (datetime): Timestamp of the last login.
+        created_at (datetime): Timestamp when the user was created.
+        updated_at (datetime): Timestamp when the user was last updated.
+    """
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-
-    # Permissions and Status
     is_staff = db.Column(db.Boolean, default=False, nullable=False)
     is_admin = db.Column(db.Boolean, default=False, nullable=False)
     active = db.Column(db.Boolean, default=True, nullable=False)
+    last_login = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-    # Dates
-    last_login = db.Column(
-        db.DateTime, nullable=False, default=db.func.current_timestamp()
-    )
-    created_at = db.Column(
-        db.DateTime, nullable=False, default=db.func.current_timestamp()
-    )
-    updated_at = db.Column(
-        db.DateTime,
-        nullable=False,
-        default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp(),
-    )
-
-    # Relationship
-    blacklisted_tokens = db.relationship(
-        "BlackListedTokens", back_populates="user", cascade="all, delete-orphan"
-    )
+    blacklisted_tokens = db.relationship("BlackListedTokens", back_populates="user", cascade="all, delete-orphan")
     shipping_addresses = db.relationship("ShippingAddress", back_populates="user")
     orders = db.relationship("Orders", back_populates="user")
     payments = db.relationship("Payments", back_populates="user")
-    coupons = db.relationship(
-        "Coupons", secondary=user_coupons, back_populates="users"
-    ) # Many to Many relationships with Coupons Where a user may use many coupons and coupon may be used by many users
+    coupons = db.relationship("Coupons", secondary=user_coupons, back_populates="users")
 
-    def __repr__(self: Self):
+    def __repr__(self: Self) -> str:
         """
-        Method for representation
+        String representation of the User instance.
+
+        Returns:
+            str: String representation of the User instance.
         """
         return f"<{self.__class__.__name__} {self.email}>"
 
     def update_last_login(self: Self) -> None:
         """
-        Method used to update last_login attribute
+        Updates the last_login attribute to the current timestamp.
         """
         self.last_login = db.func.current_timestamp()

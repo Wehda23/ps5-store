@@ -1,5 +1,5 @@
 """
-# File that contains a model BlackListedTokens.
+# This file contains the model and methods related to BlackListedTokens in the database.
 """
 
 from playstation import db, SQLMixin
@@ -8,33 +8,42 @@ from playstation.settings import JWT_AUTHENTICATIONS
 from typing import Self, Optional
 
 
-# BlackListedTokensMixin
 class BlackListedTokensMixin(SQLMixin):
     """
-    This class represents a model for BlackListedTokens.
+    Mixin class providing functionalities for BlackListedTokens.
     """
 
     def check_token_life(self: Self) -> None:
         """
-        Method to check if the token is expired on refresh duration then deletes it otherwise no action is taken
+        Checks if the token is expired based on the refresh duration and deletes it if expired.
         """
         pass
 
 
-# Class BlackListedTokens
 class BlackListedTokens(db.Model, BlackListedTokensMixin):
-    # Basic
+    """
+    Represents a BlackListedToken in the database.
+
+    Attributes:
+        id (int): Primary key.
+        access (str): Access token.
+        refresh (str): Refresh token.
+        user_id (int): Foreign key referencing User.
+        user (User): The user associated with this token.
+    """
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     access = db.Column(db.String(1000), nullable=False, unique=True)
     refresh = db.Column(db.String(1000), nullable=False, unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-
-    # Relationship
     user = db.relationship("User", back_populates="blacklisted_tokens")
 
     def __repr__(self: Self) -> str:
         """
-        Method for representation
+        String representation of the BlackListedTokens instance.
+
+        Returns:
+            str: String representation of the BlackListedTokens instance.
         """
         return f"<{self.__class__.__name__} {self.id}>"
 
@@ -44,11 +53,12 @@ class BlackListedTokens(db.Model, BlackListedTokensMixin):
         algorithm: str = JWT_AUTHENTICATIONS["ALGORITHM"],
     ) -> None:
         """
-        Method to check if the token is expired on refresh duration\
-            then deletes it otherwise no action is taken
+        Checks if the token is expired based on the refresh duration and deletes it if expired.
+
+        Args:
+            key (str): Secret key for decoding the token.
+            algorithm (str): Algorithm used for decoding the token.
         """
-        # Grab token
         token: Optional[dict] = RefreshToken.decode_token(self.refresh, key, algorithm)
-        # If token is none delete token
         if token is None:
             self.delete()

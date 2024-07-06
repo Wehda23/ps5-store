@@ -72,6 +72,10 @@ playstation/
         shipping_addresses.py
         blacklisted_tokens.py
         exceptions.py
+    tests/
+        __init__.py
+        models/
+            __init__.py
     serializers/
         __init__.py
         serializer.py
