@@ -10,7 +10,7 @@ order_product = db.Table(
     "order_product",
     db.Column("order_id", db.Integer, db.ForeignKey("orders.id"), primary_key=True),
     db.Column("product_id", db.Integer, db.ForeignKey("product.id"), primary_key=True),
-    db.Column("amount", db.Integer, nullable=False),  # Example additional column
+    db.Column("quantity", db.Integer, nullable=False),  # Example additional column
 )
 
 user_coupons = db.Table(

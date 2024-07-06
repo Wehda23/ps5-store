@@ -42,16 +42,25 @@ class Orders(db.Model, SQLMixin):
         """
         return f"<{self.__class__.__name__} {self.id}>"
 
-    def add_product(self, product: object, amount: int) -> None:
+    def add_product(self, product: object, quantity: int) -> None:
         """
         Adds a product to the order.
         Method must be called right after product has been called.
         """
-        # Create an instance of the order_product table to specify the amount
-        order_product_instance = order_product.insert().values(order_id=self.id, product_id=product.id, amount=amount)
+        # Create an instance of the order_product table to specify the quantity
+        order_product_instance = order_product.insert().values(order_id=self.id, product_id=product.id, quantity=quantity)
 
         # Add the association instance to the session to persist it
         db.session.execute(order_product_instance)
 
         # Commit the session to save the changes
         self.save()
+
+    def product_quantity(self, product: object) -> int:
+        """
+        Returns the quantity of a product in the order.
+        """
+        return db.session.query(order_product.c.quantity).filter(
+            order_product.c.order_id == self.id,
+            order_product.c.product_id == product.id
+        ).scalar()

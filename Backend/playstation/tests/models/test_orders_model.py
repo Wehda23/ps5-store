@@ -90,6 +90,7 @@ class TestOrdersModel(unittest.TestCase):
         self.assertEqual(order.shipping_address, address)
         self.assertEqual(order.coupon, coupon)
         self.assertIn(self.product, order.products)
+        self.assertTrue(order.product_quantity(self.product) == 2)
 
 
 if __name__ == '__main__':
