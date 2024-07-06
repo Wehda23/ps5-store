@@ -33,7 +33,11 @@ else:
 
 ### Nested Serialization
 
-To handle nested relationships, you can define nested serializers and use them in your main serializer. Here's an example:
+To handle nested relationships, you can define nested serializers and use them in your main serializer. 
+
+#### Single Nested Object
+
+When dealing with a single nested object, you do not need to specify `many=True`. Here's an example:
 
 ```python
 from your_application.serializers import UserSerializer, ShippingAddressSerializer
@@ -49,6 +53,65 @@ class UserDetailSerializer(UserSerializer):
 user = User.query.get(1)
 serializer = UserDetailSerializer(instance=user)
 print(serializer.data)
+```
+
+This will serialize the `shipping_address` field as a dictionary:
+
+```json
+{
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "shipping_address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "zipcode": "12345"
+    }
+}
+```
+
+#### Multiple Nested Objects
+
+When dealing with multiple nested objects, use `many=True` to return a list of dictionaries. Here's an example:
+
+```python
+from your_application.serializers import UserSerializer, ShippingAddressSerializer
+
+class UserDetailSerializer(UserSerializer):
+    shipping_addresses = ShippingAddressSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'email', 'shipping_addresses']
+
+# Usage
+user = User.query.get(1)
+serializer = UserDetailSerializer(instance=user)
+print(serializer.data)
+```
+
+This will serialize the `shipping_addresses` field as a list of dictionaries:
+
+```json
+{
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "shipping_addresses": [
+        {
+            "street": "123 Main St",
+            "city": "Anytown",
+            "zipcode": "12345"
+        },
+        {
+            "street": "456 Elm St",
+            "city": "Othertown",
+            "zipcode": "67890"
+        }
+    ]
+}
 ```
 
 ### Integration with Pydantic Models
@@ -131,7 +194,3 @@ instance = CustomModel.query.get(1)
 serializer = CustomModelSerializer(instance=instance)
 print(serializer.data)
 ```
-
-## Contributing
-
-If you want to contribute to this project, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
