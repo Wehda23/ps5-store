@@ -8,6 +8,8 @@ To use the serializers in your project, simply include the necessary files in yo
 
 ## Usage
 
+Can be used to Serialize SQLAlchemy Model or Flask-SQLAlchemy model.
+
 ### Basic Usage
 
 Here's an example of how to use the `UserRegisterSerializer` to validate and create a new user:
@@ -119,7 +121,7 @@ This will serialize the `shipping_addresses` field as a list of dictionaries:
 You can also integrate Pydantic models for additional validation. Here's an example:
 
 ```python
-from your_application.serializers import UserSerializer
+from your_application.serializers import UserSerializer, SerializerError
 from pydantic import BaseModel, EmailStr, ValidationError
 
 class UserPydanticModel(BaseModel):
@@ -195,3 +197,53 @@ instance = CustomModel.query.get(1)
 serializer = CustomModelSerializer(instance=instance)
 print(serializer.data)
 ```
+
+## Serializer Validated Fields
+
+You can customize your field validation by adding `validate_<field_name>` methods in your `serializers.Serializer class`
+
+```py
+from your_application import serializers
+from your_application.models import CustomModel
+from your_application.validators import CustomValidator
+from typing import Union
+
+class CustomPydantic(BaseModel):
+    id: str
+    name: str
+    description: EmailStr
+
+class CustomModelSerializer(serializers.Serializer):
+    pydantic_model: BaseModel = CustomPydantic # If not specified the validate_pydantic method won't be called hence no errors will occure
+
+    class Meta:
+        model = CustomModel
+        fields = ['id', 'name', 'description']
+
+    # Custom Validation for name
+    def validate_name(self, value):
+        # This will trigger Custome made Validator or pass
+        CustomValidator(SerializerError).validate(value)
+        return value
+
+
+def serialize(data: dict) -> Union[dict, list[dict]]:
+    # To trigger validators you have to initiate .is_valid() method
+    serializer = CustomModelSerializer(data={'name': 'test', 'description': 'test@test.com',"id":1})
+
+    try:
+        # Trigger validation
+        if serializer.is_valid():
+            serializer.save()
+            return serializer.data
+        # If validation did not pass custom validation Grab Errors
+        return serializer.errors
+        # if validation did not pass Pydantic Validation
+    except ValidationError as e: # If pydanic model not defined this error will not occure because validate_pydantic wont be called.
+        return e.errors()
+        # other unexpected or unhandled errors.
+    except Exception as e:
+        return e
+```
+
+

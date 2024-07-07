@@ -3,6 +3,7 @@
 """
 
 from playstation import db, SQLMixin
+from sqlalchemy.exc import MultipleResultsFound
 from playstation.models.junction_models import order_product
 
 
