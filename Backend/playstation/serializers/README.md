@@ -229,7 +229,7 @@ class CustomModelSerializer(serializers.Serializer):
 
 def serialize(data: dict) -> Union[dict, list[dict]]:
     # To trigger validators you have to initiate .is_valid() method
-    serializer = CustomModelSerializer(data={'name': 'test', 'description': 'test@test.com',"id":1})
+    serializer = CustomModelSerializer(data=data)
 
     try:
         # Trigger validation
@@ -244,6 +244,8 @@ def serialize(data: dict) -> Union[dict, list[dict]]:
         # other unexpected or unhandled errors.
     except Exception as e:
         return e
+
+serialize({'name': 'test', 'description': 'test@test.com',"id":1})
 ```
 
 
