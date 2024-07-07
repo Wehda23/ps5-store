@@ -200,7 +200,9 @@ print(serializer.data)
 
 ## Serializer Validated Fields
 
-You can customize your field validation by adding `validate_<field_name>` methods in your `serializers.Serializer class`
+You can customize your field validation by adding `validate_<field_name>` methods in your `serializers.Serializer class`.
+
+Can be used in SQLAlchemy and Flask API
 
 ```py
 from your_application import serializers
@@ -214,7 +216,8 @@ class CustomPydantic(BaseModel):
     description: EmailStr
 
 class CustomModelSerializer(serializers.Serializer):
-    pydantic_model: BaseModel = CustomPydantic # If not specified the validate_pydantic method won't be called hence no errors will occure
+    # If not specified the validate_pydantic method won't be called hence no errors will occure
+    pydantic_model: BaseModel = CustomPydantic
 
     class Meta:
         model = CustomModel
@@ -248,4 +251,85 @@ def serialize(data: dict) -> Union[dict, list[dict]]:
 serialize({'name': 'test', 'description': 'test@test.com',"id":1})
 ```
 
+### Flask API Example
 
+Here’s how you can integrate this serializer in a Flask API:
+
+```py
+from flask import Flask, request, make_response, Response
+from your_application import serializers
+from your_application.models import CustomModel
+from your_application.validators import CustomValidator
+from pydantic import BaseModel, EmailStr, ValidationError
+from typing import Union
+
+# Define the Pydantic model
+class CustomPydantic(BaseModel):
+    id: str
+    name: str
+    description: EmailStr
+
+# Define the serializer
+class CustomModelSerializer(serializers.Serializer):
+    pydantic_model: BaseModel = CustomPydantic
+
+    class Meta:
+        model = CustomModel
+        fields = ['id', 'name', 'description']
+
+    def validate_name(self, value):
+        CustomValidator(SerializerError).validate(value)
+        return value
+
+# Flask app setup
+app = Flask(__name__)
+
+@app.route('/serialize', methods=['POST'])
+def serialize_data(*args, **kwargs) -> Response:
+    data = request.get_json()
+    serializer = CustomModelSerializer(data=data)
+
+    try:
+        if serializer.is_valid():
+            serializer.save()
+            return make_response(serializer.data, 201)
+        return make_response(serializer.errors, 400)
+    except ValidationError as e:
+        return make_response(e.errors(), 422)
+    except Exception as e:
+        return make_response({"error": str(e)}, 500)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+# Testing the endpoint with sample data
+# You can use curl or Postman to test the endpoint
+# curl -X POST http://127.0.0.1:5000/serialize -H "Content-Type: application/json" -d '{"id": "1", "name": "test", "description": "test@test.com"}'
+```
+
+### Explanation of the Flask API Example:
+
+1. **Flask Imports:**
+    - Imports necessary Flask components (`Flask`, `request`, `jsonify`).
+
+2. **Serializer Setup:**
+    - Defines `CustomPydantic` and `CustomModelSerializer` as before.
+
+3. **Flask App Initialization:**
+    - Sets up a basic Flask application.
+    - Defines an endpoint `/serialize` that accepts POST requests with JSON data.
+
+4. **Endpoint Logic:**
+    - Initializes the `CustomModelSerializer` with the incoming data.
+    - Checks if the data is valid using `serializer.is_valid()`.
+    - Saves and returns the serialized data if valid.
+    - Returns validation errors if any occur.
+    - Handles Pydantic validation errors and other exceptions.
+
+5. **Running the App:**
+    - Runs the Flask app in debug mode.
+
+### Testing the Endpoint:
+You can test the endpoint using tools like `curl` or Postman by sending a POST request with the appropriate JSON data to `http://127.0.0.1:5000/serialize`.
+
+This example shows how to integrate the custom Pydantic serializer with Flask, including custom validation and error handling, while keeping the original structure and logic of the provided code.
