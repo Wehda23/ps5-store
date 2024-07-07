@@ -17,7 +17,6 @@ Modules:
     - validators: Custom validators for email, name, password, and ID fields.
     - admin.authentications.token: Contains the function to generate authentication tokens for a user.
 """
-
 from playstation import serializers
 from playstation.models.users import User
 from playstation.models.blacklisted_tokens import BlackListedTokens
