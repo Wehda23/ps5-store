@@ -103,7 +103,7 @@ export const SplOfferData = [
   },
   {
     _id: "203",
-    img: "horizon2", // Replace with the new image path for PS5 headset
+    img: "horizon2",
     productName: "PULSE 3D Wireless Headset",
     price: "99.99",
     color: "White",
@@ -123,7 +123,7 @@ export const SplOfferData = [
   },
   {
     _id: "205",
-    img: "ps5_media_remote.jpg", // Replace with the new image path for PS5 media remote
+    img: "ps5_media_remote.jpg", 
     productName: "Media Remote",
     price: "29.99",
     color: "White",
@@ -153,7 +153,7 @@ export const SplOfferData = [
   },
   {
     _id: "208",
-    img: "ps5_game_demon_souls.jpg", // Replace with the new image path for Demon's Souls game
+    img: "ps5_game_demon_souls.jpg", 
     productName: "Demon's Souls",
     price: "69.99",
     color: "Mixed",
@@ -163,7 +163,7 @@ export const SplOfferData = [
   },
   {
     _id: "209",
-    img: "ps5_game_ratchet_clank.jpg", // Replace with the new image path for Ratchet & Clank game
+    img: "ps5_game_ratchet_clank.jpg",
     productName: "Ratchet & Clank: Rift Apart",
     price: "69.99",
     color: "Mixed",
@@ -173,7 +173,7 @@ export const SplOfferData = [
   },
   {
     _id: "210",
-    img: "ps5_game_returnal.jpg", // Replace with the new image path for Returnal game
+    img: "ps5_game_returnal.jpg",
     productName: "Returnal",
     price: "69.99",
     color: "Mixed",
@@ -536,7 +536,7 @@ export const paginationItems = [
   },
 
 
-  // =================== imprimante hp =================
+  // =================== PlaStation 5 console =================
 
   {
     _id: "hp1",
@@ -953,7 +953,7 @@ export const paginationItems = [
     des: "Improve your gaming precision and comfort with these durable thumb grips, designed to fit perfectly on your DualSense controller.",
     cat: "PS5 Accessory"
   },
-  // =================== imprimante ricoh =================
+  // =================== Playstation5 with Game =================
     {
       _id: "ps5_1",
       img: cleaningKit,
@@ -1086,7 +1086,7 @@ export const paginationItems = [
       ],
     },
 
-  // =================== imprimante ricoh =================
+  // =================== Playstation 5 Sony product=================
 
   {
     _id: "ps5",
