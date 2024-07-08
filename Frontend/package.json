@@ -1,24 +1,18 @@
 {
-    "private": true,
-    "workspaces": [
-      "frontend/admin_login",
-      "frontend/managment",
-      "frontend/staff",
-      "frontend/store",
-      "backend"
-    ],
-    "scripts": {
-      "start:admin_login": "yarn workspace admin_login dev",
-      "start:managment": "yarn workspace managment dev",
-      "start:staff": "yarn workspace staff dev",
-      "start:store": "yarn workspace store start",
-      "start:backend": "yarn workspace backend start"
-    },
-    "dependencies": {
-     
-    },
-    "devDependencies": {
-      
-    }
+  "private": true,
+  "workspaces": [
+    "frontend/admin_login",
+    "frontend/managment",
+    "frontend/staff",
+    "frontend/store",
+    "backend"
+  ],
+  "scripts": {
+    "start:admin_login": "yarn workspace admin_login start",
+    "start:managment": "yarn workspace managment start",
+    "start:staff": "yarn workspace staff start",
+    "start:store": "yarn workspace store start",
+    "start:backend": "python backend/app.py",
+    "start:all": "concurrently \"yarn start:backend\" \"yarn start:store\""
   }
-  
+}
