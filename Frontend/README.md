@@ -3,13 +3,14 @@
 This is a directory that contains the project for play station 5 store frontend, The projects in this directory are:
 
 1. store (Store website).
-2. staff (Dashboard for staff members).
-3. admin (Dashboards for admin authority managers/members).
+2. admin_login (React application for staff or managment to obtain their JWT tokens from.)
+3. staff (Dashboard for staff members).
+4. managment (Dashboards for admin authority managers/members).
 
 
 # Install Project
 
-First before you start working on any project for instance `staff` 
+First before you start working on any project for instance `staff`
 
 CD into the directory
 
