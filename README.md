@@ -1,17 +1,36 @@
 # PlayStation 5 E-commerce Website
-
-## Introduction
-
 Welcome to the development journey of our PlayStation 5 e-commerce website. This project aims to provide a seamless and efficient shopping experience for PlayStation 5 enthusiasts.
 
-### Contributors
+## About the Project
 
-- **Waheed Khaled Elhariri** - Backend Engineer
-  - Responsible for designing and implementing the server-side logic, API development, and database management.
+This monorepo project contains multiple frontend applications and a backend server for the PS5 Store application. The frontend is developed using React, and the backend is developed using Flask (Python). This setup uses Yarn Workspaces for managing dependencies and scripts.
 
-- **Zerihun Shiferaw** - Frontend Engineer
-  - In charge of developing the user interface, ensuring a smooth and engaging user experience, and integrating frontend features with backend services.
+## Project Structure
 
+
+
+## /ps5-store
+- **package.json**
+- **yarn.lock**
+- ### /frontend
+  - #### /admin_login
+    - **package.json**
+    - ...
+  - #### /managment
+    - **package.json**
+    - ...
+  - #### /staff
+    - **package.json**
+    - ...
+  - #### /store
+    - **/public**
+    - **/src**
+    - **package.json**
+    - ...
+- ### /backend
+  - **app.py**
+  - **requirements.txt**
+  - ...
 
 ## Key Takeaways
 - Combining React and Flask for an easier e-commerce experience
@@ -52,9 +71,6 @@ We are always looking for ways to make our site better. User feedback and contin
 - Users can filter their search results with the help of price ranges, varying from ratings to even product types, something essential for users who are always on the go
 - End of a guessing game—this helps users find what they want faster
 
-## Conclusion
-It was fun and gratifying for me to build an e-commerce website related to PlayStation 5, using React with Flask. To focus on good design and functionality practices, we built this site for PlayStation fans—great aesthetics, a sweet way to shop smoothly.
-
 ## Developer Guide
 
 ### Technologies Used
@@ -82,49 +98,118 @@ It was fun and gratifying for me to build an e-commerce website related to PlayS
 - Permission & Validator packages (Custom Made Package)
 - Serializers (Custom Made Package)
 
-### Setup and Installation
+## Prerequisites
+
+- Node.js and Yarn
+- Python and pip
+
+## Installation
 
 1. **Clone the repository:**
-   ```sh
-   git clone https://github.com/your-repo-url.git
-   cd your-repo-directory
+
+   ```bash
+   git clone https://github.com/your-username/ps5-store.git
+   cd ps5-store
    ```
 
-2. **Install frontend dependencies:**
-   ```sh
-   npm install
+2. **Install the dependencies:**
+
+   ```bash
+   yarn install
    ```
 
-3. **Start the frontend development server:**
-   ```sh
-   npm start
-   ```
+3. **Install Python dependencies for the backend:**
 
-4. **Install backend dependencies:**
-   ```sh
+   ```bash
+   cd backend
    pip install -r requirements.txt
+   cd ..
    ```
 
-5. **Start the backend server:**
-   ```sh
-   flask run
-   ```
+## Scripts
 
-### Project Structure
+The following scripts are available to manage the different projects in the monorepo:
 
-- **frontend/**: Contains all React-related code and assets
-- **backend/**: Contains Flask-related code and backend logic
-- **public/**: Static files and the main HTML template
-- **src/**: React components, Redux store, and routing
+- **Start Admin Login Frontend:**
 
-### Contributing
+  ```bash
+  yarn start:admin_login
+  ```
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a pull request.
+- **Start Management Frontend:**
 
-### License
+  ```bash
+  yarn start:managment
+  ```
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+- **Start Staff Frontend:**
+
+  ```bash
+  yarn start:staff
+  ```
+
+- **Start Store Frontend:**
+
+  ```bash
+  yarn start:store
+  ```
+
+- **Start Backend:**
+
+  ```bash
+  yarn start:backend
+  ```
+
+- **Start All (Frontend and Backend):**
+
+  ```bash
+  yarn start:all
+  ```
+
+## Running the Project
+
+To start both the Flask backend and the React frontend (Store), run the following command from the root of the project:
+
+```bash
+yarn start:all
+```
+
+This command uses `concurrently` to start both the backend and the frontend servers simultaneously. The backend will run on port 5000 by default, and the frontend will run on port 3000 by default.
+
+## Frontend (React)
+
+The React frontend handles the user interface and makes API calls to the backend.
+
+### Example API Call
+
+In your React components, you can make API calls to the backend like this:
+
+```jsx
+import axios from 'axios';
+
+const handleLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:5000/login', {
+      username,
+      password,
+    });
+    localStorage.setItem('token', response.data.access_token);
+    window.location.href = '/management';
+  } catch (error) {
+    console.error('Error logging in', error);
+  }
+};
+```
+
+## Acknowledgements
+
+- **Company:** [AlX-SE Africa Software Engineering Company](https://www.alxafrica.com/)
+- **Frontend Developer:** Zerihun Shiferaw ([Zed-bard](https://github.com/Zed-bard))
+- **Backend Developer:** Waheed Khaled ([Wehda23](https://github.com/Wehda23))
+
+### Community
+
+- [React](https://reactjs.org/)
+- [Flask](https://flask.palletsprojects.com/)
+- [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
+- [Concurrently](https://www.npmjs.com/package/concurrently)
