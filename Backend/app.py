@@ -8,7 +8,14 @@
 
 from flask import Flask
 from flask_cors import CORS
-from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR, SECRET_KEY, MEDIA_DIR
+from playstation.settings import (
+    DEBUG,
+    TEMPLATES_DIR,
+    STATIC_DIR,
+    SECRET_KEY,
+    MEDIA_DIR,
+    CORS_ALLOWED_ORIGINS
+)
 from playstation.routes import routes
 from playstation.database import database
 from playstation.logger import setup_logging
@@ -23,7 +30,7 @@ app.config["MAX_CONTENT_LENGTH"] = 500 * 1000 * 1000
 
 
 # Cores
-CORS(app)
+CORS(app, resources={r"/api/*":{"origins":CORS_ALLOWED_ORIGINS}})
 
 # Register routes
 routes(app)

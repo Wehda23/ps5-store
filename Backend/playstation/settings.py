@@ -8,9 +8,12 @@
 - Secret Key
 - Database
 - JWT Authentication Parameters
+- Core Configuration
+- Storage Configuration
 """
 
 import os
+from typing import Union
 from dotenv import load_dotenv
 from datetime import timedelta
 
@@ -37,6 +40,14 @@ DATABASE: str = os.getenv("DATABASE", "sqlite:///test.db")
 # Secret Key
 SECRET_KEY: str = os.getenv("SECRET_KEY", os.urandom(24))
 
+# Cores Configuration Allowed origins
+CORS_ALLOWED_ORIGINS: Union[list[str], str] = ["http://localhost:3000", "http://localhost:5173"]
+"""
+[
+    'http://localhost:3000',  # Example for React development
+    'https://example.com'     # Example for a production domain
+]
+"""
 
 # JWT Authentication
 JWT_AUTHENTICATIONS: dict = {
