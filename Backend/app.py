@@ -7,6 +7,7 @@
 """
 
 from flask import Flask
+from flask_cors import CORS
 from playstation.settings import DEBUG, TEMPLATES_DIR, STATIC_DIR, SECRET_KEY, MEDIA_DIR
 from playstation.routes import routes
 from playstation.database import database
@@ -20,6 +21,9 @@ app.config["SECRET_KEY"] = SECRET_KEY
 app.config["UPLOAD_FOLDER"] = MEDIA_DIR
 app.config["MAX_CONTENT_LENGTH"] = 500 * 1000 * 1000
 
+
+# Cores
+CORS(app)
 
 # Register routes
 routes(app)

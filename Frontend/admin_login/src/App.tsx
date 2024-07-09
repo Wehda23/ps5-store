@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import loginUser from './services/api/LoginUser';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,6 +25,9 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+        <button onClick={() => loginUser({email:"waheedkhaled95@gmail.com", password:"123123123a"})}>
+          Login
+        </button>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more

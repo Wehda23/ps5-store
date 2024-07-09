@@ -1,6 +1,6 @@
 // Create a Proxy Pattern Design Class to fetch data from API endpoints
 
-interface Data {
+export interface Data {
     [key: string]: any;
 }
 
@@ -57,4 +57,5 @@ class PSFetch implements IPSFetch {
     }
 }
 
-export default PSFetch;
+
+export const psFetch = new PSFetch();
