@@ -87,12 +87,6 @@ We are always looking for ways to make our site better. User feedback and contin
 - Node.js and Yarn
 - Python and pip
 
-### Community
-
-- [React](https://reactjs.org/)
-- [Flask](https://flask.palletsprojects.com/)
-- [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
-- [Concurrently](https://www.npmjs.com/package/concurrently)
 
 ## Contributors
 
@@ -101,3 +95,11 @@ We are always looking for ways to make our site better. User feedback and contin
 
 - **Zerihun Shiferaw** - Frontend Engineer
   - In charge of developing the user interface, ensuring a smooth and engaging user experience, and integrating frontend features with backend services.
+
+
+### Community
+
+- [React](https://reactjs.org/)
+- [Flask](https://flask.palletsprojects.com/)
+- [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
+- [Concurrently](https://www.npmjs.com/package/concurrently)
