@@ -34,26 +34,17 @@ import os
 from . import pages
 
 
-@pages.route("/")
-def home_page() -> str:
-    """
-    Render the home page.
-
-    Returns:
-        str: The rendered home page template.
-    """
-    return render_template("home_page/index.html")
-
-
-@pages.route("/lobby")
-def login_page() -> str:
+@pages.route("/<path:path>")
+def frontend(path: str) -> str:
     """
     Render the login page.
 
     Returns:
         str: The rendered login page template.
     """
-    return render_template("login_page/index.html")
+    if path in {"login", "register"}:
+        return render_template("react_admin_login/index.html")
+    return render_template("home_page/index.html")
 
 
 @pages.route("/react_app")
