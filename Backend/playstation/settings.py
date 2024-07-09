@@ -42,6 +42,7 @@ DATABASE = "sqlite:///test.db"
 DATABASE = "postgresql://user:password@postgresserver/dbname"
 DATABASE = 'mysql+pymysql://username:password@localhost/dbname'
 """
+
 # Secret Key
 SECRET_KEY: str = os.getenv("SECRET_KEY", os.urandom(24))
 
