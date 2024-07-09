@@ -1,9 +1,7 @@
 // loginUser.ts
 
-import {psFetch, Data} from '../../utils/storeFetch';
+import { psFetch, Data } from '../../utils/storeFetch';
 import DOMAIN from '../../settings';
-
-
 
 const loginUser = async (body: Data) => {
     const url: string = DOMAIN + '/api/users/login';
@@ -12,8 +10,7 @@ const loginUser = async (body: Data) => {
     };
 
     try {
-        const response = await psFetch.post(url, headers, body);
-        const responseData = await response.json(); // Parse JSON response
+        const responseData = await psFetch.post(url, headers, body); // Automatically handles JSON parsing
         console.log(responseData);
         return responseData; // Return the parsed response data
     } catch (error) {
