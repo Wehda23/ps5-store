@@ -1,6 +1,14 @@
 # PlayStation 5 E-commerce Website
 Welcome to the development journey of our PlayStation 5 e-commerce website. This project aims to provide a seamless and efficient shopping experience for PlayStation 5 enthusiasts.
 
+### Contributors
+
+- **Waheed Khaled Elhariri** - Backend Engineer
+  - Responsible for designing and implementing the server-side logic, API development, and database management.
+
+- **Zerihun Shiferaw** - Frontend Engineer
+  - In charge of developing the user interface, ensuring a smooth and engaging user experience, and integrating frontend features with backend services.
+
 ## About the Project
 
 This monorepo project contains multiple frontend applications and a backend server for the PS5 Store application. The frontend is developed using React, and the backend is developed using Flask (Python). This setup uses Yarn Workspaces for managing dependencies and scripts.
@@ -86,110 +94,6 @@ We are always looking for ways to make our site better. User feedback and contin
 
 - Node.js and Yarn
 - Python and pip
-
-## Installation
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/your-username/ps5-store.git
-   cd ps5-store
-   ```
-
-2. **Install the dependencies:**
-
-   ```bash
-   yarn install
-   ```
-
-3. **Install Python dependencies for the backend:**
-
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   cd ..
-   ```
-
-## Scripts
-
-The following scripts are available to manage the different projects in the monorepo:
-
-- **Start Admin Login Frontend:**
-
-  ```bash
-  yarn start:admin_login
-  ```
-
-- **Start Management Frontend:**
-
-  ```bash
-  yarn start:managment
-  ```
-
-- **Start Staff Frontend:**
-
-  ```bash
-  yarn start:staff
-  ```
-
-- **Start Store Frontend:**
-
-  ```bash
-  yarn start:store
-  ```
-
-- **Start Backend:**
-
-  ```bash
-  yarn start:backend
-  ```
-
-- **Start All (Frontend and Backend):**
-
-  ```bash
-  yarn start:all
-  ```
-
-## Running the Project
-
-To start both the Flask backend and the React frontend (Store), run the following command from the root of the project:
-
-```bash
-yarn start:all
-```
-
-This command uses `concurrently` to start both the backend and the frontend servers simultaneously. The backend will run on port 5000 by default, and the frontend will run on port 3000 by default.
-
-## Frontend (React)
-
-The React frontend handles the user interface and makes API calls to the backend.
-
-### Example API Call
-
-In your React components, you can make API calls to the backend like this:
-
-```jsx
-import axios from 'axios';
-
-const handleLogin = async () => {
-  try {
-    const response = await axios.post('http://localhost:5000/login', {
-      username,
-      password,
-    });
-    localStorage.setItem('token', response.data.access_token);
-    window.location.href = '/management';
-  } catch (error) {
-    console.error('Error logging in', error);
-  }
-};
-```
-
-## Acknowledgements
-
-- **Company:** [AlX-SE Africa Software Engineering Company](https://www.alxafrica.com/)
-- **Frontend Developer:** Zerihun Shiferaw ([Zed-bard](https://github.com/Zed-bard))
-- **Backend Developer:** Waheed Khaled ([Wehda23](https://github.com/Wehda23))
 
 ### Community
 
