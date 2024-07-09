@@ -8,11 +8,11 @@ This monorepo project contains multiple frontend applications and a backend serv
 ## Project Structure
 
 ```txt
-## /ps5-store
-- ### /frontend # Frontend Development
-    ...
-- ### /backend # Backend Development
-    ...
+  /ps5-store
+    /frontend # Frontend Development
+      ...
+    /backend # Backend Development
+      ...
 ```
 
 ## Key Takeaways
@@ -80,6 +80,7 @@ We are always looking for ways to make our site better. User feedback and contin
 - SQLAlchemy
 - Permission & Validator packages (Custom Made Package)
 - Serializers (Custom Made Package)
+- Pydantic
 
 ## Prerequisites
 
