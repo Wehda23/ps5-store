@@ -8,16 +8,16 @@ This monorepo project contains multiple frontend applications and a backend serv
 ### Technologies Used
 
 **Frontend:**
-- ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat&logo=bootstrap&logoColor=white)
-- ![Framer Motion](https://img.shields.io/badge/Framer%20Motion-black?style=flat&logo=framer&logoColor=white)
-- ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
-- ![React Paginate](https://img.shields.io/badge/React%20Paginate-20232A?style=flat&logo=react&logoColor=61DAFB)
-- ![React Redux](https://img.shields.io/badge/React%20Redux-764ABC?style=flat&logo=redux&logoColor=white)
-- ![React Slick](https://img.shields.io/badge/React%20Slick-20232A?style=flat&logo=react&logoColor=61DAFB)
-- ![React Toastify](https://img.shields.io/badge/React%20Toastify-20232A?style=flat&logo=react&logoColor=61DAFB)
-- ![Redux Persist](https://img.shields.io/badge/Redux%20Persist-764ABC?style=flat&logo=redux&logoColor=white)
-- ![Slick Carousel](https://img.shields.io/badge/Slick%20Carousel-20232A?style=flat&logo=react&logoColor=61DAFB)
-- ![Tailwind Scrollbar](https://img.shields.io/badge/Tailwind%20Scrollbar-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat&logo=bootstrap&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-black?style=flat&logo=framer&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![React Paginate](https://img.shields.io/badge/React%20Paginate-20232A?style=flat&logo=react&logoColor=61DAFB)
+![React Redux](https://img.shields.io/badge/React%20Redux-764ABC?style=flat&logo=redux&logoColor=white)
+![React Slick](https://img.shields.io/badge/React%20Slick-20232A?style=flat&logo=react&logoColor=61DAFB)
+![React Toastify](https://img.shields.io/badge/React%20Toastify-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Redux Persist](https://img.shields.io/badge/Redux%20Persist-764ABC?style=flat&logo=redux&logoColor=white)
+![Slick Carousel](https://img.shields.io/badge/Slick%20Carousel-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Tailwind Scrollbar](https://img.shields.io/badge/Tailwind%20Scrollbar-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
 
 ## Project Structure
 
