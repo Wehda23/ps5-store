@@ -7,30 +7,13 @@ This monorepo project contains multiple frontend applications and a backend serv
 
 ## Project Structure
 
-
-
+```txt
 ## /ps5-store
-- **package.json**
-- **yarn.lock**
-- ### /frontend
-  - #### /admin_login
-    - **package.json**
-    - ...
-  - #### /managment
-    - **package.json**
-    - ...
-  - #### /staff
-    - **package.json**
-    - ...
-  - #### /store
-    - **/public**
-    - **/src**
-    - **package.json**
-    - ...
-- ### /backend
-  - **app.py**
-  - **requirements.txt**
-  - ...
+- ### /frontend # Frontend Development
+    ...
+- ### /backend # Backend Development
+    ...
+```
 
 ## Key Takeaways
 - Combining React and Flask for an easier e-commerce experience
