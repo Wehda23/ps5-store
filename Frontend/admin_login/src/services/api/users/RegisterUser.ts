@@ -5,7 +5,11 @@ import DOMAIN from '../../../settings';
 
 
 
-const registerUser = async (body: IRegisterationForm) => {
+interface IRegisterUserAPI {
+    (body: IRegisterationForm): Promise<IRegisterationResponse>
+}
+
+const registerUserApi: IRegisterUserAPI = async (body: IRegisterationForm): Promise<IRegisterationResponse> => {
     const url: string = DOMAIN + '/api/users/register';
     const headers: Data = {
         'Content-Type': 'application/json' // Assuming JSON content type
@@ -26,4 +30,4 @@ const registerUser = async (body: IRegisterationForm) => {
     }
 };
 
-export default registerUser;
+export default registerUserApi;

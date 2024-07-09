@@ -7,7 +7,10 @@ export interface IToken {
     refresh: string;
 }
 
+type ShippingAddressID = number;
+
 export interface IShippingAddress extends Data {
+    id: ShippingAddressID
     address: string;
     city: string;
     country: string;
@@ -15,7 +18,7 @@ export interface IShippingAddress extends Data {
     state: string;
 }
 
-type ShippingAddressID = number;
+
 
 type ShippingAddresses = ShippingAddressID[] | IShippingAddress | IShippingAddress[];
 
