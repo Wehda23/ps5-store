@@ -34,13 +34,23 @@ import os
 from . import pages
 
 
+@pages.route("/")
+def home_page() -> str:
+    """
+    Render the home page.
+
+    Returns:
+        str: The rendered home page template.
+    """
+    return render_template("react_test/index.html")
+
 @pages.route("/<path:path>")
 def frontend(path: str) -> str:
     """
-    Render the login page.
+    Render the path page.
 
     Returns:
-        str: The rendered login page template.
+        str: The rendered path page template.
     """
     if path in {"login", "register"}:
         return render_template("react_admin_login/index.html")
@@ -69,6 +79,9 @@ def get_static_image(file_path: str) -> Response:
     Returns:
         Response: The image file response or a default image if the file is not found or invalid.
     """
+    # If just single images
+    if len(file_path.split("/")) == 1:
+        return send_from_directory(MEDIA_DIR, file_path)
     image: str = file_path.split("/")[-1]
     directory_path: str = os.path.join(MEDIA_DIR, file_path.split("/")[0])
     relative_path: str = os.path.join(MEDIA_DIR, file_path)
