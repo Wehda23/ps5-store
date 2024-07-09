@@ -1,14 +1,12 @@
-// loginUser.ts
-
-import psFetch from '../StoreFetch';
-import { ResponseData, Data, IUserInformation } from '../ResponseData';
-import { ILoginUserForm } from '../RequestData';
+import psFetch from "../StoreFetch";
+import { IRegisterationForm } from "../RequestData";
+import { IRegisterationResponse, Data, ResponseData } from "../ResponseData";
 import DOMAIN from '../../../settings';
 
 
 
-const loginUser = async (body: ILoginUserForm) => {
-    const url: string = DOMAIN + '/api/users/login';
+const registerUser = async (body: IRegisterationForm) => {
+    const url: string = DOMAIN + '/api/users/register';
     const headers: Data = {
         'Content-Type': 'application/json' // Assuming JSON content type
     };
@@ -17,8 +15,8 @@ const loginUser = async (body: ILoginUserForm) => {
         const responseData: ResponseData = await psFetch.post(url, headers, body); // Automatically handles JSON parsing
         console.log("Response: ",responseData);
 
-        if(typeof responseData === 'object' && 'first_name' in responseData && 'token' in responseData){
-            return responseData as IUserInformation;
+        if(typeof responseData === 'string' &&  responseData === 'Successful Registeration'){
+            return responseData as IRegisterationResponse;
         } else {
             throw new Error('Invalid response format');
         }
@@ -28,4 +26,4 @@ const loginUser = async (body: ILoginUserForm) => {
     }
 };
 
-export default loginUser;
+export default registerUser;

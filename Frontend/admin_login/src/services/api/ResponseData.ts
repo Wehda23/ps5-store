@@ -27,4 +27,6 @@ export interface IUserInformation {
     shipping_addressess?: ShippingAddresses;
 }
 
-export type ResponseData = Data[] | Data | string | IUserInformation;
+export type IRegisterationResponse = "Successful Registeration";
+
+export type ResponseData = Data[] | Data | string | IUserInformation | IRegisterationResponse;
