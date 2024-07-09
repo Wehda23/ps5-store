@@ -1,41 +1,51 @@
-# PlayStation 5 E-commerce Website
+# PlayStation 5 E-commerce Frontend Development
 Welcome to the development journey of our PlayStation 5 e-commerce website. This project aims to provide a seamless and efficient shopping experience for PlayStation 5 enthusiasts.
 
 ## About the Project
 
 This monorepo project contains multiple frontend applications and a backend server for the PS5 Store application. The frontend is developed using React, and the backend is developed using Flask (Python). This setup uses Yarn Workspaces for managing dependencies and scripts.
 
+### Technologies Used
+
+**Frontend:**
+- ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat&logo=bootstrap&logoColor=white)
+- ![Framer Motion](https://img.shields.io/badge/Framer%20Motion-black?style=flat&logo=framer&logoColor=white)
+- ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+- ![React Paginate](https://img.shields.io/badge/React%20Paginate-20232A?style=flat&logo=react&logoColor=61DAFB)
+- ![React Redux](https://img.shields.io/badge/React%20Redux-764ABC?style=flat&logo=redux&logoColor=white)
+- ![React Slick](https://img.shields.io/badge/React%20Slick-20232A?style=flat&logo=react&logoColor=61DAFB)
+- ![React Toastify](https://img.shields.io/badge/React%20Toastify-20232A?style=flat&logo=react&logoColor=61DAFB)
+- ![Redux Persist](https://img.shields.io/badge/Redux%20Persist-764ABC?style=flat&logo=redux&logoColor=white)
+- ![Slick Carousel](https://img.shields.io/badge/Slick%20Carousel-20232A?style=flat&logo=react&logoColor=61DAFB)
+- ![Tailwind Scrollbar](https://img.shields.io/badge/Tailwind%20Scrollbar-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+
 ## Project Structure
 
 
+```txt
+/frontend
+    - package.json
+    - yarn.lock
 
-## /ps5-store
-- **package.json**
-- **yarn.lock**
-- ### /frontend
-  - #### /admin_login
-    - **package.json**
+  - /admin_login
+    - package.json
     - ...
-  - #### /managment
-    - **package.json**
+  - /managment
+    - package.json
     - ...
-  - #### /staff
-    - **package.json**
+  - /staff
+    - package.json
     - ...
-  - #### /store
-    - **/public**
-    - **/src**
-    - **package.json**
+  - /store
+    - /public
+    - /src
+    - package.json
     - ...
-- ### /backend
-  - **app.py**
-  - **requirements.txt**
-  - ...
+```
 
 ## Key Takeaways
-- Combining React and Flask for an easier e-commerce experience
+- Using React Technology for a responsive Web Application.
 - Emphasis on sleek design and functionality
-- Robust backend to ensure data safety and efficient order processing
 - Best practices to enhance user experience and ensure success
 - Continuous improvement driven by user feedback and performance monitoring
 
@@ -45,13 +55,6 @@ We intended to have the website look stylish with easy-to-use functionalities. U
 ### Components of Design
 - Lists consoles, games, and accessories with images
 - User-friendly interface ensuring smooth navigation
-
-## Robust Backend with Flask
-In the backend, we are using Flask, which is a simple and powerful web framework. It handles user login, order processing, and maintaining data safety efficiently.
-
-### Backend Features
-- Shopping cart and purchase are swiftly processed
-- Protection of the information of customers and details of their transactions
 
 ## Best Practices for E-commerce Success
 - Easy navigation and search so users can find what they want quickly
@@ -65,43 +68,14 @@ We are always looking for ways to make our site better. User feedback and contin
 - Assists in observing user actions on the website and its performance
 - Gathers opinions and suggestions from users
 
-
 ## Unique Features
 - Put a great search functionality via keywords, categories, and filters
 - Users can filter their search results with the help of price ranges, varying from ratings to even product types, something essential for users who are always on the go
 - End of a guessing game—this helps users find what they want faster
 
-## Developer Guide
-
-### Technologies Used
-
-**Frontend:**
-- Bootstrap
-- Framer Motion
-- React
-- React Paginate
-- React Redux
-- React Slick
-- React Toastify
-- Redux Persist
-- Slick Carousel
-- Tailwind Scrollbar
-
-**Backend:**
-- Flask
-- Swagger
-- Authentications Package using JWT (Custom Made Package)
-- SQLite for development based database
-- MySQL for Production based database
-- Unittesting
-- SQLAlchemy
-- Permission & Validator packages (Custom Made Package)
-- Serializers (Custom Made Package)
-
 ## Prerequisites
 
 - Node.js and Yarn
-- Python and pip
 
 ## Installation
 
@@ -116,14 +90,6 @@ We are always looking for ways to make our site better. User feedback and contin
 
    ```bash
    yarn install
-   ```
-
-3. **Install Python dependencies for the backend:**
-
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   cd ..
    ```
 
 ## Scripts
@@ -193,8 +159,9 @@ const handleLogin = async () => {
       username,
       password,
     });
-    localStorage.setItem('token', response.data.access_token);
-    window.location.href = '/management';
+    localStorage.setItem('user', response.data);
+    localStorage.setItem('token', response.data.token);
+    window.location.href = '/';
   } catch (error) {
     console.error('Error logging in', error);
   }
@@ -203,13 +170,12 @@ const handleLogin = async () => {
 
 ## Acknowledgements
 
-- **Company:** [AlX-SE Africa Software Engineering Company](https://www.alxafrica.com/)
+- **Company:** [AlX a sand company](https://www.alxafrica.com/)
 - **Frontend Developer:** Zerihun Shiferaw ([Zed-bard](https://github.com/Zed-bard))
 - **Backend Developer:** Waheed Khaled ([Wehda23](https://github.com/Wehda23))
 
 ### Community
 
 - [React](https://reactjs.org/)
-- [Flask](https://flask.palletsprojects.com/)
 - [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
 - [Concurrently](https://www.npmjs.com/package/concurrently)
