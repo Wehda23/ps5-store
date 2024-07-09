@@ -7,7 +7,6 @@ This monorepo project contains multiple frontend applications and a backend serv
 
 ### Technologies Used
 
-**Frontend:**
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat&logo=bootstrap&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer%20Motion-black?style=flat&logo=framer&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
