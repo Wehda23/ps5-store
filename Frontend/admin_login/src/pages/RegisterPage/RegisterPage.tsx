@@ -1,10 +1,10 @@
+import RegisterForm from "../../components/RegisterForm";
 
-
-function RegisterScreen() {
+function RegisterScreen(): JSX.Element {
     return (
     <>
-        <div className="register-screen">
-            <h1>Register Screen</h1>
+        <div className="text-3xl font-bold underline">
+            <RegisterForm />
         </div>
     </>
     )

@@ -1,11 +1,9 @@
+import LoginForm from "../../components/LoginForm";
 
-
-function LoginScreen() {
+function LoginScreen(): JSX.Element {
     return (
     <>
-        <div className="text-3xl font-bold underline">
-            <h1>Login Screen</h1>
-        </div>
+        <LoginForm />
     </>
     )
 }
