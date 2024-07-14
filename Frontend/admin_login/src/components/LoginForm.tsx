@@ -5,12 +5,13 @@ import Form from "./ui/Form";
 import TextInput from "./ui/TextInput";
 import useLogin from "../hooks/useLogin";
 import { ILoginUserForm } from "../services/api/RequestData";
+import Text from "./ui/Text";
 
 function LoginForm(): JSX.Element {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const { login, loading, error, success } = useLogin();
-    console.log("render");
+
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const loginUserForm: ILoginUserForm = { email, password };
@@ -23,8 +24,8 @@ function LoginForm(): JSX.Element {
             <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
             <hr className="mb-6 border-t-2 border-gray-300"/>
             {loading && <Loading />}
-            {error && <div className="text-red-500 mb-4">{error}</div>}
-            {success && <div className="text-green-500 mb-4">Login successful!</div>}
+            {error && <Text type="error">{error}</Text>}
+            {success && <Text type='success'>Login successful!</Text>}
             <TextInput
                 label="Email"
                 type="email"
