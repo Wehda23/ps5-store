@@ -20,7 +20,7 @@ function LoginForm(): JSX.Element {
 
     return (
         <>
-        <Form className="w-full max-w-sm mx-auto p-8 bg-white shadow-lg rounded-lg">
+        <Form className="w-full mx-auto p-8 bg-white shadow-lg rounded-lg">
             <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
             <hr className="mb-6 border-t-2 border-gray-300"/>
             {loading && <Loading />}
