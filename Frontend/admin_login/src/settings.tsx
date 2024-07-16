@@ -14,5 +14,8 @@ type TProject = 'testing' | 'production'
 
 export const project: TProject = 'testing' // For Development value `testing`, Otherwise `production` before running build.
 
+type TMedia = "/src/images" | "/images"
+
+export const MEDIASRC: TMedia = project === 'testing' ? "/src/images" : "/images";
 
 export default DOMAIN[project];
