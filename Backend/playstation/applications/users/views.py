@@ -81,18 +81,18 @@ def register(*args, **kwargs) -> Response:
         if serializer.is_valid():
             # Create user
             serializer.save()
-            return make_response("Successful Registeration", 201)
+            return make_response({"message": "Successful Registeration"}, 201)
         error: list[str] = serializer.errors
         return make_response(error, 403)
     except ExistingEmail as e:
-        return make_response("Email is already registered", 409)
+        return make_response({"message": "Email is already registered"}, 409)
     except Exception as e:
         # Write Logic to check registeration failed through logs functionality
         error: str = str(e)
         # Record Error Through logs
         current_app.logger.error(f"Registration failed: {error}")
         # Return a response `Registeration Failed`
-        return make_response("Registeration Failed", 400)
+        return make_response({"message": "Registeration Failed"}, 400)
 
 
 # Login User API
@@ -123,7 +123,7 @@ def login(*args, **kwargs) -> Response:
         # record error in a logging class
         error: str = str(e)
         current_app.logger.error(f"Login failed: {error}")
-        return make_response("Login Failed", 404)
+        return make_response({"message": "Login Failed"}, 404)
 
 
 # Update user information API
@@ -162,7 +162,7 @@ def update_user(pk: int) -> Response:
         # Add error message to a current_app.logger class to track bugs
         error: str = str(e)
         current_app.logger.error(f"Update User failed: {error}")
-        return make_response("Failed to update user", 404)
+        return make_response({"message": "Failed to update user"}, 404)
 
 
 # Refresh token api
@@ -197,7 +197,7 @@ def refresh_token(*args, **kwargs) -> Response:
         # Add error message to a current_app.logger class to track bugs
         error: str = str(e)
         current_app.logger.error(f"Refresh token failed: {error}")
-        return make_response("Failed to refresh token", 404)
+        return make_response({"message": "Failed to refresh token"}, 404)
 
 
 # Logout API
@@ -222,14 +222,14 @@ def logout(*args, **kwargs) -> Response:
         if serializer.is_valid():
             # Blacklist the current token
             serializer.save()
-            return make_response("Logged out successfully", 200)
+            return make_response({"message": "Logged out successfully"}, 200)
         error: list = serializer.errors
         return make_response(error, 404)
     except Exception as e:
         # Add error message to a current_app.logger class to track bugs
         error: str = str(e)
         current_app.logger.error(f"Logout failed: {error}")
-        return make_response("Failed to logout", 404)
+        return make_response({"message": "Failed to logout"}, 404)
 
 
 # Reset Password Mechanisim

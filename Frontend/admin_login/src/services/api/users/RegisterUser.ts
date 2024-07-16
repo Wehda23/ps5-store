@@ -19,13 +19,13 @@ const registerUserApi: IRegisterUserAPI = async (body: IRegisterationForm): Prom
         const responseData: ResponseData = await psFetch.post(url, headers, body); // Automatically handles JSON parsing
         console.log("Response: ",responseData);
 
-        if(typeof responseData === 'string' &&  responseData === 'Successful Registeration'){
+        if(typeof responseData === 'object' &&  "message" in responseData){
             return responseData as IRegisterationResponse;
         } else {
             throw new Error('Invalid response format');
         }
     } catch (error) {
-        console.error('Error logging in:', error);
+        console.error('Error Registeration:', error);
         throw error; // Re-throw the error for handling elsewhere if needed
     }
 };

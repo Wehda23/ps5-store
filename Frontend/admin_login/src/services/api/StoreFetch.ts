@@ -1,5 +1,4 @@
 import { Data, ResponseData } from "./ResponseData";
-// Create a Proxy Pattern Design Class to fetch data from API endpoints
 
 interface Request {
     (url: string, headers: Data, body: Data): Promise<ResponseData>;
@@ -19,14 +18,22 @@ interface IPSFetch {
 }
 
 class PSFetch implements IPSFetch {
+    private async handleResponse(response: Response): Promise<ResponseData> {
+        if (!response.ok) {
+            const errorData = await response.json();
+            const errorMessage = errorData.message || errorData.error || 'Unknown error';
+            throw new Error(errorMessage);
+        }
+        return response.json(); // Automatically parses JSON response
+    }
+
     async get(url: string, headers: Data): Promise<ResponseData> {
         console.log("get method called");
         const response = await fetch(url, {
             method: 'GET',
             headers: headers
         });
-
-        return response.json(); // Automatically parses JSON response
+        return this.handleResponse(response);
     }
 
     async post(url: string, headers: Data, body: Data): Promise<ResponseData> {
@@ -36,8 +43,7 @@ class PSFetch implements IPSFetch {
             headers: headers,
             body: JSON.stringify(body)
         });
-
-        return response.json(); // Automatically parses JSON response
+        return this.handleResponse(response);
     }
 
     async put(url: string, headers: Data, body: Data): Promise<ResponseData> {
@@ -47,8 +53,7 @@ class PSFetch implements IPSFetch {
             headers: headers,
             body: JSON.stringify(body)
         });
-
-        return response.json(); // Automatically parses JSON response
+        return this.handleResponse(response);
     }
 
     async delete(url: string, headers: Data): Promise<ResponseData> {
@@ -57,8 +62,7 @@ class PSFetch implements IPSFetch {
             method: 'DELETE',
             headers: headers
         });
-
-        return response.json(); // Automatically parses JSON response
+        return this.handleResponse(response);
     }
 }
 

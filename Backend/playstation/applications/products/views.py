@@ -218,14 +218,14 @@ def delete_category(category_id: int, *args, **kwargs) -> Response:
         if serializer.is_valid():
             # Delete category
             serializer.delete()
-            return make_response("Category deleted successfully", 200)
+            return make_response({"message": "Category deleted successfully"}, 200)
         # Error
         error: list[str] = serializer.errors
         return make_response(error, 404)
     except Exception as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Failed to delete product category", 404)
+        return make_response({"message": "Failed to delete product category"}, 404)
 
 
 # API to create new product
@@ -257,25 +257,25 @@ def create_product(*args, **kwargs) -> Response:
             data["image_url"] = image_file
         else:
             # Invalid content type.
-            return make_response("Invalid content type", 415)
+            return make_response({"message": "Invalid content type"}, 415)
         # Serializer
         serializer: CreateProductSerializer = CreateProductSerializer(data=data)
         # Validate serializer
         if serializer.is_valid():
             # Create product
             serializer.save()
-            return make_response("Product created successfully", 201)
+            return make_response({"message": "Product created successfully"}, 201)
         # Error
         error: list[str] = serializer.errors
         return make_response(error, 400)
     except SQLAlchemyError as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Database error while creating product", 500)
+        return make_response({"message": "Database error while creating product"}, 500)
     except Exception as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Failed to create product", 400)
+        return make_response({"message": "Failed to create product"}, 400)
 
 
 # Create API to grab product by id
@@ -310,7 +310,7 @@ def get_product_by_id(product_id: int) -> Response:
     except Exception as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Failed to grab product information", 404)
+        return make_response({"message": "Failed to grab product information"}, 404)
 
 
 # API to update a product
@@ -345,7 +345,7 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
             data["image_url"] = image_file
         else:
             # Invalid content type.
-            return make_response("Invalid content type", 415)
+            return make_response({"message": "Invalid content type"}, 415)
         # Check product id exists within the data
         if "id" not in data:
             # if does not exists embed the product_id as data['id']
@@ -363,11 +363,11 @@ def update_product(product_id: int, *args, **kwargs) -> Response:
     except SQLAlchemyError as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Database error while updating product", 500)
+        return make_response({"message": "Database error while updating product"}, 500)
     except Exception as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Failed to update product", 400)
+        return make_response({"message": "Failed to update product"}, 400)
 
 
 # API to delete a product
@@ -400,18 +400,18 @@ def delete_product(product_id: int, *args, **kwargs) -> Response:
         if serializer.is_valid():
             # Logic to delete product
             serializer.delete()
-            return make_response("Product deleted successfully", 200)
+            return make_response({"message": "Product deleted successfully"}, 200)
         # error
         error: list[str] = serializer.errors
         return make_response(error, 400)
     except SQLAlchemyError as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Database error while deleting product", 500)
+        return make_response({"message": "Database error while deleting product"}, 500)
     except Exception as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Failed to delete product", 404)
+        return make_response({"message": "Failed to delete product"}, 404)
 
 
 # API to grab all products
@@ -449,18 +449,18 @@ def get_all_products(*args, **kwargs) -> Response:
         # Grab error to logs
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Forbidden Request", 403)
+        return make_response({"message": "Forbidden Request"}, 403)
     except InvalidCategoriesDelimiter as e:
         # Grab error to logs
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Forbidden Request", 403)
+        return make_response({"message": "Forbidden Request"}, 403)
     except SQLAlchemyError as e:
         # Grab error to logs
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Failed to retrieve products", 500)
+        return make_response({"message": "Failed to retrieve products"}, 500)
     except Exception as e:
         error: str = str(e)
         current_app.logger.error(error)
-        return make_response("Failed to retrieve products", 500)
+        return make_response({"message": "Failed to retrieve products"}, 500)

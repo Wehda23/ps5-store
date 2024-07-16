@@ -78,13 +78,13 @@ def get_addresses(*args, **kwargs) -> Response:
         return make_response(shipping_addresses, 200)
     except UserShippingAddressRelation as e:
         current_app.logger.error(str(e))
-        return make_response("Something went wrong", 500)
+        return make_response({"message": "Something went wrong"}, 500)
     except UserNotAssignedError as e:
         current_app.logger.error(str(e))
-        return make_response("User not assigned", 401)
+        return make_response({"message": "User not assigned"}, 401)
     except Exception as e:
         current_app.logger.error(e)
-        return make_response("Something went wrong", 500)
+        return make_response({"message": "Something went wrong"}, 500)
 
 
 @shipping_addresses_api.route("/", methods=["POST"])
@@ -116,7 +116,7 @@ def create_address(*args, **kwargs) -> Response:
             # Save the address
             serializer.save()
             # Return success message
-            return make_response("Shipping address created successfully", 201)
+            return make_response({"message": "Shipping address created successfully"}, 201)
         # Error
         error = serializer.errors
         return make_response(error, 400)
@@ -125,14 +125,14 @@ def create_address(*args, **kwargs) -> Response:
         return make_response(error, 400)
     except UserNotAssignedError as e:
         current_app.logger.error(str(e))
-        return make_response("User not assigned", 401)
+        return make_response({"message": "User not assigned"}, 401)
     except SQLAlchemyError as e:
         current_app.logger.error(e)
-        return make_response("Something went wrong", 500)
+        return make_response({"message": "Something went wrong"}, 500)
     except Exception as e:
         current_app.logger.error(str(e))
         print(e)
-        return make_response("Failed to create shipping address", 500)
+        return make_response({"message": "Failed to create shipping address"}, 500)
 
 
 @shipping_addresses_api.route("/<int:address_id>", methods=["PUT"])
@@ -182,13 +182,13 @@ def update_address(address_id: int, *args, **kwargs) -> Response:
         return make_response(error, 400)
     except UserNotAssignedError as e:
         current_app.logger.error(str(e))
-        return make_response("User not assigned", 401)
+        return make_response({"message": "User not assigned"}, 401)
     except SQLAlchemyError as e:
         current_app.logger.error(e)
-        return make_response("Something went wrong", 500)
+        return make_response({"message": "Something went wrong"}, 500)
     except Exception as e:
         current_app.logger.error(str(e))
-        return make_response("Failed to update shipping address", 500)
+        return make_response({"message": "Failed to update shipping address"}, 500)
 
 
 @shipping_addresses_api.route("/<int:address_id>", methods=["DELETE"])
@@ -219,16 +219,16 @@ def delete_address(address_id: int, *args, **kwargs) -> Response:
             # Delete the address
             serializer.delete()
             # Return success message
-            return make_response("Shipping address deleted successfully", 200)
+            return make_response({"message": "Shipping address deleted successfully"}, 200)
         # Error
         error = serializer.errors
         return make_response(error, 400)
     except UserNotAssignedError as e:
         current_app.logger.error(str(e))
-        return make_response("User not assigned", 401)
+        return make_response({"message": "User not assigned"}, 401)
     except SQLAlchemyError as e:
         current_app.logger.error(e)
-        return make_response("Something went wrong", 500)
+        return make_response({"message": "Something went wrong"}, 500)
     except Exception as e:
         current_app.logger.error(str(e))
-        return make_response("Failed to delete shipping address", 500)
+        return make_response({"message": "Failed to delete shipping address"}, 500)

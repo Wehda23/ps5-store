@@ -12,7 +12,7 @@ const DOMAIN: IDomain = {
 
 type TProject = 'testing' | 'production'
 
-const project: TProject = 'testing' // For Development value `testing`, Otherwise `production` before running build.
+export const project: TProject = 'testing' // For Development value `testing`, Otherwise `production` before running build.
 
 
 export default DOMAIN[project];

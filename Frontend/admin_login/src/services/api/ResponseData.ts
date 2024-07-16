@@ -30,6 +30,8 @@ export interface IUserInformation {
     shipping_addressess?: ShippingAddresses;
 }
 
-export type IRegisterationResponse = "Successful Registeration";
+export interface IRegisterationResponse {
+    message: "Successful Registeration";
+}
 
 export type ResponseData = Data[] | Data | string | IUserInformation | IRegisterationResponse;

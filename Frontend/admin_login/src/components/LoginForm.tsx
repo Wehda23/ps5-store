@@ -6,6 +6,8 @@ import TextInput from "./ui/TextInput";
 import useLogin from "../hooks/useLogin";
 import { ILoginUserForm } from "../services/api/RequestData";
 import Text from "./ui/Text";
+import Break from "./ui/Break";
+import BasicHeader from "./ui/BasicHeader";
 
 function LoginForm(): JSX.Element {
     const [email, setEmail] = useState<string>("");
@@ -20,9 +22,9 @@ function LoginForm(): JSX.Element {
 
     return (
         <>
-        <Form className="w-full mx-auto p-8 bg-white shadow-lg rounded-lg">
-            <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
-            <hr className="mb-6 border-t-2 border-gray-300"/>
+        <Form className="w-full mx-auto p-8 bg-white shadow-lx rounded-lg">
+            <BasicHeader>Login</BasicHeader>
+            <Break />
             {loading && <Loading />}
             {error && <Text type="error">{error}</Text>}
             {success && <Text type='success'>Login successful!</Text>}
